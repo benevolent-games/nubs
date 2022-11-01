@@ -1,0 +1,42 @@
+{
+	"name": "@benev/nubs",
+	"version": "0.0.0-dev.0",
+	"description": "",
+	"license": "MIT",
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"type": "module",
+	"files": [
+		"x",
+		"s"
+	],
+	"scripts": {
+		"build": "run-s clean && run-p compile",
+		"dev": "run-p start watch",
+		"clean": "rimraf x && mkdirp x",
+		"compile": "tsc",
+		"watch": "tsc -w",
+		"start": "http-server",
+		"test": "exit 0"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"http-server": "^14.1.1",
+		"mkdirp": "^1.0.4",
+		"npm-run-all": "^4.1.5",
+		"rimraf": "^3.0.2",
+		"typescript": "^4.8.4"
+	},
+	"keywords": [
+		"touch",
+		"mobile",
+		"thumbsticks"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/benevolent-games/nubs.git"
+	},
+	"bugs": {
+		"url": "https://github.com/benevolent-games/nubs/issues"
+	},
+	"homepage": "https://github.com/benevolent-games/nubs#readme"
+}
