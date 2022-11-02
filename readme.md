@@ -4,10 +4,12 @@
 
 *✨ mobile-friendly thumstick ui*
 
-- easy-to-install web component
+🕹️ [live demo](https://nubs.benevolent.games/)
+
+- easy html installation
   ```html
   <!-- install nubs via html -->
-  <script src="https://unpkg.com/@benev/nubs/x/nubs.js"></script>
+  <script type="module" src="https://unpkg.com/@benev/nubs/x/nubs.js"></script>
 
   <!-- actual usage on the page -->
   <div>
@@ -16,8 +18,11 @@
   </div>
   ```
 
-```js
-// npm install @benev/nubs
-
-import {NubStick} from "@benev/nubs/nubsticks/nub-stick.js"
-```
+- advanced js installation
+  ```sh
+  npm install @benev/nubs
+  ```
+  ```js
+  import {NubStick} from "@benev/nubs/nubsticks/nub-stick.js"
+  customElements.define("nub-stick", NubStick)
+  ```
