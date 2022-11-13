@@ -1,6 +1,7 @@
-import {actions} from "./utils/actions.js"
 import {draggable} from "./utils/draggable.js"
 import { styles } from "./style.css.js"
+import { KeyData, keys } from "./utils/keys.js"
+import {dispatchCustomEvent} from "./utils/dispatchCustomEvent.js"
 export class NubKeyboard extends HTMLElement {
 
 	shadow = this.attachShadow({
@@ -9,26 +10,25 @@ export class NubKeyboard extends HTMLElement {
 	})
 
 	constructor() {
-		const keys = [
-			"1", "2", "3", "4", "5",
-			"Q", "W", "E", "R", "T", "A", "S",
-			"D", "F", "G", "Z", "X", "C", "V", "B"
-		]
-
 		super()
-		
+		// this crap below not working have fun :DDDDDDDDDDDDDDD
+		Object.values(keys).map((key: any, i: number) => console.log(key))
+		for (const value of Object.values(keys)) {
+			console.log(value)
+		}
+		console.log(Object.values(keys))
+		console.log(Object.values(keys).map(({key}) => key))
 		this.shadow.innerHTML = `
 			<div class=flex-box>
 				<div class="editor">
 					<div class="actions">
-						${keys.slice(0, 10).map((key, i) => `
-						<select class="action">
-							${Object.keys(actions).map((key) => 
-							`<option>${key}</option>`)}
-						</select>`).join("")}
+						${Object.values(keys).slice(0, 10).map(({key, actionName}: KeyData, i: number) => `
+						<span class="action">
+							${actionName ? actionName : ''}
+						</span>`).join("")}
 					</div>
 					<div class="edit-keys">
-						${keys.slice(0, 10).map(key => `
+						${Object.values(keys).slice(0, 10).map(({key}: KeyData) => `
 						<span class="edit-key">${key}</span>
 						`).join("")}
 					</div>
@@ -43,7 +43,7 @@ export class NubKeyboard extends HTMLElement {
 						<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" preserveAspectRatio="none" viewBox="0 0 24 24" fill="currentColor" stroke-width="2" class="ai ai-DragHorizontalFill"><path fill-rule="evenodd" clip-rule="evenodd" d="M22 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M14 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
 						<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" preserveAspectRatio="none" viewBox="0 0 24 24" fill="currentColor" stroke-width="2" class="ai ai-DragHorizontalFill"><path fill-rule="evenodd" clip-rule="evenodd" d="M22 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M14 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6 16a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
 					</div>
-				 	${keys.map(key => `<button class="key">${key}</button>`).join("")}
+				 	${Object.keys(keys).map((key: any, i) => `<button data-key="${key}" class="key">${key}</button>`).join("")}
 				</div>
 			</div>
 		`
@@ -60,35 +60,37 @@ export class NubKeyboard extends HTMLElement {
 
 		draggable(draggableContainer, itemToDrag)
 
-		const fireAction = (index: number) => {
-			const selectedAction = actionsElements[index].selectedOptions[0].label
-			actions[selectedAction]()
-		}
-
 		toggleEditor?.addEventListener("pointerdown", () => {
 			if (editor.style.display == 'flex') {
 				editor.style.display = 'none'
 			} else {editor.style.display = 'flex'}
 		})
 		document.addEventListener('keydown', (e) => {
-			const index = keys.indexOf(e.key.toUpperCase())
-			if (index > -1) {
+			const key = e.key.toUpperCase()
+			const keyData = keys[key]
+			const index = Object.keys(keys).indexOf(keyData.key)
+			if (keyData) {
+				dispatchCustomEvent(this, keyData)
 				keysButtons[index].setAttribute("pressed", "")
-				fireAction(index)
-			}
+		}
 		})
 		document.addEventListener('keyup', (e) => {
-			const index = keys.indexOf(e.key.toUpperCase())
-			if (index > -1) {
+			const key = e.key.toUpperCase()
+			const keyData = keys[key]
+			const index = Object.keys(keys).indexOf(keyData.key)
+			if (keyData) {
 				keysButtons[index].removeAttribute("pressed")
 			}
 		})
-		keysButtons?.forEach((key, index) => key.addEventListener('pointerdown', (e) => {
-				keysButtons[index].setAttribute("pressed", "")
-				fireAction(index)
+		keysButtons?.forEach((keyEl, index) => keyEl.addEventListener('pointerdown', (e: PointerEvent) => {
+			const key = keyEl.getAttribute("data-key")?.toUpperCase()!
+			const data = keys[key]
+			dispatchCustomEvent(this, data)
+			keyEl.setAttribute("pressed", "")
 		}))
-		keysButtons?.forEach((key, index) => key.addEventListener('pointerup', (e) => {
-				keysButtons[index].removeAttribute("pressed")
+		keysButtons?.forEach((key, index) => key.addEventListener('pointerup', (e: PointerEvent) => {
+			keysButtons[index].removeAttribute("pressed")
 		}))
 	}
+	
 }

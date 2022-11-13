@@ -72,6 +72,12 @@ export const styles = `
 		color: white;
 		cursor: pointer;
 	}
+	.toggle-editor {
+		background-color: #00000017;
+	}
+	.toggle-editor:hover {
+		background-color: #0000004d;
+	}
 	.editor {
 		display: none;
 		position: absolute;
