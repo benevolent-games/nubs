@@ -10,9 +10,10 @@
 		"s"
 	],
 	"scripts": {
-		"build": "run-s clean && run-p compile",
+		"build": "run-s clean && run-p importly compile",
 		"dev": "run-p start watch",
 		"clean": "rimraf x && mkdirp x",
+		"importly": "importly --host=node_modules < package-lock.json > x/importmap.json",
 		"compile": "tsc",
 		"watch": "tsc -w",
 		"start": "http-server",
@@ -23,7 +24,9 @@
 		"lit": "^2.4.1"
 	},
 	"devDependencies": {
+		"es-module-shims": "^1.6.2",
 		"http-server": "^14.1.1",
+		"importly": "^0.2.0",
 		"mkdirp": "^1.0.4",
 		"npm-run-all": "^4.1.5",
 		"rimraf": "^3.0.2",

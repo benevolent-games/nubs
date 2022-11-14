@@ -7,7 +7,9 @@
 	<title>nubs</title>
 
 	<link rel=stylesheet href="/index.css"/>
-	<script type=module src="/x/nub.js"></script>
+	<script defer type=importmap-shim src="/x/importmap.json"></script>
+	<script defer type=module-shim src="/x/nub.js"></script>
+	<script defer src="/node_modules/es-module-shims/dist/es-module-shims.wasm.js"></script>
 </head>
 <body>
 
@@ -17,6 +19,9 @@
 		<p>powering <a href="https://benevolent.games/">benevolent.games</a></p>
 		<p>see nubs on <a href="https://github.com/benevolent-games/nubs">github</a></p>
 	</header>
+
+	<h2>nub-stick</h2>
+	<nub-stick></nub-stick>
 
 	<nub-context bindings="
 			✏️ Chase's Keybindings for True Hackers
@@ -35,7 +40,6 @@
 		<nub-real-xr></nub-real-xr>
 
 		<nub-gridboard></nub-gridboard>
-		<nub-stick></nub-stick>
 	</nub-context>
 
 </body>

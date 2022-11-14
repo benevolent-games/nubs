@@ -1,9 +1,16 @@
 
-import {NubStick} from "./nubsticks/nub-stick.js"
-import {NubKeyboard} from "./nub-keyboard/nub-keyboard.js"
-import {NubContext} from "./nub-context/nub-context.js"
+import {themeElements} from "@chasemoskal/magical/x/theme-elements.js"
+import {registerElements} from "@chasemoskal/magical/x/register-elements.js"
 
-customElements.define("nub-stick", NubStick)
-customElements.define("nub-keyboard", NubKeyboard)
-customElements.define("nub-context", NubContext)
+import themeCss from "./framework/theme.css.js"
+import {NubStick} from "./components/stick/component.js"
 
+console.log("hello!")
+
+registerElements(
+	themeElements(themeCss, {
+		NubStick,
+	})
+)
+
+console.log("hello 2")
