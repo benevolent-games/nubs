@@ -1,6 +1,8 @@
+
 //#00000047
 //#00000047
-export const styles = `
+import {noop as css} from "../tools/template-noop.js"
+export const styles = css`
 	:host {
 		display: block;
 		position: relative;

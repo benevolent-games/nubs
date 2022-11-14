@@ -1,4 +1,6 @@
-export const styles = `
+
+import {noop as css} from "../tools/template-noop.js"
+export const styles = css`
 :host {}
 
 slot {

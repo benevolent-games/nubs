@@ -1,6 +1,7 @@
-import {dispatchCustomEvent} from "../nub-keyboard/utils/dispatchCustomEvent.js"
-import {keys} from "../nub-keyboard/utils/keys.js"
 import {styles} from "./style.css.js"
+import {keys} from "../nub-keyboard/utils/keys.js"
+import {noop as html} from "../tools/template-noop.js"
+import {dispatchCustomEvent} from "../nub-keyboard/utils/dispatchCustomEvent.js"
 
 export class NubContext extends HTMLElement {
 	shadow = this.attachShadow({
@@ -11,7 +12,7 @@ export class NubContext extends HTMLElement {
 	constructor() {
 		super()
 		let editable = false
-		this.shadow.innerHTML = `
+		this.shadow.innerHTML = html`
 		<div>
 		<button class="flip">flip mode</button>
 		<slot>

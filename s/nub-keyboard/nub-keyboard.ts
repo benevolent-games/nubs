@@ -1,6 +1,7 @@
-import {draggable} from "./utils/draggable.js"
 import { styles } from "./style.css.js"
+import {draggable} from "./utils/draggable.js"
 import { KeyData, keys } from "./utils/keys.js"
+import {noop as html} from "../tools/template-noop.js"
 import {dispatchCustomEvent} from "./utils/dispatchCustomEvent.js"
 export class NubKeyboard extends HTMLElement {
 
@@ -18,7 +19,7 @@ export class NubKeyboard extends HTMLElement {
 		}
 		console.log(Object.values(keys))
 		console.log(Object.values(keys).map(({key}) => key))
-		this.shadow.innerHTML = `
+		this.shadow.innerHTML = html`
 			<div class=flex-box>
 				<div class="editor">
 					<div class="actions">
