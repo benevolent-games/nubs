@@ -4,8 +4,9 @@ import {registerElements} from "@chasemoskal/magical/x/register-elements.js"
 
 import {NubInput} from "./events/nub-input.js"
 import {NubStick} from "./components/stick/component.js"
-import { NubContext } from "./components/context/component.js"
-import { NubGridboard } from "./components/gridboard/component.js"
+import {NubContext} from "./components/context/component.js"
+import {NubGridboard} from "./components/gridboard/component.js"
+import {NubRealPointer} from "./components/real-pointer/component.js"
 
 import themeCss from "./framework/theme.css.js"
 
@@ -13,11 +14,12 @@ registerElements(
 	themeElements(themeCss, {
 		NubStick,
 		NubContext,
-		NubGridboard
+		NubGridboard,
+		NubRealPointer,
 	})
 )
 
-document.addEventListener("nub_input", e => {
+document.addEventListener(NubInput.eventName, e => {
 	const event = <NubInput>e
-	console.log("NUB INPUT", event.detail)
+	console.log(NubInput.eventName, event.detail)
 })
