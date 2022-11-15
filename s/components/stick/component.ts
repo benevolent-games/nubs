@@ -15,9 +15,18 @@ export const NubStick = component({
 		properties: {},
 	}, use => {
 
-	const [, setTrackingMouse, getTrackingMouse] = use.state(false)
-	const [, setTrackingTouchId, getTrackingTouchId] = use.state<number | undefined>(undefined)
-	const [styleTransforms, setStyleTransforms] = use.state({stick: "", understick: ""})
+	const [, setTrackingMouse, getTrackingMouse] = (
+		use.state(false)
+	)
+
+	const [, setTrackingTouchId, getTrackingTouchId] = (
+		use.state<number | undefined>(undefined)
+	)
+
+	const [styleTransforms, setStyleTransforms] = (
+		use.state({stick: "", understick: ""})
+	)
+
 	const starters: StickStarters = {
 		shadow: use.element.shadowRoot!,
 		triggerInput(values: v2.V2) { console.log("nub_input", values) },
