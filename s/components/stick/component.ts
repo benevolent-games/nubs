@@ -4,10 +4,10 @@ import {component} from "@chasemoskal/magical/x/component.js"
 
 import styles from "./style.css.js"
 import * as v2 from "../../tools/v2.js"
-import {attachEvents} from "../../tools/attach-events.js"
-import {asLitListener} from "../../tools/lit-listener.js"
-import {findTouchAppleFriendly} from "../../tools/find-touch-ios-friendly.js"
-import {setupStickTracking} from "./utils/tracking.js"
+import {StickStarters} from "./types.js"
+import {setupBaseEvents} from "./setups/setup-base-events.js"
+import {setupWindowEvents} from "./setups/setup-window-events.js"
+import {setupTrackingAndDom} from "./setups/setup-tracking-and-dom.js"
 
 export const NubStick = component({
 		styles,
@@ -15,71 +15,22 @@ export const NubStick = component({
 		properties: {},
 	}, use => {
 
-	function triggerInput(values: v2.V2) {
-
-	}
-
 	const [, setTrackingMouse, getTrackingMouse] = use.state(false)
-	const [trackingTouchId, setTrackingTouchId] = use.state<number | void>(undefined)
-	const [styleTransforms, setStyleTransforms] = use.state({
-		stick: "",
-		understick: "",
-	})
-
-	const {moveStick, resetStick} = setupStickTracking({
+	const [, setTrackingTouchId, getTrackingTouchId] = use.state<number | undefined>(undefined)
+	const [styleTransforms, setStyleTransforms] = use.state({stick: "", understick: ""})
+	const starters: StickStarters = {
 		shadow: use.element.shadowRoot!,
+		triggerInput(values: v2.V2) { console.log("nub_input", values) },
 		setStyleTransforms,
-		triggerInput,
-	})
-
-	use.setup(() => attachEvents(window, {
-		mouseup() {
-			setTrackingMouse(false)
-			resetStick()
-		},
-		mousemove(event) {
-			const {clientX, clientY} = <MouseEvent>event
-			const trackingMouse = getTrackingMouse()
-			if (trackingMouse)
-				moveStick(clientX, clientY)
-		},
-	}))
-
-	const baseEvents = {
-		mousedown: asLitListener<MouseEvent>({
-			handleEvent({clientX, clientY}) {
-				setTrackingMouse(true)
-				moveStick(clientX, clientY)
-			},
-		}),
-		touchstart: asLitListener<TouchEvent>({
-			passive: false,
-			handleEvent(event) {
-				const touch = event.targetTouches[0]
-				setTrackingTouchId(touch.identifier)
-				const {clientX, clientY} = touch
-				moveStick(clientX, clientY)
-				event.preventDefault()
-			},
-		}),
-		touchmove: asLitListener<TouchEvent>({
-			passive: false,
-			handleEvent(event) {
-				const touch = findTouchAppleFriendly(trackingTouchId!, event.touches)
-				if (touch) {
-					const {clientX, clientY} = touch
-					moveStick(clientX, clientY)
-				}
-				event.preventDefault()
-			},
-		}),
-		touchend: asLitListener<TouchEvent>({
-			handleEvent() {
-				setTrackingTouchId(undefined)
-				resetStick()
-			},
-		}),
+		getTrackingMouse,
+		setTrackingMouse,
+		getTrackingTouchId,
+		setTrackingTouchId,
 	}
+
+	const controls = setupTrackingAndDom(starters)
+	const baseEvents = setupBaseEvents({...starters, ...controls})
+	use.setup(setupWindowEvents({...starters, ...controls}))
 
 	return html`
 		<div class=base
