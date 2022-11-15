@@ -6,14 +6,14 @@ import {registerFinalValues} from "./utils/register-final-values.js"
 import {findClosestPointOnCircle} from "./utils/find-closest-point-on-circle.js"
 
 export function setupTrackingAndDom({
-		shadow,
+		query,
 		triggerInput,
 		setStyleTransforms,
 	}: StickStarters): StickControls {
-	return {
 
+	return {
 		moveStick(clientX: number, clientY: number) {
-			const basis = getBasis(shadow)
+			const basis = getBasis(query())
 			if (basis) {
 				const {left, top, height, width} = basis.rect
 				const middleX = left + (width / 2)
@@ -25,9 +25,8 @@ export function setupTrackingAndDom({
 				registerFinalValues(setStyleTransforms, triggerInput, basis, x, y)
 			}
 		},
-
 		resetStick() {
-			const basis = getBasis(shadow)
+			const basis = getBasis(query())
 			if (basis)
 				registerFinalValues(setStyleTransforms, triggerInput, basis, 0, 0)
 		},

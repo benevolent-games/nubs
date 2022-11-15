@@ -2,7 +2,11 @@
 import {V2} from "../../tools/v2.js"
 
 export interface StickStarters {
-	shadow: ShadowRoot
+	query(): {
+		base: HTMLElement
+		stick: HTMLElement
+	}
+
 	triggerInput: (v: V2) => void
 
 	setStyleTransforms: (s: {stick: string, understick: string}) => void
