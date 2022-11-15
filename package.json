@@ -20,7 +20,7 @@
 		"test": "exit 0"
 	},
 	"dependencies": {
-		"@chasemoskal/magical": "^0.0.2",
+		"@chasemoskal/magical": "^0.0.3",
 		"lit": "^2.4.1"
 	},
 	"devDependencies": {
@@ -30,7 +30,7 @@
 		"mkdirp": "^1.0.4",
 		"npm-run-all": "^4.1.5",
 		"rimraf": "^3.0.2",
-		"typescript": "^4.8.4"
+		"typescript": "^4.9.3"
 	},
 	"keywords": [
 		"touch",
