@@ -1,4 +1,3 @@
-import {Nub} from "../../types.js"
 
 export interface GridboardStarters {
 	query(): {
@@ -6,6 +5,5 @@ export interface GridboardStarters {
 		draggableItem: HTMLElement,
 		keysButtons: any
 	}
-
-	triggerInput: ({key, pressed}: Nub.Detail.Key) => void
+	triggerInput: ({key, pressed}: {key: string, pressed: boolean}) => void
 }

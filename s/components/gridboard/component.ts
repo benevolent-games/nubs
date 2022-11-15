@@ -1,19 +1,23 @@
-import {component} from "@chasemoskal/magical/x/component.js"
+
 import {html} from "lit"
+import {component} from "@chasemoskal/magical/x/component.js"
+
 import {styles} from "./style.css.js"
-import {setupDraggableContainerEvents} from "./setups/setup-draggable-container-events.js"
-import {KeyData, keys} from "./setups/utils/keys.js"
-import {NubInput} from "../../events/nub-input.js"
-import {Nub} from "../../types.js"
 import {GridboardStarters} from "./types.js"
-import {setupGridboardEvents} from "./setups/setup-gridboard-events.js"
+import {KeyData, keys} from "./setups/utils/keys.js"
+import {dispatchNubEvent} from "../../framework/dispatch.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
+import {setupGridboardEvents} from "./setups/setup-gridboard-events.js"
+import {setupDraggableContainerEvents} from "./setups/setup-draggable-container-events.js"
 
-
-export const NubGridboard = component({
+export const NubGridboard = component<{
+		channels: string
+	}>({
 		styles,
 		shadow: true,
-		properties: {},
+		properties: {
+			channels: {type: String, reflect: true},
+		},
 	}, use => {
 
 	const starters: GridboardStarters = {
@@ -22,15 +26,11 @@ export const NubGridboard = component({
 			draggableItem: use.element.shadowRoot!.querySelector(".draggable-item")!,
 			keysButtons: use.element.shadowRoot!.querySelectorAll(".key")!
 		}),
-		triggerInput({key, pressed}: Nub.Detail.Key) {
-			use.element.dispatchEvent(
-				new NubInput<Nub.Detail.Any>({
-					type: Nub.Type.Key,
-					channels: [],
-					key,
-					pressed
-				})
-			)
+		triggerInput({key, pressed}: {key: string, pressed: boolean}) {
+			dispatchNubEvent(use.element)
+				.parseChannels(use.element.channels)
+				.input
+				.key({key, pressed})
 		},
 	}
 

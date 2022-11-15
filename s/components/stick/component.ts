@@ -2,19 +2,22 @@
 import {html} from "lit"
 import {component} from "@chasemoskal/magical/x/component.js"
 
-import {Nub} from "../../types.js"
 import styles from "./style.css.js"
 import * as v2 from "../../tools/v2.js"
 import {StickStarters} from "./types.js"
-import {NubInput} from "../../events/nub-input.js"
+import {dispatchNubEvent} from "../../framework/dispatch.js"
 import {setupBaseEvents} from "./setups/setup-base-events.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
 import {setupTrackingAndDom} from "./setups/setup-tracking-and-dom.js"
 
-export const NubStick = component({
+export const NubStick = component<{
+		channels: string
+	}>({
 		styles,
 		shadow: true,
-		properties: {},
+		properties: {
+			channels: {type: String, reflect: true},
+		},
 	}, use => {
 
 	const [, setTrackingMouse, getTrackingMouse] =
@@ -37,13 +40,10 @@ export const NubStick = component({
 			stick: use.element.shadowRoot!.querySelector(".stick")!,
 		}),
 		triggerInput(vector: v2.V2) {
-			use.element.dispatchEvent(
-				new NubInput<Nub.Detail.Vector2>({
-					type: Nub.Type.Vector2,
-					channels: [],
-					vector,
-				})
-			)
+			dispatchNubEvent(use.element)
+				.parseChannels(use.element.channels)
+				.input
+				.vector2({vector})
 		},
 	}
 

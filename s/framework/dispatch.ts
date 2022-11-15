@@ -1,42 +1,38 @@
 
 import {Nub} from "../types.js"
-import {NubInput} from "../events/nub-input.js"
 import {V2} from "../tools/v2.js"
+import {NubInput} from "../events/nub-input.js"
+import {parseChannels as parseChannels2} from "./parse-channels.js"
 
-export function dispatchNubEvent(
-		element: EventTarget,
-		channels: string[],
-	) {
-
-	return {
-		input: {
-
-			key: (key: string, pressed: boolean) => (
-				element.dispatchEvent(new NubInput({
-					key,
-					pressed,
-					channels,
-					type: Nub.Type.Key,
-				}))
-			),
-
-			vector2: ({vector}: {vector: V2}) => (
-				element.dispatchEvent(new NubInput({
-					vector,
-					channels,
-					type: Nub.Type.Vector2,
-				}))
-			),
-		},
-		action: {
-
-			key: (action: string) => {
-				throw new Error("todo implement actions")
+export const dispatchNubEvent = (target: EventTarget) => ({
+	parseChannels(rawChannels: string) {
+		const channels = parseChannels2(rawChannels)
+		return {
+			input: {
+				key: ({key, pressed}: {key: string, pressed: boolean}) => (
+					target.dispatchEvent(new NubInput({
+						key,
+						pressed,
+						channels,
+						type: Nub.Type.Key,
+					}))
+				),
+				vector2: ({vector}: {vector: V2}) => (
+					target.dispatchEvent(new NubInput({
+						vector,
+						channels,
+						type: Nub.Type.Vector2,
+					}))
+				),
 			},
-
-			vector2: (action: SVGAnimatedString) => {
-				throw new Error("todo implement actions")
+			action: {
+				key: (action: string) => {
+					throw new Error("todo implement actions")
+				},
+				vector2: (action: string) => {
+					throw new Error("todo implement actions")
+				},
 			},
-		},
-	}
-}
+		}
+	},
+})

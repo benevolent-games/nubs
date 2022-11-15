@@ -1,8 +1,7 @@
-import {NubInput} from "../../../events/nub-input.js"
-import {attachEvents} from "../../../tools/attach-events.js"
-import {Nub} from "../../../types.js"
-import {GridboardStarters} from "../types.js"
+
 import {keys} from "./utils/keys.js"
+import {GridboardStarters} from "../types.js"
+import {attachEvents} from "../../../tools/attach-events.js"
 
 export function setupWindowEvents({query, triggerInput}: GridboardStarters) {
 	return () => attachEvents(window, {

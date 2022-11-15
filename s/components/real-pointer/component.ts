@@ -3,7 +3,6 @@ import {html} from "lit"
 import {component2 as component} from "@chasemoskal/magical/x/component.js"
 
 import {dispatchNubEvent} from "../../framework/dispatch.js"
-import {parseChannels} from "../../framework/parse-channels.js"
 
 export const NubRealPointer = component<{
 		channels: string
@@ -16,7 +15,8 @@ export const NubRealPointer = component<{
 
 	use.setup(() => {
 		function handleMouseMove({clientX, clientY}: MouseEvent) {
-			dispatchNubEvent(use.element, parseChannels(use.element.channels))
+			dispatchNubEvent(use.element)
+				.parseChannels(use.element.channels)
 				.input
 				.vector2({vector: [clientX, clientY]})
 		}
