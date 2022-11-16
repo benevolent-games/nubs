@@ -28,3 +28,19 @@ export namespace Nub {
 		export type Any = Key | Vector2
 	}
 }
+
+export interface Bindings {
+
+	/** comments */
+	"👼": string[]
+
+	/** vector2 action bindings */
+	"🕹️": {
+		[key: string]: string[]
+	}
+
+	/** key action bindings */
+	"*️⃣": {
+		[key: string]: string[][]
+	}
+}
