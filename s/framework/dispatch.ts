@@ -1,13 +1,8 @@
 
 import {Nub} from "../types.js"
-import {V2} from "../tools/v2.js"
 import {NubInput} from "../events/nub-input.js"
 import {parseChannels} from "./parse-channels.js"
 import {NubAction} from "../events/nub-action.js"
-
-function wrapFireCall(fun: () => void) {
-	return {fire: fun}
-}
 
 export const dispatchNubEvent = () => ({
 	atTarget: (target: EventTarget) => ({
@@ -16,20 +11,19 @@ export const dispatchNubEvent = () => ({
 			parseChannels: (rawChannels: string) => {
 				const channels = parseChannels(rawChannels)
 				return {
-					key: ({code, pressed}: Nub.Data.Key) => wrapFireCall(() => (
+					key: (data: Nub.Data.Key) => wrapFireCall(() => (
 						target.dispatchEvent(
-							new NubInput({
-								code,
-								pressed,
+							new NubInput<Nub.Detail.Key>({
+								...data,
 								channels,
 								type: Nub.Type.Key,
 							})
 						)
 					)),
-					vector2: ({vector}: {vector: V2}) => wrapFireCall(() => (
+					vector2: (data: Nub.Data.Vector2) => wrapFireCall(() => (
 						target.dispatchEvent(
-							new NubInput({
-								vector,
+							new NubInput<Nub.Detail.Vector2>({
+								...data,
 								channels,
 								type: Nub.Type.Vector2,
 							})
@@ -39,13 +33,13 @@ export const dispatchNubEvent = () => ({
 			},
 		}),
 
-		action: () => ({
-			key: (action: string, detail: Nub.Detail.Key) => wrapFireCall(() =>
+		action: (action: string) => ({
+			key: (detail: Nub.Detail.Key) => wrapFireCall(() =>
 				target.dispatchEvent(
 					new NubAction<Nub.Detail.Key>({...detail, action})
 				)
 			),
-			vector2: (action: string, detail: Nub.Detail.Vector2) => wrapFireCall(() =>
+			vector2: (detail: Nub.Detail.Vector2) => wrapFireCall(() =>
 				target.dispatchEvent(
 					new NubAction<Nub.Detail.Vector2>({...detail, action})
 				)
@@ -53,3 +47,7 @@ export const dispatchNubEvent = () => ({
 		}),
 	}),
 })
+
+function wrapFireCall(fun: () => void) {
+	return {fire: fun}
+}

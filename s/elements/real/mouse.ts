@@ -1,10 +1,11 @@
 
 import {html} from "lit"
-import {component2 as component} from "@chasemoskal/magical/x/component.js"
+import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
-import {setupWindowMouseListening} from "./utils/setup-window-mouse-listening.js"
+import {setupWindowMouseMoveListening} from "./utils/setup-window-mouse-move-listening.js"
+import {setupWindowMouseButtonListening} from "./utils/setup-window-mouse-button-listening.ts.js"
 
-export const NubRealMouse = component<{
+export const NubRealMouse = element<{
 		channels: string
 	}>({
 		shadow: true,
@@ -13,7 +14,8 @@ export const NubRealMouse = component<{
 		},
 	}).render(use => {
 
-	use.setup(setupWindowMouseListening)
+	use.setup(setupWindowMouseMoveListening)
+	use.setup(setupWindowMouseButtonListening)
 
 	return html``
 })

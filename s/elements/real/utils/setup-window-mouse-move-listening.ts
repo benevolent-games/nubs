@@ -3,7 +3,7 @@ import {LitElement} from "lit"
 import {V2} from "../../../tools/v2.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 
-export function setupWindowMouseListening(
+export function setupWindowMouseMoveListening(
 		element: LitElement & {channels: string}
 	) {
 
@@ -14,6 +14,7 @@ export function setupWindowMouseListening(
 			.input()
 			.parseChannels(element.channels)
 			.vector2({vector})
+			.fire()
 	}
 
 	window.addEventListener("mousemove", handleMouseMove)

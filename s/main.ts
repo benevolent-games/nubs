@@ -4,6 +4,7 @@ export {registerElements} from "@chasemoskal/magical/x/register-elements.js"
 
 export {Nub} from "./types.js"
 export {NubInput} from "./events/nub-input.js"
+export {NubAction} from "./events/nub-action.js"
 
 export {default as themeCss} from "./framework/theme.css.js"
 
