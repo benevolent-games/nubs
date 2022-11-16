@@ -42,7 +42,8 @@
     - ```html
       <nub-real-mouse></nub-real-mouse>
       ```
-      - this emits `nub_input` even (all the *"real"* nub elements are like that)
+      - also emits `nub_input` events
+      - this one doesn't render any ui (all of the "real" elements are like this)
     - you can add a `channels` attribute to name and differentiate inputs
       ```html
       <nub-stick channels=movestick></nubstick>

@@ -4,7 +4,7 @@ import {component2 as component} from "@chasemoskal/magical/x/component.js"
 
 import {dispatchNubEvent} from "../../framework/dispatch.js"
 
-export const NubRealPointer = component<{
+export const NubRealMouse = component<{
 		channels: string
 	}>({
 		shadow: true,
