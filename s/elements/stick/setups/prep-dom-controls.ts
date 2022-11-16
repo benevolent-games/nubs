@@ -5,7 +5,7 @@ import {StickControls, StickStarters} from "../types.js"
 import {registerFinalValues} from "./utils/register-final-values.js"
 import {findClosestPointOnCircle} from "./utils/find-closest-point-on-circle.js"
 
-export function setupTrackingAndDom({
+export function prepDomControls({
 		query,
 		triggerInput,
 		setStyleTransforms,

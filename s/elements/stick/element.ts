@@ -5,10 +5,10 @@ import {component2 as element} from "@chasemoskal/magical/x/component.js"
 import styles from "./style.css.js"
 import * as v2 from "../../tools/v2.js"
 import {StickStarters} from "./types.js"
+import {prepBaseEvents} from "./setups/prep-base-events.js"
 import {dispatchNubEvent} from "../../framework/dispatch.js"
-import {setupBaseEvents} from "./setups/setup-base-events.js"
+import {prepDomControls} from "./setups/prep-dom-controls.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
-import {setupTrackingAndDom} from "./setups/setup-tracking-and-dom.js"
 
 export const NubStick = element<{
 		channels: string
@@ -49,8 +49,9 @@ export const NubStick = element<{
 		},
 	}
 
-	const controls = setupTrackingAndDom(starters)
-	const baseEvents = setupBaseEvents({...starters, ...controls})
+	const controls = prepDomControls(starters)
+	const baseEvents = prepBaseEvents({...starters, ...controls})
+
 	use.setup(setupWindowEvents({...starters, ...controls}))
 
 	return html`

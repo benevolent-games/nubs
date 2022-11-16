@@ -3,7 +3,7 @@ import {StickControls, StickStarters} from "../types.js"
 import {asLitListener} from "../../../tools/lit-listener.js"
 import {findTouchAppleFriendly} from "../../../tools/find-touch-ios-friendly.js"
 
-export function setupBaseEvents({
+export function prepBaseEvents({
 		moveStick,
 		resetStick,
 		setTrackingMouse,

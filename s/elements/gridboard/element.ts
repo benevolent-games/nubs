@@ -8,8 +8,8 @@ import {GridboardStarters} from "./types.js"
 import {KeyData, keys} from "./setups/utils/keys.js"
 import {dispatchNubEvent} from "../../framework/dispatch.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
-import {setupGridboardEvents} from "./setups/setup-gridboard-events.js"
-import {setupDraggableContainerEvents} from "./setups/setup-draggable-container-events.js"
+import {prepGridboardEvents} from "./setups/prep-gridboard-events.js"
+import {prepDraggableContainerEvents} from "./setups/prep-draggable-container-events.js"
 
 export const NubGridboard = element<{
 		channels: string
@@ -23,7 +23,7 @@ export const NubGridboard = element<{
 
 	const starters: GridboardStarters = {
 		query: () => ({
-			root: use.element,
+			element: use.element,
 			draggableItem: use.element.shadowRoot!.querySelector(".draggable-item")!,
 			keysButtons: use.element.shadowRoot!.querySelectorAll(".key")!
 		}),
@@ -37,17 +37,16 @@ export const NubGridboard = element<{
 		},
 	}
 
-	const gridboardEvents = setupGridboardEvents({...starters})
-	const draggableContainerEvents = setupDraggableContainerEvents({...starters})
-	const actionsElements = use.element.shadowRoot?.querySelectorAll<HTMLSelectElement>(".action")!
+	const gridboardEvents = prepGridboardEvents(starters)
+	const draggableContainerEvents = prepDraggableContainerEvents(starters)
+
+	use.setup(setupWindowEvents(starters))
 
 	const toggleEdtior = () => {
 		const editor = use.element.shadowRoot?.querySelector<HTMLElement>(".editor")!
 		editor.toggleAttribute('opened')
 	}
 
-	use.setup(setupWindowEvents({...starters}))
-	
 	return html`
 		<div class=flex-box>
 			<div class="editor">

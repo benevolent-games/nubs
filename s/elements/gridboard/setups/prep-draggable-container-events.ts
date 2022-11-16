@@ -1,9 +1,12 @@
+
+import {GridboardStarters} from "../types.js"
+
 function setTranslate(xPos: string | number, yPos: string | number, el: HTMLElement) {
 	el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)"
 }
 
-export function setupDraggableContainerEvents({query}: any) {
-	const root = query().root
+export function prepDraggableContainerEvents({query}: GridboardStarters) {
+	const {element, draggableItem} = query()
 
 	let active = false
 	let currentX: number
@@ -15,7 +18,6 @@ export function setupDraggableContainerEvents({query}: any) {
 
 	return {
 		touchstart: (e: TouchEvent) => {
-			const draggableItem = query().draggableItem
 			initialX = e.touches[0].clientX - xOffset
 			initialY = e.touches[0].clientY - yOffset
 			if (e.target === draggableItem) {
@@ -37,11 +39,10 @@ export function setupDraggableContainerEvents({query}: any) {
 				xOffset = currentX
 				yOffset = currentY
 
-				setTranslate(currentX, currentY, root)
+				setTranslate(currentX, currentY, element)
 			}
 		},
 		mousedown: (e: MouseEvent) => {
-			const draggableItem = query().draggableItem
 			initialX = e.clientX - xOffset
 			initialY = e.clientY - yOffset
 			if (e.target === draggableItem) {
@@ -63,7 +64,7 @@ export function setupDraggableContainerEvents({query}: any) {
 				xOffset = currentX
 				yOffset = currentY
 
-				setTranslate(currentX, currentY, root)
+				setTranslate(currentX, currentY, element)
 			}
 		}
 	}

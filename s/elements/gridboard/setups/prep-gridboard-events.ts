@@ -2,7 +2,7 @@
 import {keys} from "./utils/keys.js"
 import {GridboardStarters} from "../types.js"
 
-export function setupGridboardEvents({triggerInput}: GridboardStarters) {
+export function prepGridboardEvents({triggerInput}: GridboardStarters) {
 	return {
 		pointerdown: (e: PointerEvent) => {
 			const element = <HTMLElement>e.target

@@ -3,7 +3,7 @@ import {Nub} from "../../types.js"
 
 export interface GridboardStarters {
 	query(): {
-		root: HTMLElement
+		element: HTMLElement
 		draggableItem: HTMLElement,
 		keysButtons: any
 	}
