@@ -11,7 +11,7 @@ export function setupWindowEvents({query, triggerInput}: GridboardStarters) {
 			const keyData = keys[key]
 			const index = Object.keys(keys).indexOf(keyData.key)
 			if (keyData) {
-				triggerInput({key: key, pressed: true})
+				triggerInput({code: key, pressed: true})
 				keysButtons[index]?.setAttribute("pressed", "")
 			}
 		},
@@ -21,7 +21,7 @@ export function setupWindowEvents({query, triggerInput}: GridboardStarters) {
 			const keyData = keys[key]
 			const index = Object.keys(keys).indexOf(keyData.key)
 			if (keyData) {
-				triggerInput({key: key, pressed: true})
+				triggerInput({code: key, pressed: true})
 				keysButtons[index]?.removeAttribute("pressed")
 			}
 		}

@@ -2,6 +2,7 @@
 import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
+import {Nub} from "../../types.js"
 import {styles} from "./style.css.js"
 import {GridboardStarters} from "./types.js"
 import {KeyData, keys} from "./setups/utils/keys.js"
@@ -26,11 +27,11 @@ export const NubGridboard = element<{
 			draggableItem: use.element.shadowRoot!.querySelector(".draggable-item")!,
 			keysButtons: use.element.shadowRoot!.querySelectorAll(".key")!
 		}),
-		triggerInput({key, pressed}: {key: string, pressed: boolean}) {
+		triggerInput({code, pressed}: Nub.Data.Key) {
 			dispatchNubEvent(use.element)
 				.parseChannels(use.element.channels)
 				.input
-				.key({key, pressed})
+				.key({code, pressed})
 		},
 	}
 

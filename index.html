@@ -1,6 +1,6 @@
 <!doctype html>
-<html>
 <head>
+	<html>
 	<meta charset="utf-8"/>
 	<meta name=viewport content="width=device-width, initial-scale=1"/>
 	<meta name=darkreader content="dark"/>
@@ -31,24 +31,26 @@
 		<p>see nubs on <a href="https://github.com/benevolent-games/nubs">github</a></p>
 	</header>
 
-	<h2>nub-stick</h2>
-	<nub-stick></nub-stick>
-
 	<nub-context bindings="
 		👼 Default Bindings for Hackers
-		🕹️ (move) #movestick
-		🕹️ (look) #lookstick
-		*️⃣ (use) f, mouse_2
-		*️⃣ (forward) w, up
-		*️⃣ (back) s, down
-		*️⃣ (left) a, left
-		*️⃣ (right) d, right
+		🕹️ (look) #look
+		🕹️ (move) #move
+		*️⃣ (forward) KeyW, ArrowUp
+		*️⃣ (back) KeyS, ArrowDown
+		*️⃣ (left) KeyA, ArrowLeft
+		*️⃣ (right) KeyD, ArrowRight
+		*️⃣ (use) KeyF, Mouse3
 		">
-		<nub-gridboard></nub-gridboard>
 		<nub-real-keyboard></nub-real-keyboard>
+
+		<!--
 		<nub-real-mouse></nub-real-mouse>
+		<nub-stick channels=movestick></nub-stick>
+		<nub-stick channels=lookstick></nub-stick>
+		<nub-gridboard></nub-gridboard>
 		<nub-real-gamepad></nub-real-gamepad>
 		<nub-real-xr></nub-real-xr>
+		-->
 	</nub-context>
 
 </body>

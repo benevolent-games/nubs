@@ -2,9 +2,9 @@
 import {html} from "lit"
 import {component2 as component} from "@chasemoskal/magical/x/component.js"
 
-import {setupWindowMouseListening} from "./utils/setup-window-mouse-listening.js"
+import {setupWindowKeyboardListening} from "./utils/setup-window-keyboard-listening.js"
 
-export const NubRealMouse = component<{
+export const NubRealKeyboard = component<{
 		channels: string
 	}>({
 		shadow: true,
@@ -13,7 +13,7 @@ export const NubRealMouse = component<{
 		},
 	}).render(use => {
 
-	use.setup(setupWindowMouseListening)
+	use.setup(setupWindowKeyboardListening)
 
 	return html``
 })

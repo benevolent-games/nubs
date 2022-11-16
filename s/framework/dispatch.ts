@@ -9,9 +9,9 @@ export const dispatchNubEvent = (target: EventTarget) => ({
 		const channels = parseChannels2(rawChannels)
 		return {
 			input: {
-				key: ({key, pressed}: {key: string, pressed: boolean}) => (
+				key: ({code, pressed}: Nub.Data.Key) => (
 					target.dispatchEvent(new NubInput({
-						key,
+						code,
 						pressed,
 						channels,
 						type: Nub.Type.Key,

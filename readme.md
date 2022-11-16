@@ -55,18 +55,20 @@
     <nub-context
       bindings="
       👼 Default Bindings for Hackers
-      🕹️ (move) #movestick
-      🕹️ (look) #lookstick
-      *️⃣ (use) f, mouse_2
-      *️⃣ (forward) w, up
-      *️⃣ (back) s, down
-      *️⃣ (left) a, left
-      *️⃣ (right) d, right
+      🕹️ (look) #look
+      🕹️ (move) #move
+      *️⃣ (forward) KeyW, ArrowUp
+      *️⃣ (back) KeyS, ArrowDown
+      *️⃣ (left) KeyA, ArrowLeft
+      *️⃣ (right) KeyD, ArrowRight
+      *️⃣ (use) KeyF, Mouse3
       ">
 
       <!-- nest your nub elements in here -->
-      <nub-stick></nub-stick>
-      <nub-real-mouse></nub-real-mouse>
+      <nub-real-keyboard></nub-real-keyboard>
+      <nub-real-mouse channels=look></nub-real-mouse>
+      <nub-stick channels=look></nub-stick>
+      <nub-stick channels=move></nub-stick>
 
     </nub-context>
     ```
