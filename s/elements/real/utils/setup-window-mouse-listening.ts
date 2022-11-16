@@ -1,5 +1,6 @@
 
 import {LitElement} from "lit"
+import {V2} from "../../../tools/v2.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 
 export function setupWindowMouseListening(
@@ -7,10 +8,12 @@ export function setupWindowMouseListening(
 	) {
 
 	function handleMouseMove({clientX, clientY}: MouseEvent) {
-		dispatchNubEvent(element)
+		const vector: V2 = [clientX, clientY]
+		dispatchNubEvent()
+			.atTarget(element)
+			.input()
 			.parseChannels(element.channels)
-			.input
-			.vector2({vector: [clientX, clientY]})
+			.vector2({vector})
 	}
 
 	window.addEventListener("mousemove", handleMouseMove)

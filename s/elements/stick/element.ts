@@ -40,10 +40,12 @@ export const NubStick = element<{
 			stick: use.element.shadowRoot!.querySelector(".stick")!,
 		}),
 		triggerInput(vector: v2.V2) {
-			dispatchNubEvent(use.element)
+			dispatchNubEvent()
+				.atTarget(use.element)
+				.input()
 				.parseChannels(use.element.channels)
-				.input
 				.vector2({vector})
+				.fire()
 		},
 	}
 

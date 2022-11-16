@@ -27,11 +27,13 @@ export const NubGridboard = element<{
 			draggableItem: use.element.shadowRoot!.querySelector(".draggable-item")!,
 			keysButtons: use.element.shadowRoot!.querySelectorAll(".key")!
 		}),
-		triggerInput({code, pressed}: Nub.Data.Key) {
-			dispatchNubEvent(use.element)
+		triggerInput(data: Nub.Data.Key) {
+			dispatchNubEvent()
+				.atTarget(use.element)
+				.input()
 				.parseChannels(use.element.channels)
-				.input
-				.key({code, pressed})
+				.key(data)
+				.fire()
 		},
 	}
 

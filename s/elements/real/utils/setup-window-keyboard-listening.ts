@@ -8,10 +8,12 @@ export function setupWindowKeyboardListening(
 
 	const dispatch = ({code, repeat}: KeyboardEvent, pressed: boolean) => {
 		if (!repeat)
-			dispatchNubEvent(element)
+			dispatchNubEvent()
+				.atTarget(element)
+				.input()
 				.parseChannels(element.channels)
-				.input
 				.key({code, pressed})
+				.fire()
 	}
 
 	const keyup = (event: KeyboardEvent) => dispatch(event, false)
