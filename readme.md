@@ -2,12 +2,15 @@
 🔘 nubs
 =======
 
-nubs is a user-input system for web games.
+*nubs is a user-input system for web games.*  
+[⚡ **try now demo!** *nubs.benevolent.games*](https://nubs.benevolent.games/)  
 
-✨ [*live demo*](https://nubs.benevolent.games/)  
 🎮 listen to keyboards, mice, and gamepads  
 🕹️ virtual devices thumbsticks and buttons  
 📝 user-editable key bindings  
+
+👼 a project by [benevolent.games](https://benevolent.games/)  
+💖 free and open source just for you  
 
 <br/>
 
@@ -15,9 +18,20 @@ nubs is a user-input system for web games.
 
 1. insert into your html `<head>`
     ```html
-    <script defer type=importmap-shim src="https://unpkg.com/@benev/nubs/x/importmap.json"></script>
-    <script defer type=module-shim src="https://unpkg.com/@benev/nubs/x/html.js"></script>
-    <script defer src="https://unpkg.com/es-module-shims/dist/es-module-shims.wasm.js"></script>
+    <script
+      type=importmap-shim
+      src="https://unpkg.com/@benev/nubs/x/importmap.json"
+      defer
+    ></script>
+    <script
+      type=module-shim
+      src="https://unpkg.com/@benev/nubs/x/html.js"
+      defer
+    ></script>
+    <script
+      src="https://unpkg.com/es-module-shims/dist/es-module-shims.wasm.js"
+      defer
+    ></script>
     ```
 1. now let's insert some cool nub elements into your html `<body>`
     - ```html
