@@ -1,13 +1,14 @@
-import {component} from "@chasemoskal/magical/x/component.js"
+
 import {html} from "lit"
-import {NubGridboard} from "../gridboard/component.js"
+import {component2 as element} from "@chasemoskal/magical/x/component.js"
+
 import {styles} from "./style.css.js"
 
-export const NubContext = component({
+export const NubContext = element({
 		styles,
 		shadow: true,
 		properties: {},
-	}, use => {
+	}).render(use => {
 
 	const flipMode = () => {
 		use.element.toggleAttribute("edit-mode")

@@ -1,6 +1,6 @@
 
 import {html} from "lit"
-import {component} from "@chasemoskal/magical/x/component.js"
+import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import styles from "./style.css.js"
 import * as v2 from "../../tools/v2.js"
@@ -10,7 +10,7 @@ import {setupBaseEvents} from "./setups/setup-base-events.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
 import {setupTrackingAndDom} from "./setups/setup-tracking-and-dom.js"
 
-export const NubStick = component<{
+export const NubStick = element<{
 		channels: string
 	}>({
 		styles,
@@ -18,7 +18,7 @@ export const NubStick = component<{
 		properties: {
 			channels: {type: String, reflect: true},
 		},
-	}, use => {
+	}).render(use => {
 
 	const [, setTrackingMouse, getTrackingMouse] =
 		use.state(false)

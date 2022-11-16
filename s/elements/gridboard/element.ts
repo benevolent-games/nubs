@@ -1,6 +1,6 @@
 
 import {html} from "lit"
-import {component} from "@chasemoskal/magical/x/component.js"
+import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import {styles} from "./style.css.js"
 import {GridboardStarters} from "./types.js"
@@ -10,7 +10,7 @@ import {setupWindowEvents} from "./setups/setup-window-events.js"
 import {setupGridboardEvents} from "./setups/setup-gridboard-events.js"
 import {setupDraggableContainerEvents} from "./setups/setup-draggable-container-events.js"
 
-export const NubGridboard = component<{
+export const NubGridboard = element<{
 		channels: string
 	}>({
 		styles,
@@ -18,7 +18,7 @@ export const NubGridboard = component<{
 		properties: {
 			channels: {type: String, reflect: true},
 		},
-	}, use => {
+	}).render(use => {
 
 	const starters: GridboardStarters = {
 		query: () => ({
