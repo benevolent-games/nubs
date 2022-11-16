@@ -16,18 +16,48 @@ export function prepDraggableContainerEvents({query}: GridboardStarters) {
 	let xOffset = 0
 	let yOffset = 0
 
+	function pointerup(e: MouseEvent) {
+		// boundaries
+		const element = query().element
+		if (element.getBoundingClientRect().x <= 0) {
+			const resetX = currentX += Math.abs(element.getBoundingClientRect().x)
+			setTranslate(resetX, currentY, element)
+		}
+		else if (element.getBoundingClientRect().y <= 0) {
+			const resetY = currentY += Math.abs(element.getBoundingClientRect().y)
+			setTranslate(currentX, resetY, element)
+		}
+		else if (element.getBoundingClientRect().y + element.clientHeight >= window.innerHeight) {
+			const calculated = (element.getBoundingClientRect().y + element.clientHeight) - window.innerHeight
+			const resetY = currentY -= calculated
+			setTranslate(currentX, resetY, element)
+		}
+		else if (element.getBoundingClientRect().x + element.clientWidth >= window.innerWidth) {
+			const calculated = (element.getBoundingClientRect().x + element.clientWidth) - window.innerWidth
+			const resetX = currentX -= calculated
+			setTranslate(resetX, currentY, element)
+		}
+		//
+			initialX = currentX
+			initialY = currentY
+
+			currentX = initialX
+			currentY = initialY
+
+			xOffset = currentX
+			yOffset = currentY
+			active = false
+	}
+	document.addEventListener('pointerup', pointerup)
+
 	return {
 		touchstart: (e: TouchEvent) => {
+			const draggableItem = query().draggableItem
 			initialX = e.touches[0].clientX - xOffset
 			initialY = e.touches[0].clientY - yOffset
 			if (e.target === draggableItem) {
 				active = true
 			}
-		},
-		touchend: () => {
-			initialX = currentX
-			initialY = currentY
-			active = false
 		},
 		touchmove: (e: TouchEvent) => {
 			if (active) {
@@ -43,16 +73,12 @@ export function prepDraggableContainerEvents({query}: GridboardStarters) {
 			}
 		},
 		mousedown: (e: MouseEvent) => {
+			const draggableItem = query().draggableItem
 			initialX = e.clientX - xOffset
 			initialY = e.clientY - yOffset
 			if (e.target === draggableItem) {
 				active = true
 			}
-		},
-		mouseup: () => {
-			initialX = currentX
-			initialY = currentY
-			active = false
 		},
 		mousemove: (e: MouseEvent) => {
 			if (active) {
@@ -69,4 +95,3 @@ export function prepDraggableContainerEvents({query}: GridboardStarters) {
 		}
 	}
 }
-
