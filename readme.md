@@ -53,14 +53,14 @@
     ```html
     <nub-context
       bindings="
-        👼 Default Bindings for Hackers
-        🕹️ (move) #movestick
-        🕹️ (look) #lookstick
-        *️⃣ (use) f, mouse_2
-        *️⃣ (forward) w, up
-        *️⃣ (back) s, down
-        *️⃣ (left) a, left
-        *️⃣ (right) d, right
+      👼 Default Bindings for Hackers
+      🕹️ (move) #movestick
+      🕹️ (look) #lookstick
+      *️⃣ (use) f, mouse_2
+      *️⃣ (forward) w, up
+      *️⃣ (back) s, down
+      *️⃣ (left) a, left
+      *️⃣ (right) d, right
       ">
 
       <!-- nest your nub elements in here -->
@@ -83,7 +83,7 @@
     npm install @benev/nubs
     ```
 1. ```js
-    import {getElements, themeElements, registerElements} from "@benev/nubs/x/setup.js"
+    import {getElements, themeElements, registerElements} from "@benev/nubs"
 
     // run customElements.define
     registerElements(
