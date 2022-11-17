@@ -38,26 +38,3 @@ h1 {
 	margin-left: -5px;
 }
 
-.nubs {
-	display: flex;
-	justify-content: space-around;
-	max-width: 55rem;
-	font-size: 0.8rem;
-	margin: 1rem auto;
-}
-
-nub-stick {
-	opacity: 0.2;
-}
-
-
-@media (max-width: 767px) {
-	.nubs {
-		font-size: 0.6rem;
-	}
-}
-@media (max-width: 425px) {
-	.nubs {
-		font-size: 0.5rem;
-	}
-}

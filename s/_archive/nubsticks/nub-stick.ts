@@ -1,6 +1,7 @@
 import {V2} from "./utils/v2.js"
 import * as v2 from "./utils/v2.js"
 import { styles } from "./style.css.js"
+import {noop as html} from "../tools/template-noop.js"
 import {findTouchAppleFriendly} from "./utils/find-touch-ios-friendly.js"
 
 export class NubStick extends HTMLElement {
@@ -28,7 +29,7 @@ export class NubStick extends HTMLElement {
 
 	constructor() {
 		super()
-		this.shadow.innerHTML = `
+		this.shadow.innerHTML = html`
 			<div class=base>
 				<div class=stick></div>
 				<div class=understick></div>
