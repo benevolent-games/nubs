@@ -21,7 +21,7 @@
 		"test": "exit 0"
 	},
 	"dependencies": {
-		"@chasemoskal/magical": "^0.0.3",
+		"@chasemoskal/magical": "^0.0.4",
 		"lit": "^2.4.1"
 	},
 	"devDependencies": {
