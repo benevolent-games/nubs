@@ -13,7 +13,6 @@ export function getStarters(
 		query: () => ({
 			element,
 			draggableItem: element.shadowRoot!.querySelector(".draggable-item")!,
-			keysButtons: element.shadowRoot!.querySelectorAll(".key")!
 		}),
 		triggerInput(data: Nub.Data.Key) {
 			dispatchNubEvent()
