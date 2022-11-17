@@ -23,16 +23,16 @@ export function prepDraggableContainerEvents({query}: GridboardStarters) {
 			const resetX = currentX += Math.abs(element.getBoundingClientRect().x)
 			setTranslate(resetX, currentY, element)
 		}
-		else if (element.getBoundingClientRect().y <= 0) {
+		if (element.getBoundingClientRect().y <= 0) {
 			const resetY = currentY += Math.abs(element.getBoundingClientRect().y)
 			setTranslate(currentX, resetY, element)
 		}
-		else if (element.getBoundingClientRect().y + element.clientHeight >= window.innerHeight) {
+		if (element.getBoundingClientRect().y + element.clientHeight >= window.innerHeight) {
 			const calculated = (element.getBoundingClientRect().y + element.clientHeight) - window.innerHeight
 			const resetY = currentY -= calculated
 			setTranslate(currentX, resetY, element)
 		}
-		else if (element.getBoundingClientRect().x + element.clientWidth >= window.innerWidth) {
+		if (element.getBoundingClientRect().x + element.clientWidth >= window.innerWidth) {
 			const calculated = (element.getBoundingClientRect().x + element.clientWidth) - window.innerWidth
 			const resetX = currentX -= calculated
 			setTranslate(resetX, currentY, element)
