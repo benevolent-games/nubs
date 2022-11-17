@@ -34,13 +34,18 @@ export interface Bindings {
 	/** comments */
 	"👼": string[]
 
-	/** vector2 action bindings */
-	"🕹️": {
-		[key: string]: string[]
+	/** mouse action bindings */
+	"🖱️": {
+		[action: string]: string[]
 	}
 
-	/** key action bindings */
+	/** vector2 action bindings */
+	"🕹️": {
+		[action: string]: string[]
+	}
+
+	/** key action bindings.. [channelName, ...keyCodes][] */
 	"*️⃣": {
-		[key: string]: string[][]
+		[action: string]: string[][]
 	}
 }

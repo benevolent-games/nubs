@@ -5,9 +5,12 @@ export const defaultBindings: Bindings = {
 	"👼": [
 		"Cool Default Bindings"
 	],
+	"🖱️": {
+		"look": ["lookmouse"],
+	},
 	"🕹️": {
-		"look": ["look"],
-		"move": ["move"]
+		"look": ["lookstick"],
+		"move": ["movestick"]
 	},
 	"*️⃣": {
 		"forward": [["", "KeyW", "ArrowUp"]],

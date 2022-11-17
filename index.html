@@ -33,8 +33,9 @@
 
 	<nub-context bindings="
 		👼 Cool Default Bindings
-		🕹️ look :: #look
-		🕹️ move :: #move
+		🖱️ look :: lookmouse
+		🕹️ look :: lookstick
+		🕹️ move :: movestick
 		*️⃣ forward :: KeyW ArrowUp
 		*️⃣ backward :: KeyS ArrowDown
 		*️⃣ leftward :: KeyA ArrowLeft
@@ -45,15 +46,16 @@
 		*️⃣ secondary :: Mouse2
 		">
 
-		<nub-real-mouse></nub-real-mouse>
 		<nub-real-keyboard></nub-real-keyboard>
-		<nub-gridboard></nub-gridboard>
+		<nub-real-mouse channel=lookmouse></nub-real-mouse>
 
-		<nub-stick channels=look></nub-stick>
+		<nub-stick channel=movestick></nub-stick>
+		<nub-gridboard></nub-gridboard>
+		<nub-stick channel=lookstick></nub-stick>
 
 		<!--
-		<nub-stick channels=movestick></nub-stick>
-		<nub-stick channels=lookstick></nub-stick>
+		<nub-stick channel=movestick></nub-stick>
+		<nub-stick channel=lookstick></nub-stick>
 		<nub-gridboard></nub-gridboard>
 		<nub-real-gamepad></nub-real-gamepad>
 		<nub-real-xr></nub-real-xr>

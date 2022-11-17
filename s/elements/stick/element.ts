@@ -11,12 +11,12 @@ import {prepDomControls} from "./setups/prep-dom-controls.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
 
 export const NubStick = element<{
-		channels: string
+		channel: string
 	}>({
 		styles,
 		shadow: true,
 		properties: {
-			channels: {type: String, reflect: true},
+			channel: {type: String, reflect: true},
 		},
 	}).render(use => {
 
@@ -43,7 +43,7 @@ export const NubStick = element<{
 			dispatchNubEvent()
 				.atTarget(use.element)
 				.input()
-				.parseChannels(use.element.channels)
+				.parseChannels(use.element.channel)
 				.vector2({vector})
 				.fire()
 		},

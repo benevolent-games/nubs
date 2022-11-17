@@ -4,7 +4,7 @@ import {V2} from "../../../tools/v2.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 
 export function setupWindowMouseMoveListening(
-		element: LitElement & {channels: string}
+		element: LitElement & {channel: string}
 	) {
 
 	function handleMouseMove({movementX, movementY}: MouseEvent) {
@@ -12,7 +12,7 @@ export function setupWindowMouseMoveListening(
 		dispatchNubEvent()
 			.atTarget(element)
 			.input()
-			.parseChannels(element.channels)
+			.parseChannels(element.channel)
 			.vector2({vector})
 			.fire()
 	}
