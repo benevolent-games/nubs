@@ -1,29 +1,13 @@
 
 import {html} from "lit"
 import {view} from "@chasemoskal/magical/x/view/view.js"
-import {KeyData, keys} from "../setups/utils/keys.js"
 
-export const EditorView = view(use => () => {
+export const EditorView = view(use => ({isEditorOpen}: {
+		isEditorOpen: boolean
+	}) => {
 	return html`
-		<div class=editor>
-			<div class=actions>
-				${Object
-					.values(keys)
-					.slice(0, 10)
-					.map(({key, actionName}: KeyData, i: number) => html`
-						<span class="action">
-							${actionName ? actionName : ''}
-						</span>
-					`)}
-			</div>
-			<div class=edit-keys>
-				${Object
-					.values(keys)
-					.slice(0, 10)
-					.map(({key}: KeyData) => html`
-						<span class=edit-key>${key}</span>
-					`)}
-			</div>
+		<div class=editor ?data-is-open=${isEditorOpen}>
+			<p>coming soon!</p>
 		</div>
 	`
 })

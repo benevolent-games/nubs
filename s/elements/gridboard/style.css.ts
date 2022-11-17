@@ -43,7 +43,7 @@ export const styles = css`
 	.key:hover {
 		background-color: #00000052;
 	}
-	.key[pressed] {
+	.key[data-pressed] {
 		height: 95%;
 		background-color: #00000052;
 		border: none;
@@ -89,7 +89,7 @@ export const styles = css`
 		font-family: sans-serif;
 	}
 
-	.editor[opened] {
+	.editor[data-is-open] {
 		display: flex;
 	}
 
