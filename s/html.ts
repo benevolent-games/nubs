@@ -7,10 +7,10 @@ registerElements(
 
 document.addEventListener(NubAction.eventName, e => {
 	const event = <NubAction>e
-	console.log(NubAction.eventName, event.detail)
+	console.log(NubAction.eventName, ...Object.values(event.detail))
 })
 
 // document.addEventListener(NubInput.eventName, e => {
 // 	const event = <NubInput>e
-// 	console.log(NubInput.eventName, event.detail)
+// 	console.log(NubInput.eventName, ...Object.values(event.detail))
 // })

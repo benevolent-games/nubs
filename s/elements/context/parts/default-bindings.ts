@@ -3,7 +3,7 @@ import {Bindings} from "../../../types.js"
 
 export const defaultBindings: Bindings = {
 	"👼": [
-		"Default Bindings for Hackers"
+		"Cool Default Bindings"
 	],
 	"🕹️": {
 		"look": ["look"],
@@ -11,9 +11,12 @@ export const defaultBindings: Bindings = {
 	},
 	"*️⃣": {
 		"forward": [["", "KeyW", "ArrowUp"]],
-		"back": [["", "KeyS", "ArrowDown"]],
-		"left": [["", "KeyA", "ArrowLeft"]],
-		"right": [["", "KeyD", "ArrowRight"]],
-		"use": [["", "KeyF", "Mouse3"]]
+		"backward": [["", "KeyS", "ArrowDown"]],
+		"leftward": [["", "KeyA", "ArrowLeft"]],
+		"rightward": [["", "KeyD", "ArrowRight"]],
+		"jump": [["", "Space"]],
+		"use": [["", "KeyF", "Mouse3"]],
+		"primary": [["", "Mouse1"]],
+		"secondary": [["", "Mouse2"]]
 	}
 }
