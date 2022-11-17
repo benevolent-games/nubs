@@ -7,8 +7,8 @@ export function setupWindowMouseMoveListening(
 		element: LitElement & {channels: string}
 	) {
 
-	function handleMouseMove({clientX, clientY}: MouseEvent) {
-		const vector: V2 = [clientX, clientY]
+	function handleMouseMove({movementX, movementY}: MouseEvent) {
+		const vector: V2 = [movementX, movementY]
 		dispatchNubEvent()
 			.atTarget(element)
 			.input()
