@@ -10,8 +10,9 @@ export default css`
 
 .base {
 	position: relative;
-	width: 100%;
-	height: 100%;
+	aspect-ratio: 1/1;
+	max-width: 100%;
+	max-height: 100%;
 	background: var(--thumb-stick-background, #000);
 	border-radius: 100%;
 	cursor: grab;
