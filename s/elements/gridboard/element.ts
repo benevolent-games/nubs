@@ -24,9 +24,9 @@ export const NubGridboard = element<{
 	const toggleEditor = () => setEditorOpen(x => !x)
 
 	return html`
-		<div class=flex-box>
+		<div class=shell>
 			${EditorView({isEditorOpen})}
-			<div class="grid-box">
+			<div class=grid>
 				${ToggleEditorButtonView(toggleEditor)}
 				${DraggableContainerView(starters)}
 				${GridButtonsView(starters)}

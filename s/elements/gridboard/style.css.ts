@@ -7,12 +7,12 @@ export const styles = css`
 	position: relative;
 }
 
-.flex-box {
+.shell {
 	display: flex;
 	flex-direction: column;
 }
 
-.grid-box {
+.grid {
 	display: grid;
 	grid-template-columns: repeat(5, 2em);
 	grid-template-rows: repeat(5, 2em);
