@@ -70,10 +70,10 @@
 
       <!-- nest your nub elements in here -->
       <nub-real-keyboard></nub-real-keyboard>
-      <nub-real-mouse channel=look></nub-real-mouse>
+      <nub-real-mouse channel=lookmouse></nub-real-mouse>
 
-      <nub-stick channel=look></nub-stick>
-      <nub-stick channel=move></nub-stick>
+      <nub-stick channel=movestick></nub-stick>
+      <nub-stick channel=lookstick></nub-stick>
     </nub-context>
     ```
     - this is a context for user-configurable key bindings
