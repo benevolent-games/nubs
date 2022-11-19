@@ -43,19 +43,13 @@ export interface Bindings {
 	"👼": string[]
 
 	/** mouse action bindings */
-	"🖱️": {
-		[action: string]: string[]
-	}
+	"🖱️": {[action: string]: string[]}
 
 	/** vector2 action bindings */
-	"🕹️": {
-		[action: string]: string[]
-	}
+	"🕹️": {[action: string]: string[]}
 
 	/** key action bindings.. [channelName, ...keyCodes][] */
-	"*️⃣": {
-		[action: string]: string[][]
-	}
+	"*️⃣": {[action: string]: string[][]}
 }
 
 type ActionGroup<xDetail extends Nub.Detail.Any> = {[action: string]: xDetail | undefined}

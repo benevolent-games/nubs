@@ -17,6 +17,13 @@
 		src="/x/html.js"
 		defer
 	></script>
+	<script type=module defer>
+		document.addEventListener("nub_action", event => {
+			console.log("nub_action!", event.detail.action)
+			for (const [key, value] of Object.entries(event.detail))
+				console.log(" - ", key, value)
+		})
+	</script>
 	<script
 		src="/node_modules/es-module-shims/dist/es-module-shims.wasm.js"
 		defer
