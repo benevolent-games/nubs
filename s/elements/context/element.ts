@@ -3,56 +3,31 @@ import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import {styles} from "./style.css.js"
-import {NubInput} from "../../main.js"
-import {Bindings, Nub} from "../../types.js"
+import {Actions, Bindings, Nub} from "../../types.js"
 import {defaultBindings} from "./parts/default-bindings.js"
-import {dispatchNubEvent} from "../../framework/dispatch.js"
-import {findActionsForKeyEvent} from "./parts/find-actions-for-key-event.js"
-import {findActionsForVector2Event} from "./parts/find-actions-for-vector2-event.js"
+import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
+import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
 
 export const NubContext = element<{
-		bindingsJson: Bindings | void
+		actions: Actions
+		bindingsJson: Bindings | undefined
 	}>({
 		styles,
 		shadow: true,
 		properties: {
-			bindingsJson: {type: Object, reflect: false},
+			actions: {attribute: false},
+			bindingsJson: {attribute: false},
 		},
 	}).render(use => {
 
-	const bindings: Bindings = use.element.bindingsJson ?? defaultBindings
+	const [actions] = use.state(stateForActions)
+	const [bindings] = use.state<Bindings>(use.element.bindingsJson ?? defaultBindings)
 
-	function handleInput(input: NubInput) {
-		switch (input.detail.type) {
+	const handleInput = translateInputEventsToActionEvents({
+		actions,
+		bindings,
+		element: use.element,
+	})
 
-			case Nub.Type.Key: {
-				for (const action of findActionsForKeyEvent(
-						input.detail.code,
-						input.detail.channels,
-						bindings,
-					))
-					dispatchNubEvent()
-						.atTarget(use.element)
-						.action(action)
-						.key(input.detail)
-						.fire()
-			} break
-
-			case Nub.Type.Vector2: {
-				for (const action of findActionsForVector2Event(
-						input.detail.channels,
-						bindings,
-					))
-					dispatchNubEvent()
-						.atTarget(use.element)
-						.action(action)
-						.vector2(input.detail)
-						.fire()
-			} break
-		}
-	}
-
-	return html`
-		<slot @nub_input=${handleInput}></slot>
-	`
+	return html`<slot @nub_input=${handleInput}></slot>`
 })
