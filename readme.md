@@ -2,21 +2,30 @@
 🔘 nubs
 =======
 
-*nubs is a user-input system for web games.*  
-[⚡ **try now demo!** *nubs.benevolent.games*](https://nubs.benevolent.games/)  
-
-🎮 listen to keyboards, mice, and gamepads  
-🕹️ virtual devices thumbsticks and buttons  
-📝 user-editable key bindings  
-
-👼 a project by [benevolent.games](https://benevolent.games/)  
-💖 free and open source just for you  
+*nubs is a user-input system for web games.*
 
 <br/>
 
-## installation and usage
+[⚡ **live demo!** *nubs.benevolent.games*](https://nubs.benevolent.games/)  
 
-1. insert into your html `<head>`
+👂 nubs listens to keyboards, mice, gamepads, etc  
+📝 nubs has ui for users to edit their own key bindings  
+📣 nubs emits `nub_action` events, based on inputs and user bindings  
+🕹️ nubs has mobile-friendly virtual devices, like thumbsticks and buttons  
+
+👼 a project by [benevolent.games](https://benevolent.games/)  
+💖 free and open source  
+
+<br/>
+
+## nubs installation
+
+first, you have to get nubs installed onto your web page.
+
+choose ONE path — the easy way, or the hard way:
+
+- **the easy way** *(for html enthusiasts)*
+  - install these scripts into your page's `<head>`
     ```html
     <script
       type=importmap-shim
@@ -33,7 +42,34 @@
       defer
     ></script>
     ```
-1. now let's insert some cool nub elements into your html `<body>`
+- **the advanced way** *(for web developers)*
+    - install nubs npm package
+      ```sh
+      npm install @benev/nubs
+      ```
+    - import nubs elements, register them to the dom
+      ```js
+      import {getElements, themeElements, registerElements} from "@benev/nubs"
+
+      // run customElements.define
+      registerElements(
+
+        // apply a common css theme
+        themeElements(
+
+          // get all nubs elements
+          getElements()
+        )
+      )
+      ```
+
+<br/>
+
+## nubs usage
+
+now that nubs is installed onto your web page, you can start using nub elements.
+
+1. let's insert some cool nub elements into your html `<body>`
     - ```html
       <nub-stick></nub-stick>
       ```
@@ -53,7 +89,7 @@
 1. wrap your nub elements inside a `context`
     ```html
     <nub-context
-      bindings="
+      default-bindings="
       👼 Cool Default Bindings
       🖱️ look :: lookmouse
       🕹️ look :: lookstick
@@ -68,7 +104,8 @@
       *️⃣ secondary :: Mouse2
       ">
 
-      <!-- nest your nub elements in here -->
+      <!-- group nub elements together into a context! -->
+
       <nub-real-keyboard></nub-real-keyboard>
       <nub-real-mouse channel=lookmouse></nub-real-mouse>
 
@@ -76,30 +113,30 @@
       <nub-stick channel=lookstick></nub-stick>
     </nub-context>
     ```
-    - this is a context for user-configurable key bindings
-    - it listens to `nub_input` events, and based on the bindings, it dispatches `nub_action` events
-    - the `bindings` attribute specifies the default bindings
-    - **the user can edit their bindings,** nubs presents ui to save, load, copy, and paste these bindings
-    - the idea is that gamers can easily share bindings by merely copy-pasting these little text files
+    - nub-context is for grouping nub inputs
+      - the context will only listen to inputs nested under it
+      - the context may contain virtual devices and editing ui
+      - `nub-real-*` elements render nothing and do not appear
+    - nub-context introduces key `bindings`
+      - bindings define the associations between "inputs" and "actions"
+      - nub-context has ui that allows users to edit their `bindings`
+      - an example input might be `KeyW`
+      - an example action might be `forward`
+      - in most cases, you probably want your app to listen to `nub_action` events like `forward` rather than the specific keys
+    - `bindings` has its own funny little text format
+      - it uses emojis unironically, to indicate nub types
+      - it's just sugar for a JSON format that operates under the hood
+      - it's intended for users to be able to copy-paste these bindings files, to easily share them over discord or whatever
 
 <br/>
 
-## advanced installation
+## nub elements documentation
 
-1. ```sh
-    npm install @benev/nubs
-    ```
-1. ```js
-    import {getElements, themeElements, registerElements} from "@benev/nubs"
+coming soon lol
 
-    // run customElements.define
-    registerElements(
-
-      // apply a common css theme
-      themeElements(
-
-        // get all nubs elements
-        getElements()
-      )
-    )
-    ```
+- `<nub-context>`
+- `<nub-real-mouse>`
+- `<nub-real-keyboard>`
+- `<nub-stick>`
+- `<nub-gridboard>`
+- `<nub-editor>`
