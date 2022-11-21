@@ -20,6 +20,7 @@ export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 	const keybindsEntries = Object.entries(keybinds['*️⃣'])
 
 	const handleKeyChange = (e: PointerEvent, index: number, indexOfKeyBind: number) => {
+		if(isListeningForKey) return 
 		e.preventDefault()
 		const action = keybindsEntries[index][0]
 		const {target} = <any>e
@@ -29,6 +30,7 @@ export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 		target.setAttribute("selected", "")
 	}
 	const addNewKeyBind = (e: PointerEvent, index: number) => {
+		if(isListeningForKey) return 
 		e.preventDefault()
 		const {target} = <any>e
 		const action = keybindsEntries[index][0]
@@ -38,8 +40,8 @@ export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 		setAction(action)
 		target.setAttribute("selected", "")
 	}
-	const listenForKey = () => {
-		document.addEventListener("nub_input", (e) => {
+
+	const listenForKey = (e: any) => {
 		const event = <NubInput<Nub.Detail.Key>>e
 		if (event.detail.type == 0) {
 			const selectedKey = use.element.shadowRoot?.querySelector('[selected]')
@@ -53,12 +55,13 @@ export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 					}
 				})
 			selectedKey?.removeAttribute('selected')
-			setIsListeningForKey(false)
-		}})
+			setIsListeningForKey(false) // this setter not working 
+			document.removeEventListener("nub_input", listenForKey)
+		}
 	}
 
 	if (isListeningForKey) {
-		listenForKey()
+		document.addEventListener("nub_input", listenForKey)
 	}
 
 	return html`
