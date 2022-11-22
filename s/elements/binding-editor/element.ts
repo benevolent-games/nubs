@@ -50,13 +50,13 @@ export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 			const selectedKey = use.element.shadowRoot?.querySelector('[selected]')
 			const replacedKey = [...keybinds['*️⃣'][action][0]]
 			replacedKey[selectedKeyBindIndex] = event.detail.code
-				setKeybinds({
-					...keybinds,
-					'*️⃣': {
-						...keybinds["*️⃣"],
-						[action]: [replacedKey]
-					}
-				})
+			setKeybinds({
+				...keybinds,
+				'*️⃣': {
+					...keybinds["*️⃣"],
+					[action]: [replacedKey]
+				}
+			})
 			selectedKey?.removeAttribute('selected')
 			setIsListeningForKey(false) // this setter not working 
 			document.removeEventListener("nub_input", listenForKey)
