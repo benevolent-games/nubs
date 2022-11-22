@@ -4,6 +4,9 @@ import {Nub, NubInput} from "../../main.js"
 import {Bindings} from "../../types.js"
 import { styles } from "./style.css.js"
 import {loadBindings} from "./utils/loadBindings.js"
+import {ActionsView} from "./views/actions.js"
+import {ButtonsView} from "./views/buttons.js"
+import {KeybindsView} from "./views/keybinds.js"
 
 export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 	styles,
@@ -34,7 +37,7 @@ export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 		e.preventDefault()
 		const {target} = <any>e
 		const action = keybindsEntries[index][0]
-		const indexOfAddBindButton = use.element.shadowRoot?.querySelectorAll('.binds-row')[index].childElementCount! - 1
+		const indexOfAddBindButton = use.element.shadowRoot?.querySelectorAll('.keybinds')[index].childElementCount! - 1
 		setIsListeningForKey(true)
 		setSelectedKeyBindIndex(indexOfAddBindButton)
 		setAction(action)
@@ -65,27 +68,16 @@ export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
 	}
 
 	return html`
-	<div class="column">
-		<h1>Binding editor</h1>
-		<div class="row">
-			<div class="actions">
-				${keybindsEntries.map(value => html`<div>${value[0]}</div>`)}
-			</div>
-			<div class="binds-column">
+		<div class="column">
+			<h1>Binding editor</h1>
+			<div class="row">
 				${keybindsEntries.map((value, i) => html`
-				<div class="binds-row">
-					${value[1].map(keyBinds => keyBinds.map((keyBind, indexOfKeyBind) => html`
-					<div @pointerdown=${(e: PointerEvent) => handleKeyChange(e, i, indexOfKeyBind)} class="bind">
-						<span class="key">${keyBind == '' ? html`-` : keyBind}</span>
-						<span class="info-key">press key</span>
-					</div>`))}
-					<div @pointerdown=${(e: PointerEvent) => addNewKeyBind(e, i)} class="add-bind">
-						<span class="add-key">+</span>
-						<span  class="info-key">press key</span>
-					</div>
+				<div class="container">
+					${ActionsView(value)}
+					${KeybindsView(value, i, handleKeyChange, addNewKeyBind)}
 				</div>`)}
 			</div>
+			${ButtonsView(keybinds, setKeybinds)}
 		</div>
-	</div>
 	`
 })
