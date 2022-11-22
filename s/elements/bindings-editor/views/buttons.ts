@@ -10,6 +10,7 @@ export const ButtonsView = view(use => (keybinds: Bindings, setKeybinds: StateSe
 	const applyBindings = () => {
 		localStorage.setItem('bindings', JSON.stringify(keybinds));
 		setKeybinds(loadBindings())
+		window.dispatchEvent(new Event("storage"));
 	}
 	const restoreToDefault = () => {
 		localStorage.removeItem('bindings')

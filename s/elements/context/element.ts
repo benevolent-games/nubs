@@ -7,6 +7,7 @@ import {Actions, Bindings, Nub} from "../../types.js"
 import {defaultBindings} from "./parts/default-bindings.js"
 import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
+import {listenForLocalStorageBindings, loadLocalStorageBindings} from "../bindings-editor/utils/loadBindings.js"
 
 export const NubContext = element<{
 		actions: Actions
@@ -21,7 +22,9 @@ export const NubContext = element<{
 	}).render(use => {
 
 	const [actions] = use.state(stateForActions)
-	const [bindings] = use.state<Bindings>(use.element.bindingsJson ?? defaultBindings)
+	const [bindings, setBindings] = use.state<Bindings>(loadLocalStorageBindings() ?? use.element.bindingsJson ?? defaultBindings)
+
+	listenForLocalStorageBindings(setBindings)
 
 	const handleInput = translateInputEventsToActionEvents({
 		actions,
