@@ -39,6 +39,6 @@ h1 {
 }
 
 /* toggle bindings editor */
-nub-binding-editor[data-closed] {
+nub-bindings-editor[data-closed] {
 	display: none;
 }

@@ -8,7 +8,7 @@ import {ActionsView} from "./views/actions.js"
 import {ButtonsView} from "./views/buttons.js"
 import {KeybindsView} from "./views/keybinds.js"
 
-export const NubBindingEditor = element<{bindingsJson: Bindings | void}>({
+export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 	styles,
 	shadow: true,
 	properties: {
