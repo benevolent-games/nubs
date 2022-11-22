@@ -1,19 +1,20 @@
 
 import {LitElement} from "lit"
-import {V2} from "../../../tools/v2.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 
 export function setupWindowMouseMoveListening(
 		element: LitElement & {channel: string}
 	) {
 
-	function handleMouseMove({movementX, movementY}: MouseEvent) {
-		const vector: V2 = [movementX, movementY]
+	function handleMouseMove({movementX, movementY, clientX, clientY}: MouseEvent) {
 		dispatchNubEvent()
 			.atTarget(element)
 			.input()
 			.parseChannels(element.channel)
-			.vector2({vector})
+			.mouse({
+				movement: [movementX, movementY],
+				position: [clientX, clientY],
+			})
 			.fire()
 	}
 

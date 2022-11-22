@@ -15,10 +15,8 @@ export namespace Nub {
 			pressed: boolean
 		}
 		export interface Mouse {
-			clientX: number
-			clientY: number
-			movementX: number
-			movementY: number
+			movement: V2
+			position: V2
 		}
 		export interface Vector2 {
 			vector: V2
