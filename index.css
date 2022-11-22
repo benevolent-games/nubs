@@ -38,3 +38,7 @@ h1 {
 	margin-left: -5px;
 }
 
+/* toggle bindings editor */
+nub-binding-editor[data-closed] {
+	display: none;
+}

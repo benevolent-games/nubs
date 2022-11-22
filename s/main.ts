@@ -13,6 +13,7 @@ import {NubRealMouse} from "./elements/real/mouse.js"
 import {NubContext} from "./elements/context/element.js"
 import {NubRealKeyboard} from "./elements/real/keyboard.js"
 import {NubGridboard} from "./elements/gridboard/element.js"
+import {NubBindingEditor} from "./elements/binding-editor/element.js"
 
 export {NubStick} from "./elements/stick/element.js"
 export {NubRealMouse} from "./elements/real/mouse.js"
@@ -25,4 +26,5 @@ export const getElements = () => ({
 	NubGridboard,
 	NubRealMouse,
 	NubRealKeyboard,
+	NubBindingEditor,
 })

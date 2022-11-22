@@ -9,20 +9,40 @@
 	<link rel=stylesheet href="/index.css"/>
 	<script
 		type=importmap-shim
-		src="/x/importmap.json"
+		src=/x/importmap.json
 		defer
 	></script>
 	<script
 		type=module-shim
-		src="/x/html.js"
+		src=/x/html.js
 		defer
 	></script>
 	<script type=module defer>
+
+		// console log nub_action events
 		document.addEventListener("nub_action", event => {
 			console.log("nub_action!", event.detail.action)
 			for (const [key, value] of Object.entries(event.detail))
 				console.log(" - ", key, value)
 		})
+
+		// toggle bindings editor
+		{
+			let open = false
+			const editor = document.querySelector("nub-binding-editor")
+
+			document.addEventListener("nub_input", event => {
+
+				if (event.detail.code === "Backquote" && event.detail.pressed)
+					open = !open
+
+				if (open)
+					editor.removeAttribute("data-closed")
+				else
+					editor.setAttribute("data-closed", "")
+			})
+		}
+
 	</script>
 	<script
 		src="/node_modules/es-module-shims/dist/es-module-shims.wasm.js"
@@ -36,6 +56,8 @@
 		<p>user-input system for web games</p>
 		<p>powering <a href="https://benevolent.games/">benevolent.games</a></p>
 		<p>see nubs on <a href="https://github.com/benevolent-games/nubs">github</a></p>
+		<br/>
+		<p><em>press tilde key ( ~ ) to toggle bindings editor</em></p>
 	</header>
 
 	<nub-context bindings="
@@ -55,6 +77,8 @@
 
 		<nub-real-keyboard></nub-real-keyboard>
 		<nub-real-mouse channel=lookmouse></nub-real-mouse>
+
+		<nub-binding-editor data-closed></nub-binding-editor>
 
 		<nub-stick channel=movestick></nub-stick>
 		<nub-gridboard></nub-gridboard>
