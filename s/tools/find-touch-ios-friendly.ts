@@ -4,7 +4,7 @@ export function findTouchAppleFriendly(
 		touches: TouchList,
 	) {
 
-	if (!touchId)
+	if (touchId === undefined)
 		return undefined
 
 	for (let i = 0; i < touches.length; i++) {
