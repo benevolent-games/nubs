@@ -9,7 +9,6 @@
 
 html {
 	font-family: "Gentium Book Basic", serif;
-	/* background: fixed linear-gradient(135deg, #321b41, #160c1d); */
 	background: fixed linear-gradient(180deg, #1b2941, #0c0511);
 	color: whitesmoke;
 }
@@ -41,4 +40,13 @@ h1 {
 /* toggle bindings editor */
 nub-bindings-editor[data-closed] {
 	display: none;
+}
+
+.wrap {
+	display: flex;
+	justify-content: space-around;
+	max-width: 55rem;
+	font-size: 0.8rem;
+	margin: 1rem auto;
+	align-items: center;
 }

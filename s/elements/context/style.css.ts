@@ -2,14 +2,6 @@ import {css} from "@chasemoskal/magical/x/camel-css/camel-css-lit.js"
 export const styles = css`
 :host {}
 
-slot {
-	display: flex;
-	justify-content: space-around;
-	max-width: 55rem;
-	font-size: 0.8rem;
-	margin: 1rem auto;
-	align-items: center;
-}
 
 nub-stick {
 	opacity: 0.2;
