@@ -11,6 +11,7 @@ html {
 	font-family: "Gentium Book Basic", serif;
 	background: fixed linear-gradient(180deg, #1b2941, #0c0511);
 	color: whitesmoke;
+	font-size: 21px;
 }
 
 header {
@@ -35,6 +36,12 @@ h1 {
 	align-items: center;
 	justify-content: center;
 	margin-left: -5px;
+}
+
+nub-visualizer {
+	max-width: 32em;
+	margin: auto;
+	background: #0004;
 }
 
 /* toggle bindings editor */
