@@ -17,7 +17,7 @@ html {
 header {
 	text-align: center;
 	max-width: max-content;
-	margin: 5rem auto 7rem;
+	margin: 1rem auto;
 }
 
 header > p {
@@ -30,7 +30,7 @@ header a {
 }
 
 h1 {
-	font-size: 4rem;
+	font-size: 3rem;
 	text-shadow: 4px 6px 1px #0003;
 	display: flex;
 	align-items: center;
@@ -39,6 +39,7 @@ h1 {
 }
 
 nub-visualizer {
+	font-size: 0.7em;
 	max-width: 32em;
 	margin: auto;
 	background: #0004;
