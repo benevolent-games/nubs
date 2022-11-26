@@ -4,13 +4,15 @@ import {Bindings} from "../../../types.js"
 import {compareKeybindings} from "../utils/compare-keybindings.js"
 import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
 import {loadBindings} from "../utils/loadBindings.js"
+import {NubBindingsEvent} from "../../../events/nub-bindings.js"
 
-export const ButtonsView = view(use => (keybinds: Bindings, setKeybinds: StateSetter<Bindings>) => {
+export const ButtonsView = view(use => (keybinds: Bindings, setKeybinds: StateSetter<Bindings>, element: HTMLElement) => {
 
 	const applyBindings = () => {
 		localStorage.setItem('bindings', JSON.stringify(keybinds));
 		setKeybinds(loadBindings())
-		window.dispatchEvent(new Event("storage"));
+		const event = new NubBindingsEvent()
+		element.dispatchEvent(event)
 	}
 	const restoreToDefault = () => {
 		localStorage.removeItem('bindings')

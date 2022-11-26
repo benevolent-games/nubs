@@ -77,7 +77,7 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 					${KeybindsView(value, i, handleKeyChange, addNewKeyBind)}
 				</div>`)}
 			</div>
-			${ButtonsView(keybinds, setKeybinds)}
+			${ButtonsView(keybinds, setKeybinds, use.element)}
 		</div>
 	`
 })
