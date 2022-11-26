@@ -4,9 +4,7 @@ import {LitElement} from "lit"
 import {NubInput} from "../../../main.js"
 import {Actions, Bindings, Nub} from "../../../types.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
-import {findActionsForKeyEvent} from "./find-actions-for-key-event.js"
-import {findActionsForMouseEvent} from "./find-actions-for-mouse-event.js"
-import {findActionsForVector2Event} from "./find-actions-for-vector2-event.js"
+import {queryBindingsToRelateInputsToActions} from "./query-bindings-to-relate-inputs-to-actions.js"
 
 export function translateInputEventsToActionEvents({
 		actions,
@@ -18,14 +16,13 @@ export function translateInputEventsToActionEvents({
 		element: LitElement
 	}) {
 
+	const findActions = queryBindingsToRelateInputsToActions(bindings)
+
 	return function handleInput(input: NubInput) {
 		switch (input.detail.type) {
 
 			case Nub.Type.Key: {
-				for (const action of findActionsForKeyEvent(
-						input.detail.code,
-						bindings,
-					)) {
+				for (const action of findActions.key(input.detail.code)) {
 					actions.key[action] = input.detail
 					dispatchNubEvent()
 						.atTarget(element)
@@ -36,10 +33,7 @@ export function translateInputEventsToActionEvents({
 			} break
 
 			case Nub.Type.Mouse: {
-				for (const action of findActionsForMouseEvent(
-						input.detail.name,
-						bindings,
-					)) {
+				for (const action of findActions.mouse(input.detail.name)) {
 					actions.mouse[action] = input.detail
 					dispatchNubEvent()
 						.atTarget(element)
@@ -50,10 +44,7 @@ export function translateInputEventsToActionEvents({
 			} break
 
 			case Nub.Type.Vector2: {
-				for (const action of findActionsForVector2Event(
-						input.detail.name,
-						bindings,
-					)) {
+				for (const action of findActions.vector2(input.detail.name)) {
 					actions.vector2[action] = input.detail
 					dispatchNubEvent()
 						.atTarget(element)
