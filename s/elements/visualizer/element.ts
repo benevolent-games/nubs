@@ -2,30 +2,10 @@
 import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
-import {Nub} from "../../types.js"
-import {V2} from "../../tools/v2.js"
-import {NubAction} from "../../main.js"
-
 import styles from "./styles.css.js"
-import {nubActionSwitch} from "../../tools/nub-switch.js"
-
-export namespace Stats {
-	export interface Key {
-		time: number
-		detail: Nub.Detail.Key & {action: string}
-	}
-	export interface Mouse {
-		movement: V2
-		position: V2
-	}
-	export interface Vector2 {
-		vector: V2
-	}
-}
-
-export interface RecentKeyStats {
-	[action: string]: Stats.Key
-}
+import {printVector2} from "./parts/printing.js"
+import {RecentKeyStats, Stats} from "./parts/types.js"
+import {setupListeningToActionsAndRecordingStats} from "./parts/setup-listening-to-actions-and-recording-stats.js"
 
 export const NubVisualizer = element<{
 		name: string
@@ -54,38 +34,13 @@ export const NubVisualizer = element<{
 		}))
 	)
 
-	use.setup(() => {
-		function listener(e: Event) {
-			nubActionSwitch(<NubAction>e, {
-				key: event => {
-					setRecentKeyStats({
-						...getRecentKeyStats(),
-						[event.detail.action]: {
-							time: Date.now(),
-							detail: event.detail,
-						},
-					})
-				},
-				mouse(event) {
-					setStatsForMouse({
-						movement: event.detail.movement,
-						position: event.detail.position,
-					})
-				},
-				vector2(event) {
-					setStatsForVector2({
-						vector: event.detail.vector,
-					})
-				},
-			})
-		}
-
-		window.addEventListener("nub_action", listener)
-
-		return () => {
-			window.removeEventListener("nub_action", listener)
-		}
-	})
+	use.setup(setupListeningToActionsAndRecordingStats({
+		eventTarget: window,
+		getRecentKeyStats,
+		setRecentKeyStats,
+		setStatsForMouse,
+		setStatsForVector2,
+	}))
 
 	return html`
 		<div class=coordinatesbar>
@@ -112,11 +67,3 @@ export const NubVisualizer = element<{
 		</ul>
 	`
 })
-
-function printCoordinate(a: number) {
-	return a.toFixed(2).padStart(8, " ")
-}
-
-function printVector2([x, y]: V2) {
-	return `[${printCoordinate(x)}, ${printCoordinate(y)}]`
-}
