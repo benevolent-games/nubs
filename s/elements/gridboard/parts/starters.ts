@@ -6,7 +6,7 @@ import {GridboardStarters} from "../types.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 
 export function getStarters(
-		element: LitElement & {channel: string}
+		element: LitElement & {name: string}
 	): GridboardStarters {
 
 	return {
@@ -18,7 +18,7 @@ export function getStarters(
 			dispatchNubEvent()
 				.atTarget(element)
 				.input()
-				.parseChannels(element.channel)
+				.name(element.name)
 				.key(data)
 				.fire()
 		},

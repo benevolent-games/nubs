@@ -26,7 +26,7 @@ export namespace Nub {
 	export namespace Detail {
 		export interface Base {
 			type: Type
-			channels: string[]
+			name: string
 		}
 		export type Key = Base & Data.Key & {type: Type.Key}
 		export type Mouse = Base & Data.Mouse & {type: Type.Mouse}
@@ -46,8 +46,8 @@ export interface Bindings {
 	/** vector2 action bindings */
 	"🕹️": {[action: string]: string[]}
 
-	/** key action bindings.. [channelName, ...keyCodes][] */
-	"*️⃣": {[action: string]: string[][]}
+	/** key action bindings */
+	"*️⃣": {[action: string]: string[]}
 }
 
 type ActionGroup<xDetail extends Nub.Detail.Any> = {[action: string]: xDetail | undefined}

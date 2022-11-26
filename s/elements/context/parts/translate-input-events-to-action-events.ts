@@ -24,7 +24,6 @@ export function translateInputEventsToActionEvents({
 			case Nub.Type.Key: {
 				for (const action of findActionsForKeyEvent(
 						input.detail.code,
-						input.detail.channels,
 						bindings,
 					)) {
 					actions.key[action] = input.detail
@@ -38,7 +37,7 @@ export function translateInputEventsToActionEvents({
 
 			case Nub.Type.Mouse: {
 				for (const action of findActionsForMouseEvent(
-						input.detail.channels,
+						input.detail.name,
 						bindings,
 					)) {
 					actions.mouse[action] = input.detail
@@ -52,7 +51,7 @@ export function translateInputEventsToActionEvents({
 
 			case Nub.Type.Vector2: {
 				for (const action of findActionsForVector2Event(
-						input.detail.channels,
+						input.detail.name,
 						bindings,
 					)) {
 					actions.vector2[action] = input.detail

@@ -1,16 +1,17 @@
 
 import {Bindings} from "../../../types.js"
 
-export function findActionsForMouseEvent(channels: string[], bindings: Bindings) {
+export function findActionsForMouseEvent(
+		name: string,
+		bindings: Bindings,
+	) {
+
 	const binds = Object.entries(bindings["🖱️"])
 	const actions = new Set<string>()
 
-	for (const [bindAction, bindChannels] of binds) {
-
-		const someChannelsArePresentInThisBinding = channels
-			.some(c => bindChannels.includes(c))
-
-		if (someChannelsArePresentInThisBinding)
+	for (const [bindAction, bindNames] of binds) {
+		const isMatch = bindNames.includes(name)
+		if (isMatch)
 			actions.add(bindAction)
 	}
 

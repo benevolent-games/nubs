@@ -46,15 +46,15 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 
 	const listenForKey = (e: any) => {
 		const event = <NubInput<Nub.Detail.Key>>e
-		if (event.detail.type == 0) {
+		if (event.detail.type == Nub.Type.Key) {
 			const selectedKey = use.element.shadowRoot?.querySelector('[selected]')
-			const replacedKey = [...keybinds['*️⃣'][action][0]]
-			replacedKey[selectedKeyBindIndex] = event.detail.code
+			const codes = [...keybinds["*️⃣"][action]]
+			codes[selectedKeyBindIndex] = event.detail.code
 			setKeybinds({
 				...keybinds,
-				'*️⃣': {
+				"*️⃣": {
 					...keybinds["*️⃣"],
-					[action]: [replacedKey]
+					[action]: codes,
 				}
 			})
 			selectedKey?.removeAttribute('selected')

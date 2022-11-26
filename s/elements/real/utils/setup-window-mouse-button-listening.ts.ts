@@ -4,7 +4,7 @@ import {dispatchNubEvent} from "../../../framework/dispatch.js"
 import {convertMouseButtonToKeyCode} from "./convert-mouse-button-to-key-code.js"
 
 export function setupWindowMouseButtonListening(
-		element: LitElement & {channel: string}
+		element: LitElement & {name: string}
 	) {
 
 	const handlers = {
@@ -14,7 +14,7 @@ export function setupWindowMouseButtonListening(
 			dispatchNubEvent()
 				.atTarget(element)
 				.input()
-				.parseChannels(element.channel)
+				.name(element.name)
 				.key({code, pressed})
 				.fire()
 		},
@@ -24,7 +24,7 @@ export function setupWindowMouseButtonListening(
 			dispatchNubEvent()
 				.atTarget(element)
 				.input()
-				.parseChannels(element.channel)
+				.name(element.name)
 				.key({code, pressed})
 				.fire()
 		},

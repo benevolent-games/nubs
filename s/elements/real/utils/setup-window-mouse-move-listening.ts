@@ -3,14 +3,14 @@ import {LitElement} from "lit"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 
 export function setupWindowMouseMoveListening(
-		element: LitElement & {channel: string}
+		element: LitElement & {name: string}
 	) {
 
 	function handleMouseMove({movementX, movementY, clientX, clientY}: MouseEvent) {
 		dispatchNubEvent()
 			.atTarget(element)
 			.input()
-			.parseChannels(element.channel)
+			.name(element.name)
 			.mouse({
 				movement: [movementX, movementY],
 				position: [clientX, clientY],

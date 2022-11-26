@@ -7,12 +7,12 @@ import {setupWindowMouseMoveListening} from "./utils/setup-window-mouse-move-lis
 import {setupWindowMouseButtonListening} from "./utils/setup-window-mouse-button-listening.ts.js"
 
 export const NubRealMouse = element<{
-		channel: string
+		name: string
 	}>({
 		shadow: true,
 		styles: css`:host {display: none}`,
 		properties: {
-			channel: {type: String, reflect: true},
+			name: {type: String, reflect: true},
 		},
 	}).render(use => {
 

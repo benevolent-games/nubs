@@ -1,21 +1,19 @@
 
 import {Nub} from "../types.js"
 import {NubInput} from "../events/nub-input.js"
-import {parseChannels} from "./parse-channels.js"
 import {NubAction} from "../events/nub-action.js"
 
 export const dispatchNubEvent = () => ({
 	atTarget: (target: EventTarget) => ({
 
 		input: () => ({
-			parseChannels: (rawChannels: string) => {
-				const channels = parseChannels(rawChannels)
+			name: (name: string) => {
 				function prepareDispatcher<xData extends {}, xDetail extends Nub.Detail.Any>(type: Nub.Type) {
 					return (data: xData) => ({
 						fire() {
 							const event = new NubInput<xDetail>({
 								...(<any>data),
-								channels,
+								name,
 								type,
 							})
 							target.dispatchEvent(event)

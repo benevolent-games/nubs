@@ -80,12 +80,12 @@ now that nubs is installed onto your web page, you can start using nub elements.
       ```
       - also emits `nub_input` events
       - this one doesn't render any ui (all of the "real" elements are like this)
-    - you can add a `channel` attribute to name and differentiate inputs
+    - you can add a `name` attribute to name and differentiate inputs
       ```html
-      <nub-stick channel=movestick></nubstick>
-      <nub-stick channel="lookstick altmode"></nubstick>
+      <nub-stick name=movestick></nubstick>
+      <nub-stick name=lookstick></nubstick>
       ```
-      - then, for each nub_input event, `event.detail.channels` is an array of strings
+      - then, for each nub_input event, name is available as `event.detail.name`
 1. wrap your nub elements inside a `context`
     ```html
     <nub-context
@@ -107,10 +107,10 @@ now that nubs is installed onto your web page, you can start using nub elements.
       <!-- group nub elements together into a context! -->
 
       <nub-real-keyboard></nub-real-keyboard>
-      <nub-real-mouse channel=lookmouse></nub-real-mouse>
+      <nub-real-mouse name=lookmouse></nub-real-mouse>
 
-      <nub-stick channel=movestick></nub-stick>
-      <nub-stick channel=lookstick></nub-stick>
+      <nub-stick name=movestick></nub-stick>
+      <nub-stick name=lookstick></nub-stick>
     </nub-context>
     ```
     - nub-context is for grouping nub inputs

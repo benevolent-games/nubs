@@ -10,12 +10,12 @@ import {DraggableContainerView} from "./views/draggable-container.js"
 import {ToggleEditorButtonView} from "./views/toggle-editor-button.js"
 
 export const NubGridboard = element<{
-		channel: string
+		name: string
 	}>({
 		styles,
 		shadow: true,
 		properties: {
-			channel: {type: String, reflect: true},
+			name: {type: String, reflect: true},
 		},
 	}).render(use => {
 

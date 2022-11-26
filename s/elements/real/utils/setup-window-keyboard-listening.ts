@@ -3,7 +3,7 @@ import {LitElement} from "lit"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 
 export function setupWindowKeyboardListening(
-		element: LitElement & {channel: string}
+		element: LitElement & {name: string}
 	) {
 
 	const dispatch = ({code, repeat}: KeyboardEvent, pressed: boolean) => {
@@ -11,7 +11,7 @@ export function setupWindowKeyboardListening(
 			dispatchNubEvent()
 				.atTarget(element)
 				.input()
-				.parseChannels(element.channel)
+				.name(element.name)
 				.key({code, pressed})
 				.fire()
 	}
