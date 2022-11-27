@@ -1,21 +1,27 @@
+
 import {html} from "lit"
 import {view} from "@chasemoskal/magical/x/view/view.js"
-import {Bindings} from "../../../types.js"
-import {compareKeybindings} from "../utils/compare-keybindings.js"
 import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
+
+import {Bindings} from "../../../types.js"
 import {loadBindings} from "../utils/loadBindings.js"
 import {NubBindingsEvent} from "../../../events/nub-bindings.js"
+import {compareKeybindings} from "../utils/compare-keybindings.js"
 
-export const ButtonsView = view(use => (keybinds: Bindings, setKeybinds: StateSetter<Bindings>, element: HTMLElement) => {
+export const ButtonsView = view(use => (
+		keybinds: Bindings,
+		setKeybinds: StateSetter<Bindings>,
+		element: HTMLElement,
+	) => {
 
 	const applyBindings = () => {
-		localStorage.setItem('bindings', JSON.stringify(keybinds));
+		localStorage.setItem("bindings", JSON.stringify(keybinds))
 		setKeybinds(loadBindings())
 		const event = new NubBindingsEvent()
 		element.dispatchEvent(event)
 	}
 	const restoreToDefault = () => {
-		localStorage.removeItem('bindings')
+		localStorage.removeItem("bindings")
 		setKeybinds(loadBindings())
 	}
 
@@ -23,8 +29,15 @@ export const ButtonsView = view(use => (keybinds: Bindings, setKeybinds: StateSe
 
 	return html`
 		<div class="buttons-container">
-			<button ?disabled=${isEqual} @pointerdown=${applyBindings}>Apply bindings</button>
-			<button @pointerdown=${restoreToDefault}>Restore to default</button>
-		</div>`
-
+			<button
+				?disabled=${isEqual}
+				@pointerdown=${applyBindings}>
+				Apply bindings
+			</button>
+			<button
+				@pointerdown=${restoreToDefault}>
+				Restore to default
+			</button>
+		</div>
+	`
 })

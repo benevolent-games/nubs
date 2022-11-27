@@ -1,29 +1,37 @@
-import {component2 as element} from "@chasemoskal/magical/x/component.js"
+
 import {html} from "lit"
-import {Nub, NubInput} from "../../main.js"
+import {component2 as element} from "@chasemoskal/magical/x/component.js"
+
+import {styles} from "./style.css.js"
 import {Bindings} from "../../types.js"
-import { styles } from "./style.css.js"
-import {loadBindings} from "./utils/loadBindings.js"
+import {Nub, NubInput} from "../../main.js"
 import {ActionsView} from "./views/actions.js"
 import {ButtonsView} from "./views/buttons.js"
 import {KeybindsView} from "./views/keybinds.js"
+import {loadBindings} from "./utils/loadBindings.js"
 
 export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
-	styles,
-	shadow: true,
-	properties: {
-		bindingsJson: {type: Object, reflect: false},
-	},
-}).render(use => {
+		styles,
+		shadow: true,
+		properties: {
+			bindingsJson: {type: Object, reflect: false},
+		},
+	}).render(use => {
 
+	const [action, setAction] = use.state("")
 	const [isListeningForKey, setIsListeningForKey] = use.state(false)
-	const [action, setAction] = use.state('')
-	const [selectedKeyBindIndex, setSelectedKeyBindIndex] = use.state(0)
 	const [keybinds, setKeybinds] = use.state<Bindings>(loadBindings())
-	const keybindsEntries = Object.entries(keybinds['*️⃣'])
+	const [selectedKeyBindIndex, setSelectedKeyBindIndex] = use.state(0)
 
-	const handleKeyChange = (e: PointerEvent, index: number, indexOfKeyBind: number) => {
-		if(isListeningForKey) return 
+	const keybindsEntries = Object.entries(keybinds["*️⃣"])
+
+	const handleKeyChange = (
+			e: PointerEvent,
+			index: number,
+			indexOfKeyBind: number
+		) => {
+		if (isListeningForKey)
+			return
 		e.preventDefault()
 		const action = keybindsEntries[index][0]
 		const {target} = <any>e
@@ -32,12 +40,19 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 		setAction(action)
 		target.setAttribute("selected", "")
 	}
+
 	const addNewKeyBind = (e: PointerEvent, index: number) => {
-		if(isListeningForKey) return 
+		if (isListeningForKey)
+			return
 		e.preventDefault()
 		const {target} = <any>e
 		const action = keybindsEntries[index][0]
-		const indexOfAddBindButton = use.element.shadowRoot?.querySelectorAll('.keybinds')[index].childElementCount! - 1
+		const indexOfAddBindButton = (
+			use.element
+				.shadowRoot
+				?.querySelectorAll(".keybinds")[index]
+				.childElementCount!
+		) - 1
 		setIsListeningForKey(true)
 		setSelectedKeyBindIndex(indexOfAddBindButton)
 		setAction(action)
@@ -47,7 +62,7 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 	const listenForKey = (e: any) => {
 		const event = <NubInput<Nub.Detail.Key>>e
 		if (event.detail.type == Nub.Type.Key) {
-			const selectedKey = use.element.shadowRoot?.querySelector('[selected]')
+			const selectedKey = use.element.shadowRoot?.querySelector("[selected]")
 			const codes = [...keybinds["*️⃣"][action]]
 			codes[selectedKeyBindIndex] = event.detail.code
 			setKeybinds({
@@ -57,8 +72,8 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 					[action]: codes,
 				}
 			})
-			selectedKey?.removeAttribute('selected')
-			setIsListeningForKey(false) // this setter not working 
+			selectedKey?.removeAttribute("selected")
+			setIsListeningForKey(false)
 			document.removeEventListener("nub_input", listenForKey)
 		}
 	}
@@ -68,14 +83,15 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 	}
 
 	return html`
-		<div class="column">
+		<div class=column>
 			<h1>Binding editor</h1>
-			<div class="row">
+			<div class=row>
 				${keybindsEntries.map((value, i) => html`
-				<div class="container">
-					${ActionsView(value)}
-					${KeybindsView(value, i, handleKeyChange, addNewKeyBind)}
-				</div>`)}
+					<div class=container>
+						${ActionsView(value)}
+						${KeybindsView(value, i, handleKeyChange, addNewKeyBind)}
+					</div>
+				`)}
 			</div>
 			${ButtonsView(keybinds, setKeybinds, use.element)}
 		</div>
