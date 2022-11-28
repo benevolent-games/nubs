@@ -1,20 +1,22 @@
 
 import {html} from "lit"
 import {view} from "@chasemoskal/magical/x/view/view.js"
-import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
 
 import {WaitingForAssignment} from "../types.js"
+import {renderKeycapView} from "../utils/render-keycap-view.js"
 
 export const KeysView = view(use => ({
 		action,
 		keycodes,
 		waitingForAssignment,
-		setWaitingForAssignment,
+		onClickRebind,
+		onClickAddNewBind,
 	}: {
 		action: string
 		keycodes: string[]
 		waitingForAssignment: undefined | WaitingForAssignment
-		setWaitingForAssignment: StateSetter<undefined | WaitingForAssignment>
+		onClickRebind: (keyIndex: number) => void
+		onClickAddNewBind: () => void
 	}) => {
 
 	const currentlyWaitingForThisAction =
@@ -22,17 +24,9 @@ export const KeysView = view(use => ({
 
 	const showAddButton = !currentlyWaitingForThisAction
 
-	const showWaitingIndicatorForNewBind = (
+	const showWaitingIndicatorForNewBind =
 		currentlyWaitingForThisAction &&
 		waitingForAssignment.keyIndex === keycodes.length
-	)
-
-	function clickAddNewKeybind() {
-		setWaitingForAssignment({
-			action,
-			keyIndex: keycodes.length
-		})
-	}
 
 	return html`
 		<div
@@ -43,43 +37,13 @@ export const KeysView = view(use => ({
 			<div class=action>${action}</div>
 
 			<div class=keybinds>
-				${keycodes.map((code, keyIndex) => {
-
-					const currentlyWaitingForThisKeyIndex =
-						waitingForAssignment?.keyIndex === keyIndex
-
-					const click = (event: MouseEvent) => {
-						if (!waitingForAssignment) {
-							event.preventDefault()
-							setWaitingForAssignment({
-								action,
-								keyIndex,
-							})
-						}
-					}
-
-					const label = code === ""
-						? html`-`
-						: code
-
-					const isSelected =
-						currentlyWaitingForThisAction &&
-						currentlyWaitingForThisKeyIndex
-
-					return html`
-						<div
-							class=bind
-							?data-selected=${isSelected}
-							@click=${click}>
-
-							${isSelected ? html`
-								<span class=info-key>press key</span>
-							` : html`
-								<span class=key>${label}</span>
-							`}
-						</div>
-					`
-				})}
+				${keycodes.map(
+					renderKeycapView({
+						waitingForAssignment,
+						currentlyWaitingForThisAction,
+						onClickRebind,
+					})
+				)}
 
 				${showWaitingIndicatorForNewBind ? html`
 					<div class=bind>
@@ -91,7 +55,7 @@ export const KeysView = view(use => ({
 					<div class=add-bind>
 						<span
 							class=add-key
-							@click=${clickAddNewKeybind}>+</span>
+							@click=${onClickAddNewBind}>+</span>
 					</div>
 				` : null}
 			</div>

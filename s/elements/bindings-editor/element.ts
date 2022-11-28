@@ -3,11 +3,11 @@ import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import {styles} from "./style.css.js"
-import {KeysView} from "./views/keys.js"
 import {Bindings, Nub} from "../../types.js"
 import {ButtonsView} from "./views/buttons.js"
-import {stateForClosestContext} from "./utils/state-for-closest-context.js"
 import {WaitingForAssignment} from "./types.js"
+import {renderKeyView} from "./utils/render-key-view.js"
+import {stateForClosestContext} from "./utils/state-for-closest-context.js"
 import {setupListenForBindingsChanges} from "./utils/setup-listen-for-bindings-changes.js"
 import {setupListenToInputsAndActuateKeyBindReassignment} from "./utils/setup-listen-to-inputs-and-actuate-key-bind-reassignment.ts.js"
 
@@ -27,20 +27,20 @@ export const NubBindingsEditor = element<{}>({
 			() => context.getBindings()
 		)
 
-	const [
-			waitingForAssignment,
-			setWaitingForAssignment,
+	const [waitingForAssignment, setWaitingForAssignment, getWaitingForAssignment] =
+		use.state<undefined | WaitingForAssignment>(undefined)
+
+	use.setup(
+		setupListenToInputsAndActuateKeyBindReassignment({
+			context,
 			getWaitingForAssignment,
-		]
-		= use.state<undefined | WaitingForAssignment>(undefined)
+			setWaitingForAssignment,
+		})
+	)
 
-	use.setup(setupListenToInputsAndActuateKeyBindReassignment({
-		context,
-		getWaitingForAssignment,
-		setWaitingForAssignment,
-	}))
-
-	use.setup(setupListenForBindingsChanges(context, setBindings))
+	use.setup(
+		setupListenForBindingsChanges(context, setBindings)
+	)
 
 	return html`
 		<div class=column>
@@ -49,13 +49,12 @@ export const NubBindingsEditor = element<{}>({
 			<div class=row>
 				${Object
 					.entries(bindings["*️⃣"])
-					.map(([action, keycodes]) =>
-						KeysView({
-							action,
-							keycodes,
+					.map(
+						renderKeyView(
 							waitingForAssignment,
 							setWaitingForAssignment,
-						}))}
+						)
+					)}
 			</div>
 
 			${ButtonsView(context)}
