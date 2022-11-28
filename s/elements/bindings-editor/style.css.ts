@@ -28,10 +28,6 @@ export const styles = css`
 			flex-wrap: wrap;
 		}
 
-		.action, .keycap {
-			padding: 0.4em;
-		}
-
 		.action {
 			flex: 0 0 auto;
 			width: 12em;
@@ -47,7 +43,7 @@ export const styles = css`
 			flex: 1 1 auto;
 			display: flex;
 			flex-wrap: wrap;
-			padding: var(--pad-keygap) 0;
+			padding: calc(var(--pad-keygap) / 2) 0;
 			gap: var(--pad-keygap);
 
 			.keycap {
