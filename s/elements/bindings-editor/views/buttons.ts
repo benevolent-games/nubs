@@ -5,7 +5,7 @@ import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
 
 import {Bindings} from "../../../types.js"
 import {loadBindings} from "../utils/loadBindings.js"
-import {NubBindingsEvent} from "../../../events/nub-bindings.js"
+import {NubBindingsEvent} from "../../../events/bindings.js"
 import {compareKeybindings} from "../utils/compare-keybindings.js"
 
 export const ButtonsView = view(use => (

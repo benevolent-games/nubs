@@ -2,7 +2,7 @@
 import {LitElement} from "lit"
 import {Bindings} from "../../../types.js"
 import {NubContextProperties} from "../types.js"
-import {NubBindingsEvent} from "../../../events/nub-bindings.js"
+import {NubBindingsEvent} from "../../../events/bindings.js"
 
 export function setupUpdateBindingsFunction({
 		save,

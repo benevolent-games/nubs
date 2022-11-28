@@ -1,13 +1,13 @@
 
 import {Nub} from "../types.js"
 
-export class NubAction<xDetail extends Nub.Detail.Any = Nub.Detail.Any>
+export class NubActionEvent<xDetail extends Nub.Detail.Any = Nub.Detail.Any>
 	extends CustomEvent<xDetail & {action: string}> {
 
 	static eventName = "nub_action"
 
 	constructor(detail: xDetail & {action: string}) {
-		super(NubAction.eventName, {
+		super(NubActionEvent.eventName, {
 			detail,
 			bubbles: true,
 			composed: true,

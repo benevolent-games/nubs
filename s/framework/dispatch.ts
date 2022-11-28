@@ -1,7 +1,7 @@
 
 import {Nub} from "../types.js"
-import {NubInput} from "../events/nub-input.js"
-import {NubAction} from "../events/nub-action.js"
+import {NubInputEvent} from "../events/input.js"
+import {NubActionEvent} from "../events/action.js"
 
 export const dispatchNubEvent = () => ({
 	atTarget: (target: EventTarget) => ({
@@ -11,7 +11,7 @@ export const dispatchNubEvent = () => ({
 				function prepareDispatcher<xData extends {}, xDetail extends Nub.Detail.Any>(type: Nub.Type) {
 					return (data: xData) => ({
 						fire() {
-							const event = new NubInput<xDetail>({
+							const event = new NubInputEvent<xDetail>({
 								...(<any>data),
 								name,
 								type,
@@ -33,7 +33,7 @@ export const dispatchNubEvent = () => ({
 			function prepareDispatcher<xDetail extends Nub.Detail.Any>() {
 				return (detail: xDetail) => ({
 					fire() {
-						const event = new NubAction<Nub.Detail.Key>({...(<any>detail), action})
+						const event = new NubActionEvent<Nub.Detail.Key>({...(<any>detail), action})
 						target.dispatchEvent(event)
 						return event
 					}
