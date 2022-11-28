@@ -11,6 +11,8 @@ import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
 import {setupUpdateBindingsFunction as setupElementFunctions} from "./parts/setup-update-bindings-function.js"
 
+export type NubContextElement = InstanceType<typeof NubContext>
+
 export const NubContext = element<NubContextProperties>({
 		styles,
 		shadow: true,
@@ -22,20 +24,23 @@ export const NubContext = element<NubContextProperties>({
 			actions: {attribute: false},
 			getBindings: {attribute: false},
 			updateBindings: {attribute: false},
+			restoreBindingsToDefaults: {attribute: false},
 		},
 	}).render(use => {
 
 	const [actions] = use.state(stateForActions)
 
-	const [{save, load}] = use.state(
-		stateForBindingsStore(localStorage, use.element.name)
-	)
+	const [{save, load}] =
+		use.state(
+			stateForBindingsStore(localStorage, use.element.name)
+		)
 
-	const [bindings, setBindings, getBindings] = use.state<Bindings>(
-		element => load()
-			?? element.defaultBindingsJson
-			?? defaultBindings
-	)
+	const [bindings, setBindings, getBindings] =
+		use.state<Bindings>(
+			element => load()
+				?? element.defaultBindingsJson
+				?? defaultBindings
+		)
 
 	use.setup(
 		setupElementFunctions({save, getBindings, setBindings})

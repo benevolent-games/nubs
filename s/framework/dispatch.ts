@@ -1,7 +1,8 @@
 
-import {Nub} from "../types.js"
+import {Bindings, Nub} from "../types.js"
 import {NubInputEvent} from "../events/input.js"
 import {NubActionEvent} from "../events/action.js"
+import {NubBindingsEvent} from "../events/bindings.js"
 
 export const dispatchNubEvent = () => ({
 	atTarget: (target: EventTarget) => ({
@@ -45,5 +46,13 @@ export const dispatchNubEvent = () => ({
 				vector2: prepareDispatcher<Nub.Detail.Vector2>(),
 			}
 		},
+
+		bindings: (bindings: Bindings) => ({
+			fire() {
+				const event = new NubBindingsEvent({bindings})
+				target.dispatchEvent(event)
+				return event
+			},
+		}),
 	}),
 })

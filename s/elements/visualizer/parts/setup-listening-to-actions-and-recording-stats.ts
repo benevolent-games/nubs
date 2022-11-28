@@ -1,7 +1,7 @@
 
-import {NubAction} from "../../../main.js"
-import {nubActionSwitch} from "../../../tools/nub-switch.js"
 import {RecentKeyStats, Stats} from "./types.js"
+import {NubActionEvent} from "../../../events/action.js"
+import {nubActionSwitch} from "../../../tools/nub-switch.js"
 
 export function setupListeningToActionsAndRecordingStats({
 		eventTarget,
@@ -19,7 +19,7 @@ export function setupListeningToActionsAndRecordingStats({
 
 	return () => {
 		function listener(e: Event) {
-			nubActionSwitch(<NubAction>e, {
+			nubActionSwitch(<NubActionEvent>e, {
 				key: event => {
 					setRecentKeyStats({
 						...getRecentKeyStats(),

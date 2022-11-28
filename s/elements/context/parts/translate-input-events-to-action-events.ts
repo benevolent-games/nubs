@@ -1,7 +1,7 @@
 
 import {LitElement} from "lit"
 
-import {NubInput} from "../../../main.js"
+import {NubInputEvent} from "../../../events/input.js"
 import {Actions, Bindings, Nub} from "../../../types.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 import {queryBindingsToRelateInputsToActions} from "./query-bindings-to-relate-inputs-to-actions.js"
@@ -18,7 +18,7 @@ export function translateInputEventsToActionEvents({
 
 	const findActions = queryBindingsToRelateInputsToActions(bindings)
 
-	return function handleInput(input: NubInput) {
+	return function handleInput(input: NubInputEvent) {
 		switch (input.detail.type) {
 
 			case Nub.Type.Key: {

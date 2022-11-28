@@ -68,30 +68,8 @@ export const styles = css`
 	.add-bind .add-key:hover {
 		background-color: #0c4e0c4f;
 	}
-	.bind[selected], .add-bind[selected] {
+	.bind[data-selected], .add-bind[data-selected] {
 		box-shadow: inset 0px 0px 45px -23px rgba(0, 0, 0, 1);
-	}
-	.key, .add-key, .info-key {
-		pointer-events: none;
-	}
-	.info-key {
-		display: none;
-	}
-	.bind[selected] {
-		.info-key {
-			display: block;
-		}
-		.key {
-			display: none;
-		}
-	}
-	.add-bind[selected] {
-		.add-key {
-			display: none;
-		}
-		.info-key {
-			display: block;
-		}
 	}
 	.buttons-container {
 		display: flex;

@@ -1,13 +1,13 @@
 
 import {Nub} from "../types.js"
-import {NubAction} from "../main.js"
+import {NubActionEvent} from "../events/action.js"
 
 export function nubActionSwitch<R = void>(
-		event: NubAction,
+		event: NubActionEvent,
 		handlers: {
-			key: (event: NubAction<Nub.Detail.Key>) => R
-			mouse: (event: NubAction<Nub.Detail.Mouse>) => R
-			vector2: (event: NubAction<Nub.Detail.Vector2>) => R
+			key: (event: NubActionEvent<Nub.Detail.Key>) => R
+			mouse: (event: NubActionEvent<Nub.Detail.Mouse>) => R
+			vector2: (event: NubActionEvent<Nub.Detail.Vector2>) => R
 		},
 	): R {
 

@@ -1,4 +1,5 @@
 
+import {NubContext} from "./element.js"
 import {Actions, Bindings} from "../../types.js"
 
 export type NubContextProperties = NubContextInputs & NubContextOutputs
@@ -8,7 +9,7 @@ export interface NubContextInputs {
 	/** used as localstorage key prefix, to differentiate contexts */
 	name: string
 
-	/** property to set the initial default bindings programmatically via javascript (takes precedence over default-bindings) */
+	/** property to set the initial default bindings programmatically via javascript */
 	defaultBindingsJson: Bindings | undefined
 
 	/** attribute to set the initial default bindings in text format via html */
@@ -25,4 +26,7 @@ export interface NubContextOutputs {
 
 	/** save new bindings, and save to localstorage, and dispatch bindings event */
 	updateBindings: (bindings: Bindings) => void
+
+	/** restore bindings back to the defaults */
+	restoreBindingsToDefaults: () => void
 }
