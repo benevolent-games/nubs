@@ -7,6 +7,10 @@
 	box-sizing: border-box;
 }
 
+:not(:defined) {
+	display: none;
+}
+
 html {
 	font-family: "Gentium Book Basic", serif;
 	background: fixed linear-gradient(180deg, #1b2941, #0c0511);

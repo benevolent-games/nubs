@@ -2,30 +2,30 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical/x/view/view.js"
 
-import {WaitingForAssignment} from "../types.js"
+import {Waiting} from "../types.js"
+import {buttonLabels} from "../utils/constants.js"
 import {renderKeycap} from "../utils/render-keycap.js"
-import {stop} from "../../../tools/stop.js"
 
 export const KeybindView = view(use => ({
 		action,
 		keycodes,
-		waitingForAssignment,
+		waiting,
 		onClickRebind,
 		onClickAddNewBind,
 	}: {
 		action: string
 		keycodes: string[]
-		waitingForAssignment: undefined | WaitingForAssignment
+		waiting: undefined | Waiting
 		onClickRebind: (keyIndex: number) => void
 		onClickAddNewBind: () => void
 	}) => {
 
 	const currentlyWaitingForThisAction =
-		waitingForAssignment?.action === action
+		waiting?.action === action
 
 	const showWaitingIndicatorForNewBind =
 		currentlyWaitingForThisAction &&
-		waitingForAssignment.keyIndex === keycodes.length
+		waiting.keyIndex === keycodes.length
 
 	return html`
 		<div
@@ -38,25 +38,24 @@ export const KeybindView = view(use => ({
 			<div class=keys>
 				${keycodes.map(
 					renderKeycap({
-						waitingForAssignment,
+						waiting,
 						currentlyWaitingForThisAction,
 						onClickRebind,
 					})
 				)}
 
 				${(showWaitingIndicatorForNewBind || null) && html`
-					<button class=keycap data-selected>
-						press key
+					<button class=keycap data-waiting>
+						${buttonLabels.waitingForKeyPress}
 					</button>
 				`}
 
-				${(!waitingForAssignment || null) && html`
+				${(!waiting || null) && html`
 					<button
 						class=keycap
 						data-add-new
-						tabindex="0"
-						@click=${stop(onClickAddNewBind)}>
-							add
+						@click=${onClickAddNewBind}>
+							${buttonLabels.addNewKeyBind}
 					</button>
 				`}
 			</div>

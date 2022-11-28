@@ -1,26 +1,26 @@
 
 import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
 
+import {Waiting} from "../types.js"
 import {KeybindView} from "../views/keybind.js"
-import {WaitingForAssignment} from "../types.js"
 
 export function renderKeybind(
-		waitingForAssignment: undefined | WaitingForAssignment,
-		setWaitingForAssignment: StateSetter<undefined | WaitingForAssignment>,
+		waiting: undefined | Waiting,
+		setWaiting: StateSetter<undefined | Waiting>,
 	) {
 
 	return ([action, keycodes]: [string, string[]]) => KeybindView({
 		action,
 		keycodes,
-		waitingForAssignment,
+		waiting,
 		onClickRebind(keyIndex) {
-			setWaitingForAssignment({
+			setWaiting({
 				action,
 				keyIndex,
 			})
 		},
 		onClickAddNewBind() {
-			setWaitingForAssignment({
+			setWaiting({
 				action,
 				keyIndex: keycodes.length,
 			})

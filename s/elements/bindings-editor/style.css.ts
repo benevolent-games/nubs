@@ -10,7 +10,7 @@ export const styles = css`
 	--outline-soft: #fff4;
 	--outline-hard: #fff8;
 	--pad-keygap: 0.4em;
-	--pad-keyinner: 0.4em;
+	--pad-keyinner: 0.2em;
 }
 
 .keybindlist {
@@ -57,7 +57,7 @@ export const styles = css`
 				justify-content: center;
 				max-width: max-content;
 				align-items: center;
-				padding: var(--pad-keyinner);
+				padding: var(--pad-keyinner) 0.5em;
 				text-align: center;
 				border: 1px solid var(--outline-soft);
 				cursor: pointer;
@@ -77,9 +77,11 @@ export const styles = css`
 					}
 				}
 
-				^[data-selected] {
+				^[data-waiting] {
 					background: orange;
-					box-shadow: inset 0px 0px 45px -23px rgba(0, 0, 0, 1);
+					color: white;
+					font-weight: bold;
+					text-shadow: 1px 2px 4px #000a;
 				}
 			}
 		}

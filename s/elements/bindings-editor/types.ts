@@ -1,5 +1,5 @@
 
-export interface WaitingForAssignment {
+export interface Waiting {
 	action: string
 	keyIndex: number
 }

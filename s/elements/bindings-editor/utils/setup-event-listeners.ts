@@ -1,5 +1,18 @@
 
-type Listener = (event: Event) => void
+type Listener<E extends Event = Event> = (event: E) => void
+
+export function setupEventListener<E extends Event>(
+		target: EventTarget,
+		event: {eventName: string},
+		listener: Listener<E>,
+	) {
+
+	return setupEventListeners({
+		targets: [target],
+		events: [event],
+		listeners: [<any>listener],
+	})
+}
 
 export function setupEventListeners({
 		targets, events, listeners, options
@@ -32,17 +45,4 @@ export function setupEventListeners({
 		for (const [target, eventName, listener] of memory)
 			target.removeEventListener(eventName, listener)
 	}
-}
-
-export function setupEventListener<E extends CustomEvent>(
-		target: EventTarget,
-		event: {eventName: string},
-		listener: (e: E) => void,
-	) {
-
-	return setupEventListeners({
-		targets: [target],
-		events: [event],
-		listeners: [<any>listener],
-	})
 }

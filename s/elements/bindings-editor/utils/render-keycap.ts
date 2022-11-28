@@ -1,14 +1,14 @@
 
+import {Waiting} from "../types.js"
 import {KeycapView} from "../views/keycap.js"
-import {WaitingForAssignment} from "../types.js"
 
 export function renderKeycap({
-		waitingForAssignment,
+		waiting,
 		currentlyWaitingForThisAction,
 		onClickRebind,
 	}: {
 		currentlyWaitingForThisAction: boolean
-		waitingForAssignment: undefined | WaitingForAssignment
+		waiting: undefined | Waiting
 		onClickRebind: (keyIndex: number) => void
 	}) {
 
@@ -18,11 +18,13 @@ export function renderKeycap({
 
 		code: code ? code : "-",
 
-		isSelected: currentlyWaitingForThisAction &&
-			waitingForAssignment?.keyIndex === keyIndex,
+		isWaiting: (
+			currentlyWaitingForThisAction &&
+			waiting?.keyIndex === keyIndex
+		),
 
 		onClickRebind(event) {
-			if (!waitingForAssignment) {
+			if (!waiting) {
 				event.preventDefault()
 				onClickRebind(keyIndex)
 			}
