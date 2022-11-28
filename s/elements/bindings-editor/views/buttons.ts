@@ -9,7 +9,7 @@ export const ButtonsView = view(use => (context: NubContextElement) => {
 		<div class=buttons>
 			<button
 				@click=${context.restoreBindingsToDefaults}>
-				Restore to default
+				reset to defaults
 			</button>
 		</div>
 	`
