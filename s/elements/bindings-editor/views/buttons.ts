@@ -15,11 +15,12 @@ export const ButtonsView = view(use => (
 	) => {
 
 	const applyBindings = () => {
-		localStorage.setItem("bindings", JSON.stringify(keybinds))
-		setKeybinds(loadBindings())
-		const event = new NubBindingsEvent()
-		element.dispatchEvent(event)
+		console.log("TODO")
+		// localStorage.setItem("bindings", JSON.stringify(keybinds))
+		// setKeybinds(loadBindings())
+		// element.dispatchEvent(new NubBindingsEvent())
 	}
+
 	const restoreToDefault = () => {
 		localStorage.removeItem("bindings")
 		setKeybinds(loadBindings())
@@ -28,7 +29,7 @@ export const ButtonsView = view(use => (
 	const isEqual = compareKeybindings(keybinds)
 
 	return html`
-		<div class="buttons-container">
+		<div class=buttons-container>
 			<button
 				?disabled=${isEqual}
 				@pointerdown=${applyBindings}>

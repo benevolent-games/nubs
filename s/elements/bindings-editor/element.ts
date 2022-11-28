@@ -3,12 +3,12 @@ import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import {styles} from "./style.css.js"
-import {Bindings} from "../../types.js"
-import {Nub, NubInput} from "../../main.js"
-import {ActionsView} from "./views/actions.js"
+import {NubInput} from "../../main.js"
+import {Bindings, Nub} from "../../types.js"
 import {ButtonsView} from "./views/buttons.js"
 import {KeybindsView} from "./views/keybinds.js"
 import {loadBindings} from "./utils/loadBindings.js"
+import {stateForClosestContext} from "./utils/state-for-closest-context.js"
 
 export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 		styles,
@@ -17,6 +17,18 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 			bindingsJson: {type: Object, reflect: false},
 		},
 	}).render(use => {
+
+	const [context] = use.state(
+		stateForClosestContext(use.element)
+	)
+
+	const [bindings] = use.state<Bindings>(() => {
+		return context.getBindings()
+	})
+
+	const [waitingForAssignment, setWaitingForAssignment] = use.state(() => ({
+		action: "forward"
+	}))
 
 	const [action, setAction] = use.state("")
 	const [isListeningForKey, setIsListeningForKey] = use.state(false)
@@ -88,8 +100,13 @@ export const NubBindingsEditor = element<{bindingsJson: Bindings | void}>({
 			<div class=row>
 				${keybindsEntries.map((value, i) => html`
 					<div class=container>
-						${ActionsView(value)}
-						${KeybindsView(value, i, handleKeyChange, addNewKeyBind)}
+						<div class=action>${value[0]}</div>
+						${KeybindsView(
+							value,
+							i,
+							handleKeyChange,
+							addNewKeyBind,
+						)}
 					</div>
 				`)}
 			</div>
