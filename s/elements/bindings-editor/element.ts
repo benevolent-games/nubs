@@ -9,7 +9,7 @@ import {WaitingForAssignment} from "./types.js"
 import {renderKeybind as renderKeybindView} from "./utils/render-keybind.js"
 import {stateForClosestContext} from "./utils/state-for-closest-context.js"
 import {setupListenForBindingsChanges} from "./utils/setup-listen-for-bindings-changes.js"
-import {setupListenToInputsAndActuateKeyBindReassignment} from "./utils/setup-listen-to-inputs-and-actuate-key-bind-reassignment.ts.js"
+import {setupListenToInputsAndActuateKeyBindAssignment} from "./utils/setup-listen-to-inputs-and-actuate-key-bind-assignment.js"
 
 export const NubBindingsEditor = element<{}>({
 		styles,
@@ -31,7 +31,7 @@ export const NubBindingsEditor = element<{}>({
 		use.state<undefined | WaitingForAssignment>(undefined)
 
 	use.setup(
-		setupListenToInputsAndActuateKeyBindReassignment({
+		setupListenToInputsAndActuateKeyBindAssignment({
 			context,
 			getWaitingForAssignment,
 			setWaitingForAssignment,
