@@ -33,6 +33,8 @@
 		"editor.insertSpaces": true,
 	},
 
+	"lit-plugin.rules.no-invalid-css": "off",
+
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"javascript.format.semicolons": "remove",
 	"typescript.format.semicolons": "remove",

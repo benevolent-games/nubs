@@ -11,7 +11,7 @@ html {
 	font-family: "Gentium Book Basic", serif;
 	background: fixed linear-gradient(180deg, #1b2941, #0c0511);
 	color: whitesmoke;
-	font-size: 21px;
+	font-size: 16px;
 }
 
 header {
@@ -38,23 +38,26 @@ h1 {
 	margin-left: -5px;
 }
 
-nub-visualizer {
-	font-size: 0.7em;
-	max-width: 32em;
-	margin: auto;
-	background: #0004;
-}
-
-/* toggle bindings editor */
-nub-bindings-editor[data-closed] {
-	display: none;
-}
-
-.wrap {
+.side-by-side {
 	display: flex;
-	justify-content: space-around;
-	max-width: 55rem;
-	font-size: 0.8rem;
-	margin: 1rem auto;
+	justify-content: center;
 	align-items: center;
+	width: 100%;
+	gap: 1em;
+}
+
+nub-visualizer, nub-bindings-editor {
+	background: #0004;
+	border: 2px solid #fff8;
+}
+
+nub-stick {
+	width: 8em;
+	height: 8em;
+}
+
+nub-bindings-editor {
+	max-width: 38em;
+	margin: auto;
+	margin-top: 1em;
 }

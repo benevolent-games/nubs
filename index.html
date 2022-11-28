@@ -17,26 +17,6 @@
 		src=/x/html.js
 		defer
 	></script>
-	<script type=module defer>
-
-		// toggle bindings editor
-		{
-			let open = false
-			const editor = document.querySelector("nub-bindings-editor")
-
-			document.addEventListener("nub_input", event => {
-
-				if (event.detail.code === "Backquote" && event.detail.pressed)
-					open = !open
-
-				if (open)
-					editor.removeAttribute("data-closed")
-				else
-					editor.setAttribute("data-closed", "")
-			})
-		}
-
-	</script>
 	<script
 		src="/node_modules/es-module-shims/dist/es-module-shims.wasm.js"
 		defer
@@ -51,12 +31,9 @@
 			see on <a href="https://github.com/benevolent-games/nubs">github</a>..
 			a <a href="https://benevolent.games/">benevolent.games</a> project..
 		</p>
-		<p><em>press tilde key ( ~ ) to toggle bindings editor</em></p>
 	</header>
 
-	<nub-visualizer></nub-visualizer>
-
-	<nub-context bindings="
+	<nub-context default-bindings="
 		👼 Cool Default Bindings
 		🖱️ look :: lookmouse
 		🕹️ look :: lookstick
@@ -74,13 +51,12 @@
 		<nub-real-keyboard></nub-real-keyboard>
 		<nub-real-mouse name=lookmouse></nub-real-mouse>
 
-		<nub-bindings-editor data-closed></nub-bindings-editor>
-
-		<div class="wrap">
-			<nub-stick name=movestick></nub-stick>
-			<nub-gridboard></nub-gridboard>
+		<div class=side-by-side>
 			<nub-stick name=lookstick></nub-stick>
+			<nub-visualizer></nub-visualizer>
 		</div>
+
+		<nub-bindings-editor></nub-bindings-editor>
 	</nub-context>
 
 </body>

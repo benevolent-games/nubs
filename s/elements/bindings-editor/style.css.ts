@@ -1,120 +1,137 @@
+
 import {css} from "@chasemoskal/magical/x/camel-css/camel-css-lit.js"
 
 export const styles = css`
+
 	:host {
-		position: absolute;
-		border: 1px solid black;
-		width: 100%;
-		height: 100%;
-		margin: auto;
-		inset: 0;
-		z-index: 10;
-		background-color: rgb(25 26 32 / 45%);
-		backdrop-filter: blur(3px);
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		display: block;
+		font-family: monospace;
+		background: #111e;
+		--outline-soft: #fff4;
+		--outline-hard: #fff8;
+		--pad-keygap: 0.4em;
+		--pad-keyinner: 0.4em;
 	}
-	h1 {
-		padding: 0.5em;
-	}
-	.column {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-	}
-	.row {
-		font-size: 2em;
-		width: 70%;
-		overflow-y: scroll;
-		max-height: 70vh;
-	}
-	.bind, .add-bind {
-		text-align: center;
-		width: 25%;
-		z-index: 10;
-		flex: 0 0 25%;
-	}
-	.add-bind {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.container, .action {
-		display: flex;
-	}
-	.action, .keybinds, .row, .binds-column {
-		flex: 1;
-	}
-	.action, .bind, .add-bind {
-		padding: 0.5em;
-	}
-	.keybinds {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	.add-bind .add-key {
-		display: flex;
-		width: 1em;
-		height: 1em;
-		justify-content: center;
-		border: 1px solid #005600;
-		color: #005600;
-		align-items: center;
-		cursor: pointer;
-	}
-	.add-bind .add-key:hover {
-		background-color: #0c4e0c4f;
-	}
-	.bind[data-selected], .add-bind[data-selected] {
-		box-shadow: inset 0px 0px 45px -23px rgba(0, 0, 0, 1);
-	}
-	.buttons-container {
-		display: flex;
-		width: 70%;
-		justify-content: flex-end;
-		gap: 1em;
+
+	.keybindlist {
 		margin: 1em;
+		padding-right: 1em;
+		overflow-x: hidden;
+		overflow-y: scroll;
+
+		.keybind {
+			display: flex;
+			width: 100%;
+
+			> * {
+				display: flex;
+				flex-wrap: wrap;
+			}
+
+			.action, .keycap {
+				padding: 0.4em;
+			}
+
+			.action {
+				flex: 0 0 auto;
+				width: 12em;
+				padding: calc(var(--pad-keygap) + var(--pad-keyinner));
+				padding-right: 1em;
+				max-width: 100%;
+				justify-content: flex-end;
+				align-items: flex-start;
+				color: orange;
+			}
+
+			.keys {
+				flex: 1 1 auto;
+				display: flex;
+				flex-wrap: wrap;
+				padding: var(--pad-keygap) 0;
+				gap: var(--pad-keygap);
+
+				.keycap {
+					flex: 1 1 auto;
+					display: flex;
+					justify-content: center;
+					max-width: max-content;
+					align-items: center;
+					padding: var(--pad-keyinner);
+					text-align: center;
+					border: 1px solid var(--outline-soft);
+					cursor: pointer;
+
+					^:is(:hover, :focus) {
+						border-color: var(--outline-hard);
+					}
+
+					^[data-add-new] {
+						color: lime;
+						border: 1px solid;
+						cursor: pointer;
+						margin-left: auto;
+
+						^:is(:hover, :focus) {
+							background-color: green;
+						}
+					}
+
+					^[data-selected] {
+						background: orange;
+						box-shadow: inset 0px 0px 45px -23px rgba(0, 0, 0, 1);
+					}
+				}
+			}
+		}
 	}
-	.buttons-container button {
-		padding: 0.5em;
-		border: none;
-		background-color: #81818126;
-		border-radius: 10px;
-		padding: 0.5em;
-		color: white;
-		font-size: 1.5em;
-		border-bottom: 2px solid rgba(129, 129, 129, 0.15);
-		cursor: pointer;
+
+	.buttons {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		margin: 1em;
+		gap: 1em;
+
+		button {
+			font: inherit;
+			padding: 0.5em;
+			background: #81818126;
+			padding: 0.5em;
+			color: white;
+			border: 1px solid var(--outline-soft);
+			border-radius: 0.5em;
+			cursor: pointer;
+
+			^:is(:hover, :focus) {
+				background: rgb(183 183 183 / 15%);
+				border-color: var(--outline-hard);
+			}
+
+			^[disabled] {
+				color: rgb(129 129 129 / 11%);
+				background: rgb(255 255 255 / 2%);
+			}
+
+			^:active:not([disabled]) {
+				border: none;
+			}
+		}
 	}
-	.buttons-container button:hover {
-		background-color: rgb(183 183 183 / 15%);
-	}
-	.buttons-container button[disabled] {
-		color: rgb(129 129 129 / 11%);
-		background-color: rgb(255 255 255 / 2%);
-	}
-	.buttons-container button:active:not([disabled]) {
-		border: none;
-	}
-	.container:nth-child(odd) .action, .keybinds {
-		background-color: rgba(70, 71, 76, 0.39);
-	}
-	.container:nth-child(odd) .keybinds, .action {
-		background-color: rgba(37, 37, 40, 0.43);
-	}
+
 	::-webkit-scrollbar {
 		width: 5px;
 	}
+
 	::-webkit-scrollbar-track {
 		background: rgb(255 255 255 / 9%);
 	}
+
 	::-webkit-scrollbar-thumb {
 		background: rgb(20 20 20);
 	}
+
 	::-webkit-scrollbar-thumb:hover {
 		background: #5555558a;
 	}
-	`
+
+`

@@ -5,9 +5,7 @@ export default css`
 :host {
 	display: block;
 	font-family: monospace;
-	color: white;
-	background: #0004;
-	border: 4px solid #fff8;
+	user-select: none;
 }
 
 .coordinatesbar {

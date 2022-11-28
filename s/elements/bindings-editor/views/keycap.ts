@@ -14,16 +14,22 @@ export const KeycapView = view(use => ({
 		onClickRebind: (event: MouseEvent) => void
 	}) => {
 
-	return html`
-		<div
-			class=bind
-			data-key-index=${keyIndex}
-			?data-selected=${isSelected}
-			@click=${onClickRebind}>
-
-			${isSelected
-				? html`<span class=info-key>press key</span>`
-				: html`<span class=key>${code}</span>`}
-		</div>
-	`
+	return isSelected
+		? html`
+			<div
+				class=keycap
+				data-selected
+				data-key=${keyIndex}>
+					press key
+			</div>
+		`
+		: html`
+			<div
+				class=keycap
+				tabindex="0"
+				data-key=${keyIndex}
+				@click=${onClickRebind}>
+					${code}
+			</div>
+		`
 })
