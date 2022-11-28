@@ -4,6 +4,7 @@ import {view} from "@chasemoskal/magical/x/view/view.js"
 
 import {WaitingForAssignment} from "../types.js"
 import {renderKeycap} from "../utils/render-keycap.js"
+import {stop} from "../../../tools/stop.js"
 
 export const KeybindView = view(use => ({
 		action,
@@ -44,19 +45,19 @@ export const KeybindView = view(use => ({
 				)}
 
 				${(showWaitingIndicatorForNewBind || null) && html`
-					<div class=keycap data-selected>
+					<button class=keycap data-selected>
 						press key
-					</div>
+					</button>
 				`}
 
 				${(!waitingForAssignment || null) && html`
-					<div
+					<button
 						class=keycap
 						data-add-new
 						tabindex="0"
-						@click=${onClickAddNewBind}>
+						@click=${stop(onClickAddNewBind)}>
 							add
-					</div>
+					</button>
 				`}
 			</div>
 		</div>

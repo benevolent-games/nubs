@@ -34,15 +34,15 @@ export function setupEventListeners({
 	}
 }
 
-export function setupEventListener(
+export function setupEventListener<E extends CustomEvent>(
 		target: EventTarget,
 		event: {eventName: string},
-		listener: Listener,
+		listener: (e: E) => void,
 	) {
 
 	return setupEventListeners({
 		targets: [target],
 		events: [event],
-		listeners: [listener],
+		listeners: [<any>listener],
 	})
 }

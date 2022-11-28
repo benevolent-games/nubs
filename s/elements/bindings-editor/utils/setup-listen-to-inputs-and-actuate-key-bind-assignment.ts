@@ -36,16 +36,20 @@ export function setupListenToInputsAndActuateKeyBindAssignment({
 			}
 		}
 
-		return setupEventListener(context, NubInputEvent, e => {
-			const waiting = getWaitingForAssignment()
-			if (waiting) {
-				const event = <NubInputEvent>e
-				if (event.detail.type === Nub.Type.Key) {
-					const detail = <Nub.Detail.Key>event.detail
-					const {action, keyIndex} = waiting
-					assignKeyBind(action, keyIndex, detail.code)
+		return setupEventListener<NubInputEvent>(
+			context,
+			NubInputEvent,
+			event => {
+				const waiting = getWaitingForAssignment()
+				if (waiting) {
+					if (event.detail.type === Nub.Type.Key) {
+						const detail = <Nub.Detail.Key>event.detail
+						const {action, keyIndex} = waiting
+						if (detail.pressed)
+							assignKeyBind(action, keyIndex, detail.code)
+					}
 				}
-			}
-		})
+			},
+		)
 	}
 }

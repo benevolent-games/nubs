@@ -1,5 +1,6 @@
 
 import {html} from "lit"
+import {stop} from "../../../tools/stop.js"
 import {view} from "@chasemoskal/magical/x/view/view.js"
 
 export const KeycapView = view(use => ({
@@ -16,20 +17,20 @@ export const KeycapView = view(use => ({
 
 	return isSelected
 		? html`
-			<div
+			<button
 				class=keycap
 				data-selected
 				data-key=${keyIndex}>
 					press key
-			</div>
+			</button>
 		`
 		: html`
-			<div
+			<button
 				class=keycap
 				tabindex="0"
 				data-key=${keyIndex}
-				@click=${onClickRebind}>
+				@click=${stop(onClickRebind)}>
 					${code}
-			</div>
+			</button>
 		`
 })

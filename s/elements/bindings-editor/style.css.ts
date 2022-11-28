@@ -48,6 +48,11 @@ export const styles = css`
 
 			.keycap {
 				flex: 1 1 auto;
+				font: inherit;
+				border: none;
+				color: inherit;
+				border-radius: 0.3em;
+				background: transparent;
 				display: flex;
 				justify-content: center;
 				max-width: max-content;
