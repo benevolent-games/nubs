@@ -49,7 +49,7 @@ choose ONE path — the easy way, or the hard way:
       ```
     - import nubs elements, register them to the dom
       ```js
-      import {getElements, themeElements, registerElements} from "@benev/nubs"
+      import {getElements, themeElements, registerElements, themeCss} from "@benev/nubs"
 
       // run customElements.define
       registerElements(
@@ -57,8 +57,11 @@ choose ONE path — the easy way, or the hard way:
         // apply a common css theme
         themeElements(
 
-          // get all nubs elements
-          getElements()
+          // stylesheet applied into the shadow doms
+          themeCss,
+
+          // get all nub element classes
+          getElements(),
         )
       )
       ```
