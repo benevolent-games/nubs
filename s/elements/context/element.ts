@@ -8,10 +8,10 @@ import {NubContextProperties} from "./types.js"
 import {defaultBindings} from "./parts/default-bindings.js"
 import {stateForBindingsStore} from "./parts/state-for-bindings-store.js"
 import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
+import {setupContextElementFunctions} from "./parts/setup-context-element-functions.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
-import {setupUpdateBindingsFunction as setupElementFunctions} from "./parts/setup-update-bindings-function.js"
 
-export type NubContextElement = InstanceType<typeof NubContext>
+export type NubContext = InstanceType<typeof NubContext>
 
 export const NubContext = element<NubContextProperties>({
 		styles,
@@ -28,7 +28,8 @@ export const NubContext = element<NubContextProperties>({
 		},
 	}).render(use => {
 
-	const [actions] = use.state(stateForActions)
+	const [actions] =
+		use.state(stateForActions)
 
 	const [{save, load}] =
 		use.state(
@@ -43,7 +44,11 @@ export const NubContext = element<NubContextProperties>({
 		)
 
 	use.setup(
-		setupElementFunctions({save, getBindings, setBindings})
+		setupContextElementFunctions({
+			save,
+			getBindings,
+			setBindings,
+		})
 	)
 
 	const handleInput = translateInputEventsToActionEvents({

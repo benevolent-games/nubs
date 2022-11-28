@@ -4,7 +4,7 @@ import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
 import {Waiting} from "../types.js"
 import {Bindings, Nub} from "../../../types.js"
 import {NubInputEvent} from "../../../events/input.js"
-import {NubContextElement} from "../../context/element.js"
+import {NubContext} from "../../context/element.js"
 import {setupEventListener} from "./setup-event-listeners.js"
 
 export function setupListenToInputsAndActuateKeyBindAssignment({
@@ -12,7 +12,7 @@ export function setupListenToInputsAndActuateKeyBindAssignment({
 		getWaiting,
 		setWaiting,
 	}: {
-		context: NubContextElement
+		context: NubContext
 		getWaiting: () => undefined | Waiting
 		setWaiting: StateSetter<undefined | Waiting>
 	}) {

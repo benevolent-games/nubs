@@ -5,16 +5,15 @@ import {component2 as element} from "@chasemoskal/magical/x/component.js"
 import {Waiting} from "./types.js"
 import {styles} from "./style.css.js"
 import {Bindings} from "../../types.js"
+import {buttonLabels} from "./utils/constants.js"
 import {stateForClosestContext} from "./utils/state-for-closest-context.js"
 import {renderKeybind as renderKeybindView} from "./utils/render-keybind.js"
 import {setupListenForBindingsChanges} from "./utils/setup-listen-for-bindings-changes.js"
 import {setupListenToInputsAndActuateKeyBindAssignment} from "./utils/setup-listen-to-inputs-and-actuate-key-bind-assignment.js"
-import {buttonLabels} from "./utils/constants.js"
 
-export const NubBindingsEditor = element<{}>({
+export const NubBindingsEditor = element({
 		styles,
 		shadow: true,
-		properties: {},
 	}).render(use => {
 
 	const [context] =
@@ -46,12 +45,7 @@ export const NubBindingsEditor = element<{}>({
 		<div class=keybindlist>
 			${Object
 				.entries(bindings["*️⃣"])
-				.map(
-					renderKeybindView(
-						waiting,
-						setWaiting,
-					)
-				)}
+				.map(renderKeybindView(waiting, setWaiting))}
 		</div>
 
 		<div class=buttons>
