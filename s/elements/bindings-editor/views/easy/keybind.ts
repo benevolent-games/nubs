@@ -2,9 +2,9 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical/x/view/view.js"
 
-import {Waiting} from "../types.js"
-import {buttonLabels} from "../utils/constants.js"
-import {renderKeycap} from "../utils/render-keycap.js"
+import {Waiting} from "../../types.js"
+import {renderKeycap} from "./render-keycap.js"
+import {buttonLabels} from "../../utils/constants.js"
 
 export const KeybindView = view(use => ({
 		action,

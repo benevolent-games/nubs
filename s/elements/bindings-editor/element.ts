@@ -2,56 +2,46 @@
 import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
-import {Waiting} from "./types.js"
 import {styles} from "./style.css.js"
 import {Bindings} from "../../types.js"
-import {buttonLabels} from "./utils/constants.js"
+import {EasyEditorPanelView} from "./views/easy-editor-panel.js"
+import {TextEditorPanelView} from "./views/text-editor-panel.js"
+import {prepareAssignKeybind} from "./utils/prepare-assign-keybind.js"
 import {stateForClosestContext} from "./utils/state-for-closest-context.js"
-import {renderKeybind as renderKeybindView} from "./utils/render-keybind.js"
 import {setupListenForBindingsChanges} from "./utils/setup-listen-for-bindings-changes.js"
-import {setupListenToInputsAndActuateKeyBindAssignment} from "./utils/setup-listen-to-inputs-and-actuate-key-bind-assignment.js"
 
 export const NubBindingsEditor = element({
 		styles,
 		shadow: true,
 	}).render(use => {
 
-	const [context] =
-		use.state(
-			stateForClosestContext(use.element)
-		)
+	const [context]
+		= use.state(stateForClosestContext(use.element))
 
-	const [bindings, setBindings] =
-		use.state<Bindings>(
-			() => context.getBindings()
-		)
+	const [bindings, setBindings]
+		= use.state<Bindings>(() => context.getBindings())
 
-	const [waiting, setWaiting, getWaiting] =
-		use.state<undefined | Waiting>(undefined)
+	const [showTextEditor, setShowTextEditor]
+		= use.state(false)
 
 	use.setup(
 		setupListenForBindingsChanges(context, setBindings)
 	)
 
-	use.setup(
-		setupListenToInputsAndActuateKeyBindAssignment({
-			context,
-			getWaiting,
-			setWaiting,
-		})
-	)
-
 	return html`
-		<div class=keybindlist>
-			${Object
-				.entries(bindings["*️⃣"])
-				.map(renderKeybindView(waiting, setWaiting))}
-		</div>
-
-		<div class=buttons>
-			<button @click=${context.restoreBindingsToDefaults}>
-				${buttonLabels.resetDefaults}
+		<div class=metabar>
+			<button @click=${() => setShowTextEditor(x => !x)}>
+				${showTextEditor ? "text mode" : "easy mode"}
 			</button>
 		</div>
+
+		${showTextEditor
+			? TextEditorPanelView({bindings})
+			: EasyEditorPanelView({
+				bindings,
+				eventTarget: context,
+				onResetDefaults: context.restoreBindingsToDefaults,
+				onKeybindAssignment: prepareAssignKeybind(context),
+			})}
 	`
 })

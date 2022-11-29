@@ -7,10 +7,36 @@ export const styles = css`
 	display: block;
 	font-family: monospace;
 	background: #111e;
+	color: #fffc;
 	--outline-soft: #fff4;
 	--outline-hard: #fff8;
 	--pad-keygap: 0.4em;
 	--pad-keyinner: 0.2em;
+}
+
+.metabar {
+	padding: 0.1em 0.5em;
+	button {
+		background: transparent;
+		border: none;
+		color: inherit;
+		opacity: 0.7;
+		cursor: pointer;
+		^:is(:hover) { opacity: 1; }
+	}
+}
+
+[data-panel="text-editor"] {
+	padding: 1em;
+
+	textarea {
+		width: 100%;
+		min-height: 24em;
+		background: #0007;
+		color: #fffa;
+		border: 0;
+		padding: 1em;
+	}
 }
 
 .keybindlist {

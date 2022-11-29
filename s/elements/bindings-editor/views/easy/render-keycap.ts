@@ -1,6 +1,6 @@
 
-import {Waiting} from "../types.js"
-import {KeycapView} from "../views/keycap.js"
+import {Waiting} from "../../types.js"
+import {KeycapView} from "./keycap.js"
 
 export function renderKeycap({
 		waiting,

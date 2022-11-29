@@ -2,7 +2,7 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical/x/view/view.js"
 
-import {buttonLabels} from "../utils/constants.js"
+import {buttonLabels} from "../../utils/constants.js"
 
 export const KeycapView = view(use => ({
 		code,
