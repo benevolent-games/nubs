@@ -20,7 +20,10 @@ import {NubBindingsEditor} from "./elements/bindings-editor/element.js"
 export {NubStick} from "./elements/stick/element.js"
 export {NubRealMouse} from "./elements/real/mouse.js"
 export {NubContext} from "./elements/context/element.js"
+export {NubRealKeyboard} from "./elements/real/keyboard.js"
 export {NubGridboard} from "./elements/gridboard/element.js"
+export {NubVisualizer} from "./elements/visualizer/element.js"
+export {NubBindingsEditor} from "./elements/bindings-editor/element.js"
 
 export const getElements = () => ({
 	NubStick,
