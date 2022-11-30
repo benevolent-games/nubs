@@ -35,19 +35,23 @@ export namespace Nub {
 	}
 }
 
+export interface ActionBinds {
+	[action: string]: string[]
+}
+
 export interface Bindings {
 
 	/** comments */
 	"👼": string[]
 
 	/** mouse action bindings */
-	"🖱️": {[action: string]: string[]}
+	"🖱": ActionBinds
 
 	/** vector2 action bindings */
-	"🕹️": {[action: string]: string[]}
+	"🕹️": ActionBinds
 
 	/** key action bindings */
-	"*️⃣": {[action: string]: string[]}
+	"*️⃣": ActionBinds
 }
 
 type ActionGroup<xDetail extends Nub.Detail.Any> = {[action: string]: xDetail | undefined}

@@ -1,6 +1,6 @@
 import {Bindings} from "../../../types.js"
 
-type Emojis = '👼' | '🖱️' | '🕹️' | '*️⃣'
+type Emojis = '👼' | '🖱' | '🕹️' | '*️⃣'
 
 export const mergeIdenticalKeys = (data: {[s: string]: any}) => {
 	return data.reduce((acc: {[x: string]: unknown[]}, curr: {[s: string]: string[]}) => {
@@ -40,7 +40,7 @@ export const translateNestedArrayToObject = (data: {[key: string]: string[]}) =>
 export function parseBindingsText(text: string): Bindings {
 	let bindings = <Bindings>{}
 
-	const emojis: Emojis[] = ['👼', '🖱️', '🕹️', '*️⃣']
+	const emojis: Emojis[] = ['👼', '🖱', '🕹️', '*️⃣']
 	const splitten = text.trim().split(/\s+/)
 	const indexes: number[] = []
 	let chunks: string[][] = []

@@ -3,7 +3,7 @@ import {Bindings} from "../../../types.js"
 
 export const defaultBindingsText = () => `
 👼 Cool Default Bindings
-🖱️ look :: lookmouse
+🖱 look :: lookmouse
 🕹️ look :: lookstick
 🕹️ move :: movestick
 *️⃣ forward :: KeyW ArrowUp
@@ -20,7 +20,7 @@ export const defaultBindings: Bindings = {
 	"👼": [
 		"Cool Default Bindings"
 	],
-	"🖱️": {
+	"🖱": {
 		"look": ["lookmouse"]
 	},
 	"🕹️": {

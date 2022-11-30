@@ -27,7 +27,7 @@ export function queryBindingsToRelateInputsToActions(
 			return find(code, bindings["*️⃣"])
 		},
 		mouse(name: string) {
-			return find(name, bindings["🖱️"])
+			return find(name, bindings["🖱"])
 		},
 		vector2(name: string) {
 			return find(name, bindings["🕹️"])
