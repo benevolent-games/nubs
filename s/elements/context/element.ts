@@ -10,6 +10,7 @@ import {stateForBindingsStore} from "./parts/state-for-bindings-store.js"
 import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
 import {setupContextElementFunctions} from "./parts/setup-context-element-functions.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
+import {parseBindingsText} from "./parts/parse-bindings-text.js"
 
 export type NubContext = InstanceType<typeof NubContext>
 
@@ -27,7 +28,7 @@ export const NubContext = element<NubContextProperties>({
 			restoreBindingsToDefaults: {attribute: false},
 		},
 	}).render(use => {
-
+	console.log(parseBindingsText(use.element['default-bindings']!))
 	const [actions] =
 		use.state(stateForActions)
 

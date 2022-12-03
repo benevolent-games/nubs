@@ -2,12 +2,28 @@ import {Bindings} from "../../../types.js"
 
 type Emojis = '👼' | '🖱' | '🕹️' | '*️⃣'
 
+export function checker() {
+	return {checkForDuplicateActions(actions: string[]) {
+		const result = actions.some(element => {
+			if (actions.indexOf(element) !== actions.lastIndexOf(element)) {
+				throw new Error("duplicate action in channel")
+			}
+			return false
+		})
+		return result
+	}
+}
+}
+
 export const mergeIdenticalKeys = (data: {[s: string]: any}) => {
 	return data.reduce((acc: {[x: string]: unknown[]}, curr: {[s: string]: string[]}) => {
 		Object.entries(curr).forEach(([key, value]) => {
 			if (acc[key] != null) {
+
+				// console.log(acc[key])
 				acc[key].push(value)
 			} else {
+				// console.log(acc[key])
 				acc[key] = [value]
 			}
 		})
@@ -20,28 +36,41 @@ export function getAllIndexes(arr: string[], val: Emojis, indexes: number[]) {
 			indexes.push(i)
 			return indexes
 }
-export const translateNestedArrayToObject = (data: {[key: string]: string[]}) => {
-	return Object.entries(data).map(([key, value]: [string, any[]]) => {
-		const k = <Emojis>key
+export const translateNestedArrayToObject = (data: {[channel: string]: string[]}) => {
+	const actions:string[] = []
+	return {
+		translated() {
+			return Object.entries(data).map(([channel, value]: [string, any[]]) => {
+		const ch = <Emojis>channel
 		return {
-			[k]: value.reduce((object: {[key: string]: string[]}, el: string[]) => {
-				if (k == "👼") {
-					return el
+			[ch]: value.reduce((object: {[channel: string]: string[]}, value: string[]) => {
+				if (ch == "👼") {
+					return [" " + value.join(" ")]
+					// .join(" ")
 				}
 				else {
-					object[el[0]] = [...el].splice(2)
+					const action = value[0]
+					console.log(value[0], "ACTOIN", channel, "KEY")
+					actions.push(action)
+					object[action] = [...value].splice(2)
 					return object
 				}
 			}, {})
 		}
 	})
+	},
+		actions() {
+			this.translated()
+			return actions
+		}
+	}
 }
 
 export function parseBindingsText(text: string): Bindings {
 	let bindings = <Bindings>{}
 
 	const emojis: Emojis[] = ['👼', '🖱', '🕹️', '*️⃣']
-	const splitten = text.trim().split(/\s+/)
+	const splitten = text.split(/\s+/)
 	const indexes: number[] = []
 	let chunks: string[][] = []
 
@@ -52,10 +81,16 @@ export function parseBindingsText(text: string): Bindings {
 	}
 
 	const arrayOfObjectsWithDuplicateKeys = Object.assign(chunks.map(([k, ...v]) => ({[k]: v})))
-	const arrayOfObjectsWithUniqueKeys:any = mergeIdenticalKeys(arrayOfObjectsWithDuplicateKeys)
-	const arrayOfObjects = translateNestedArrayToObject(arrayOfObjectsWithUniqueKeys)
-	const finalResult: Bindings = Object.assign({}, ...arrayOfObjects) 
+	console.log(arrayOfObjectsWithDuplicateKeys)
+	const arrayOfObjectsWithUniqueKeys: any = mergeIdenticalKeys(arrayOfObjectsWithDuplicateKeys)
+	console.log(arrayOfObjectsWithUniqueKeys)
+	const arrayOfObjects = translateNestedArrayToObject(arrayOfObjectsWithUniqueKeys).translated()
+	console.log(arrayOfObjects)
+	console.log(translateNestedArrayToObject(arrayOfObjectsWithUniqueKeys).actions())
+	
+	const finalResult: Bindings = Object.assign({}, ...arrayOfObjects)
+	console.log(finalResult)
 	bindings = finalResult
-
+	checker().checkForDuplicateActions(translateNestedArrayToObject(arrayOfObjectsWithUniqueKeys).actions())
 	return bindings
 }

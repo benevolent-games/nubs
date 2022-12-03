@@ -78,8 +78,11 @@ export default <Suite>{
 		return {
 			"simple one-liner": async() => {
 				const comments = parseComments(`👼 Cool Default Bindings`)
+
 				expect(comments.length).equals(1)
 				const [comment] = comments
+				console.log(comments, "here comments")
+
 				expect(typeof comment).equals("string")
 				expect(comment).equals(" Cool Default Bindings")
 			},
@@ -123,6 +126,8 @@ export default <Suite>{
 				🕹️ benevolent :: alpha
 				🕹️ benevolent :: bravo
 			`)).throws()
+			// it wont throw the error but it will remove the duplicate action
 		},
+
 	},
 }
