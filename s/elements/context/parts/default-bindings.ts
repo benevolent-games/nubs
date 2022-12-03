@@ -1,5 +1,5 @@
 
-import {Bindings} from "../../../types.js"
+import {Bindings} from "../../../bindings/types.js"
 
 export const defaultBindingsText = () => `
 👼 Cool Default Bindings
@@ -17,17 +17,17 @@ export const defaultBindingsText = () => `
 `.trim()
 
 export const defaultBindings: Bindings = {
-	"👼": [
-		"Cool Default Bindings"
+	"comment": [
+		" Cool Default Bindings"
 	],
-	"🖱": {
+	"mouse": {
 		"look": ["lookmouse"]
 	},
-	"🕹️": {
+	"vector2": {
 		"look": ["lookstick"],
 		"move": ["movestick"]
 	},
-	"*️⃣": {
+	"key": {
 		"forward": ["KeyW", "ArrowUp"],
 		"backward": ["KeyS", "ArrowDown"],
 		"leftward": ["KeyA", "ArrowLeft"],

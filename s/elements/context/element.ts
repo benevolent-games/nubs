@@ -3,14 +3,14 @@ import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import {styles} from "./style.css.js"
-import {Bindings} from "../../types.js"
 import {NubContextProperties} from "./types.js"
+import {Bindings} from "../../bindings/types.js"
+import {parseBindings} from "../../bindings/parse.js"
 import {defaultBindings} from "./parts/default-bindings.js"
 import {stateForBindingsStore} from "./parts/state-for-bindings-store.js"
 import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
 import {setupContextElementFunctions} from "./parts/setup-context-element-functions.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
-import {parseBindingsText} from "./parts/parse-bindings-text.js"
 
 export type NubContext = InstanceType<typeof NubContext>
 
@@ -28,7 +28,7 @@ export const NubContext = element<NubContextProperties>({
 			restoreBindingsToDefaults: {attribute: false},
 		},
 	}).render(use => {
-	console.log(parseBindingsText(use.element['default-bindings']!))
+
 	const [actions] =
 		use.state(stateForActions)
 
@@ -41,6 +41,9 @@ export const NubContext = element<NubContextProperties>({
 		use.state<Bindings>(
 			element => load()
 				?? element.defaultBindingsJson
+				?? (element["default-bindings"]
+					? parseBindings(element["default-bindings"])
+					: null)
 				?? defaultBindings
 		)
 

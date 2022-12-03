@@ -1,5 +1,5 @@
 
-import {Bindings} from "../../../types.js"
+import {Bindings} from "../../../bindings/types.js"
 
 export function queryBindingsToRelateInputsToActions(
 		bindings: Bindings,
@@ -24,13 +24,13 @@ export function queryBindingsToRelateInputsToActions(
 
 	return {
 		key(code: string) {
-			return find(code, bindings["*️⃣"])
+			return find(code, bindings.key)
 		},
 		mouse(name: string) {
-			return find(name, bindings["🖱"])
+			return find(name, bindings.mouse)
 		},
 		vector2(name: string) {
-			return find(name, bindings["🕹️"])
+			return find(name, bindings.vector2)
 		},
 	}
 }

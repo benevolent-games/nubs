@@ -3,7 +3,7 @@ import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import {styles} from "./style.css.js"
-import {Bindings} from "../../types.js"
+import {Bindings} from "../../bindings/types.js"
 import {EasyEditorPanelView} from "./views/easy-editor-panel.js"
 import {TextEditorPanelView} from "./views/text-editor-panel.js"
 import {prepareAssignKeybind} from "./utils/prepare-assign-keybind.js"
@@ -36,7 +36,12 @@ export const NubBindingsEditor = element({
 		</div>
 
 		${showTextEditor
-			? TextEditorPanelView({bindings})
+			? TextEditorPanelView({
+				bindings,
+				onClickSave(draft) {
+					context.updateBindings(draft)
+				},
+			})
 			: EasyEditorPanelView({
 				bindings,
 				eventTarget: context,

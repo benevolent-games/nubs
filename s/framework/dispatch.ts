@@ -1,5 +1,6 @@
 
-import {Bindings, Nub} from "../types.js"
+import {Nub} from "../types.js"
+import {Bindings} from "../bindings/types.js"
 import {NubInputEvent} from "../events/input.js"
 import {NubActionEvent} from "../events/action.js"
 import {NubBindingsEvent} from "../events/bindings.js"

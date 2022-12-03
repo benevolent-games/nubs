@@ -1,6 +1,6 @@
 
 import {AssignKeybind} from "../types.js"
-import {Bindings} from "../../../types.js"
+import {Bindings} from "../../../bindings/types.js"
 import {NubContext} from "../../context/element.js"
 
 export function prepareAssignKeybind(context: NubContext): AssignKeybind {
@@ -11,15 +11,15 @@ export function prepareAssignKeybind(context: NubContext): AssignKeybind {
 		) {
 
 		const bindings = <Bindings>structuredClone(context.getBindings())
-		const notRedundant = !bindings["*️⃣"][action].some(c => c === code)
+		const notRedundant = !bindings.key[action].some(c => c === code)
 
 		if (notRedundant) {
 			const isEscapeKey = code === "Escape"
 
 			if (isEscapeKey)
-				bindings["*️⃣"][action].splice(keyIndex, 1)
+				bindings.key[action].splice(keyIndex, 1)
 			else
-				bindings["*️⃣"][action][keyIndex] = code
+				bindings.key[action][keyIndex] = code
 
 			context.updateBindings(bindings)
 		}

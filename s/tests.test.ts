@@ -1,6 +1,6 @@
 
 import {Suite} from "cynic"
-import parser from "./elements/context/parts/parse-bindings-text.test.js"
+import parser from "./bindings/parse.test.js"
 
 export default <Suite>{
 	"bindings text format": {parser},

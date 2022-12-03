@@ -1,5 +1,5 @@
 
-import {Bindings} from "../types.js"
+import {Bindings} from "../bindings/types.js"
 
 export class NubBindingsEvent extends CustomEvent<{bindings: Bindings}> {
 	static eventName = "nub_bindings"
