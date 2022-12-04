@@ -68,45 +68,38 @@ export default <Suite>{
 		expect(bindings.vector2["benevolent"][0]).equals("bravo")
 	},
 
-	"👼 comments": async() => {
-		function parseComments(text: string) {
-			return parseBindings(text).comment
-		}
+	"comments": {
+		"simple one-liner": async() => {
+			const comments = parseBindings(`👼 Cool Default Bindings`).comment
 
-		return {
-			"simple one-liner": async() => {
-				const comments = parseBindings(`👼 Cool Default Bindings`).comment
+			expect(comments.length).equals(1)
+			const [comment] = comments
 
-				expect(comments.length).equals(1)
-				const [comment] = comments
-				console.log(comments, "here comments")
+			expect(typeof comment).equals("string")
+			expect(comment).equals(" Cool Default Bindings")
+		},
 
-				expect(typeof comment).equals("string")
-				expect(comment).equals(" Cool Default Bindings")
-			},
+		"multi-line with spacing (whitespace is kept)": async() => {
+			const rawComment = `
+				Cool
+					Default Bindings
+			`
+			const comments = parseBindings(`👼${rawComment}`).comment
+			expect(comments.length).equals(1)
+			const [comment] = comments
+			expect(comment).equals(rawComment)
+		},
 
-			"one-liner with spacing (whitespace is kept)": async() => {
-				const rawComment = `
-					Cool
-						Default Bindings
-				`
-				const comments = parseBindings(`👼${rawComment}`).comment
-				expect(comments.length).equals(1)
-				const [comment] = comments
-				expect(comment).equals(rawComment)
-			},
-
-			"two comments": async() => {
-				const comments = parseComments(`
-					👼 alpha
-					👼 bravo
-				`)
-				expect(comments.length).equals(2)
-				const [a, b] = comments
-				expect(a.trim()).equals("alpha")
-				expect(b.trim()).equals("bravo")
-			},
-		}
+		"two comments": async() => {
+			const comments = parseBindings(`
+				👼 alpha
+				👼 bravo
+			`).comment
+			expect(comments.length).equals(2)
+			const [a, b] = comments
+			expect(a.trim()).equals("alpha")
+			expect(b.trim()).equals("bravo")
+		},
 	},
 
 	"throws errors when": {
