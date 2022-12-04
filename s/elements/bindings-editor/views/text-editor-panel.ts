@@ -14,11 +14,13 @@ export const TextEditorPanelView = view(use => ({
 		onClickSave: (draft: Bindings) => void
 	}) => {
 
-	const [error, setError] = use.state<undefined | Error>(undefined)
+	const [problem, setProblem] = use.state<string>("")
 	const [draft, setDraft] = use.state<undefined | Bindings>(undefined)
 
 	function onTextAreaChange(event: InputEvent) {
 		const target = <HTMLTextAreaElement>event.target
+		setProblem("")
+		setDraft(undefined)
 		try {
 			setDraft(
 				parseBindings(target.value)
@@ -26,7 +28,7 @@ export const TextEditorPanelView = view(use => ({
 		}
 		catch (error) {
 			if (error instanceof Error)
-				setError(error)
+				setProblem(error.message)
 		}
 	}
 
@@ -36,14 +38,14 @@ export const TextEditorPanelView = view(use => ({
 		<div data-panel=text-editor>
 			<textarea @input=${onTextAreaChange}>${text}</textarea>
 
-			${error && html`
-				<div class=error>
-					${error.message}
+			${problem && html`
+				<div class=problem>
+					${problem}
 				</div>
 			`}
 
 			<div class=buttons>
-				${((draft && !error) && html`
+				${((draft && !problem) && html`
 					<button @click=${() => onClickSave(draft)}>
 						save
 					</button>
