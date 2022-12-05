@@ -1,7 +1,6 @@
 
 import {RecentKeyStats, Stats} from "./types.js"
 import {NubActionEvent} from "../../../events/action.js"
-import {nubActionSwitch} from "../../../tools/nub-switch.js"
 
 export function setupListeningToActionsAndRecordingStats({
 		eventTarget,
@@ -17,34 +16,31 @@ export function setupListeningToActionsAndRecordingStats({
 		setStatsForVector2: (x: Stats.Vector2) => void
 	}) {
 
-	return () => {
-		function listener(e: Event) {
-			nubActionSwitch(<NubActionEvent>e, {
-				key: event => {
-					setRecentKeyStats({
-						...getRecentKeyStats(),
-						[event.detail.action]: {
-							time: Date.now(),
-							detail: event.detail,
-						},
-					})
-				},
-				mouse(event) {
-					setStatsForMouse({
-						movement: event.detail.movement,
-						position: event.detail.position,
-					})
-				},
-				vector2(event) {
-					setStatsForVector2({
-						vector: event.detail.vector,
-					})
-				},
-			})
-		}
+	return () => NubActionEvent
+		.target(eventTarget)
+		.listen(e => NubActionEvent.switch(<NubActionEvent>e, {
 
-		return NubActionEvent
-			.target(eventTarget)
-			.listen(listener)
-	}
+			key: event => {
+				setRecentKeyStats({
+					...getRecentKeyStats(),
+					[event.detail.action]: {
+						time: Date.now(),
+						detail: event.detail,
+					},
+				})
+			},
+
+			mouse(event) {
+				setStatsForMouse({
+					movement: event.detail.movement,
+					position: event.detail.position,
+				})
+			},
+
+			vector2(event) {
+				setStatsForVector2({
+					vector: event.detail.vector,
+				})
+			},
+		}))
 }
