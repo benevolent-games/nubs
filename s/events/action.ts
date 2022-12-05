@@ -1,17 +1,14 @@
 
 import {Nub} from "../types.js"
+import {Xevent, xevent} from "../framework/xevent.js"
 
-export class NubActionEvent<xDetail extends Nub.Detail.Any = Nub.Detail.Any>
-	extends CustomEvent<xDetail & {action: string}> {
+export class NubActionEvent<D extends Nub.Detail.Any = Nub.Detail.Any>
+	extends Xevent<D & {action: string}> {
 
 	static eventName = "nub_action"
+	static target = xevent(NubActionEvent).target
 
-	constructor(detail: xDetail & {action: string}) {
-		super(NubActionEvent.eventName, {
-			detail,
-			bubbles: true,
-			composed: true,
-			cancelable: true,
-		})
+	constructor(detail: D & {action: string}) {
+		super(NubActionEvent.eventName, detail)
 	}
 }
