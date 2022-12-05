@@ -3,7 +3,7 @@ import {LitElement} from "lit"
 
 import {Nub} from "../../../types.js"
 import {GridboardStarters} from "../types.js"
-import {dispatchNubEvent} from "../../../framework/dispatch.js"
+import {NubInputEvent} from "../../../main.js"
 
 export function getStarters(
 		element: LitElement & {name: string}
@@ -15,12 +15,13 @@ export function getStarters(
 			draggableItem: element.shadowRoot!.querySelector(".draggable-item")!,
 		}),
 		triggerInput(data: Nub.Data.Key) {
-			dispatchNubEvent()
-				.atTarget(element)
-				.input()
-				.name(element.name)
-				.key(data)
-				.fire()
+			NubInputEvent
+				.target(element)
+				.dispatch({
+					...data,
+					type: Nub.Type.Key,
+					name: element.name,
+				})
 		},
 	}
 }

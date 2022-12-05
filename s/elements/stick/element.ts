@@ -2,11 +2,12 @@
 import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
+import {Nub} from "../../types.js"
 import styles from "./style.css.js"
 import * as v2 from "../../tools/v2.js"
 import {StickStarters} from "./types.js"
+import {NubInputEvent} from "../../events/input.js"
 import {prepBaseEvents} from "./setups/prep-base-events.js"
-import {dispatchNubEvent} from "../../framework/dispatch.js"
 import {prepDomControls} from "./setups/prep-dom-controls.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
 
@@ -40,12 +41,13 @@ export const NubStick = element<{
 			stick: use.element.shadowRoot!.querySelector(".stick")!,
 		}),
 		triggerInput(vector: v2.V2) {
-			dispatchNubEvent()
-				.atTarget(use.element)
-				.input()
-				.name(use.element.name)
-				.vector2({vector})
-				.fire()
+			NubInputEvent
+				.target(use.element)
+				.dispatch({
+					vector,
+					type: Nub.Type.Vector2,
+					name: use.element.name,
+				})
 		},
 	}
 

@@ -1,6 +1,7 @@
 
 import {LitElement} from "lit"
-import {dispatchNubEvent} from "../../../framework/dispatch.js"
+import {Nub} from "../../../types.js"
+import {NubInputEvent} from "../../../events/input.js"
 
 export function setupWindowKeyboardListening(
 		element: LitElement & {name: string}
@@ -8,12 +9,14 @@ export function setupWindowKeyboardListening(
 
 	const dispatch = ({code, repeat}: KeyboardEvent, pressed: boolean) => {
 		if (!repeat)
-			dispatchNubEvent()
-				.atTarget(element)
-				.input()
-				.name(element.name)
-				.key({code, pressed})
-				.fire()
+			NubInputEvent
+				.target(element)
+				.dispatch({
+					code,
+					pressed,
+					type: Nub.Type.Key,
+					name: element.name,
+				})
 	}
 
 	const keydown = (event: KeyboardEvent) => dispatch(event, true)

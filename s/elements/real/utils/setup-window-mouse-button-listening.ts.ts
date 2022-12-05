@@ -1,6 +1,7 @@
 
 import {LitElement} from "lit"
-import {dispatchNubEvent} from "../../../framework/dispatch.js"
+import {Nub} from "../../../types.js"
+import {NubInputEvent} from "../../../events/input.js"
 import {convertMouseButtonToKeyCode} from "./convert-mouse-button-to-key-code.js"
 
 export function setupWindowMouseButtonListening(
@@ -11,22 +12,26 @@ export function setupWindowMouseButtonListening(
 		mousedown({button}: MouseEvent) {
 			const pressed = true
 			const code = convertMouseButtonToKeyCode(button)
-			dispatchNubEvent()
-				.atTarget(element)
-				.input()
-				.name(element.name)
-				.key({code, pressed})
-				.fire()
+			NubInputEvent
+				.target(element)
+				.dispatch({
+					code,
+					pressed,
+					type: Nub.Type.Key,
+					name: element.name,
+				})
 		},
 		mouseup({button}: MouseEvent) {
 			const pressed = false
 			const code = convertMouseButtonToKeyCode(button)
-			dispatchNubEvent()
-				.atTarget(element)
-				.input()
-				.name(element.name)
-				.key({code, pressed})
-				.fire()
+			NubInputEvent
+				.target(element)
+				.dispatch({
+					code,
+					pressed,
+					type: Nub.Type.Key,
+					name: element.name,
+				})
 		},
 	}
 

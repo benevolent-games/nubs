@@ -1,21 +1,21 @@
 
 import {LitElement} from "lit"
-import {dispatchNubEvent} from "../../../framework/dispatch.js"
+import {Nub} from "../../../types.js"
+import {NubInputEvent} from "../../../events/input.js"
 
 export function setupWindowMouseMoveListening(
 		element: LitElement & {name: string}
 	) {
 
 	function handleMouseMove({movementX, movementY, clientX, clientY}: MouseEvent) {
-		dispatchNubEvent()
-			.atTarget(element)
-			.input()
-			.name(element.name)
-			.mouse({
+		NubInputEvent
+			.target(element)
+			.dispatch({
 				movement: [movementX, movementY],
 				position: [clientX, clientY],
+				name: element.name,
+				type: Nub.Type.Mouse,
 			})
-			.fire()
 	}
 
 	window.addEventListener("mousemove", handleMouseMove)

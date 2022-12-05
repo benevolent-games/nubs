@@ -43,10 +43,8 @@ export function setupListeningToActionsAndRecordingStats({
 			})
 		}
 
-		eventTarget.addEventListener("nub_action", listener)
-
-		return () => {
-			eventTarget.removeEventListener("nub_action", listener)
-		}
+		return NubActionEvent
+			.target(eventTarget)
+			.listen(listener)
 	}
 }
