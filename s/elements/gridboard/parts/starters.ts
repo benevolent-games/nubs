@@ -3,7 +3,7 @@ import {LitElement} from "lit"
 
 import {Nub} from "../../../types.js"
 import {GridboardStarters} from "../types.js"
-import {NubInputEvent} from "../../../main.js"
+import {NubInputEvent} from "../../../events/input.js"
 
 export function getStarters(
 		element: LitElement & {name: string}
