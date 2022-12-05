@@ -1,8 +1,9 @@
 
 import {LitElement} from "lit"
 
+import {Actions, Nub} from "../../../types.js"
+import {Bindings} from "../../../bindings/types.js"
 import {NubInputEvent} from "../../../events/input.js"
-import {Actions, Bindings, Nub} from "../../../types.js"
 import {dispatchNubEvent} from "../../../framework/dispatch.js"
 import {queryBindingsToRelateInputsToActions} from "./query-bindings-to-relate-inputs-to-actions.js"
 

@@ -1,6 +1,6 @@
 
-import {NubContext} from "./element.js"
-import {Actions, Bindings} from "../../types.js"
+import {Actions} from "../../types.js"
+import {Bindings} from "../../bindings/types.js"
 
 export type NubContextProperties = NubContextInputs & NubContextOutputs
 

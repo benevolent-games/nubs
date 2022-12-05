@@ -3,8 +3,9 @@ import {html} from "lit"
 import {component2 as element} from "@chasemoskal/magical/x/component.js"
 
 import {styles} from "./style.css.js"
-import {Bindings} from "../../types.js"
 import {NubContextProperties} from "./types.js"
+import {Bindings} from "../../bindings/types.js"
+import {parseBindings} from "../../bindings/parse.js"
 import {defaultBindings} from "./parts/default-bindings.js"
 import {stateForBindingsStore} from "./parts/state-for-bindings-store.js"
 import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
@@ -40,6 +41,9 @@ export const NubContext = element<NubContextProperties>({
 		use.state<Bindings>(
 			element => load()
 				?? element.defaultBindingsJson
+				?? (element["default-bindings"]
+					? parseBindings(element["default-bindings"])
+					: null)
 				?? defaultBindings
 		)
 

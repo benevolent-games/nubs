@@ -94,7 +94,7 @@ now that nubs is installed onto your web page, you can start using nub elements.
     <nub-context
       default-bindings="
       👼 Cool Default Bindings
-      🖱️ look :: lookmouse
+      🖱 look :: lookmouse
       🕹️ look :: lookstick
       🕹️ move :: movestick
       *️⃣ forward :: KeyW ArrowUp

@@ -18,13 +18,15 @@
 		"compile": "tsc",
 		"watch": "tsc -w",
 		"start": "http-server",
-		"test": "exit 0"
+		"test-debug": "node inspect node_modules/cynic/dist/cli.js node x/tests.test.js",
+		"test": "cynic node x/tests.test.js"
 	},
 	"dependencies": {
 		"@chasemoskal/magical": "^0.0.5",
 		"lit": "^2.4.1"
 	},
 	"devDependencies": {
+		"cynic": "^0.1.0-dev.16",
 		"es-module-shims": "^1.6.2",
 		"http-server": "^14.1.1",
 		"importly": "^0.2.0",

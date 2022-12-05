@@ -2,10 +2,10 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical/x/view/view.js"
 
-import {Bindings} from "../../../types.js"
 import {hackGetter} from "./easy/hack-getter.js"
 import {buttonLabels} from "../utils/constants.js"
 import {AssignKeybind, Waiting} from "../types.js"
+import {Bindings} from "../../../bindings/types.js"
 import {renderKeybind} from "./easy/render-keybind.js"
 import {setupListenToInputsAndActuateKeyBindAssignment} from "../utils/setup-listen-to-inputs-and-actuate-key-bind-assignment.js"
 
@@ -37,7 +37,7 @@ export const EasyEditorPanelView = view(use => ({
 		<div data-panel=easy-editor>
 			<div class=keybindlist>
 				${Object
-					.entries(bindings["*️⃣"])
+					.entries(bindings.key)
 					.map(renderKeybind(waiting, setWaiting))}
 			</div>
 

@@ -1,5 +1,5 @@
 
-import {Bindings} from "../../../types.js"
+import {Bindings} from "../../../bindings/types.js"
 import {jsonStorage} from "../../../tools/json-storage.js"
 
 export function stateForBindingsStore(
