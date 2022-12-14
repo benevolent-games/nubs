@@ -1,65 +1,70 @@
 
 import {html} from "lit"
-import {component2 as element} from "@chasemoskal/magical/x/component.js"
+import {property} from "lit/decorators.js"
+import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
-import {NubContextProperties} from "./types.js"
-import {Bindings} from "../../bindings/types.js"
-import {parseBindings} from "../../bindings/parse.js"
-import {defaultBindings} from "./parts/default-bindings.js"
-import {stateForBindingsStore} from "./parts/state-for-bindings-store.js"
-import {stateForActions as stateForActions} from "./parts/state-for-actions.js"
-import {setupContextElementFunctions} from "./parts/setup-context-element-functions.js"
+import {setBindings} from "./parts/set-bindings.js"
+import {bindingsStore} from "./parts/bindings-store.js"
+import {makeActionsMemory} from "./parts/actions-memory.js"
+import {fallbackBindings} from "./parts/fallback-bindings.js"
+import {Bindings, BindingsStore} from "../../bindings/types.js"
+import {getDefaultBindings} from "./parts/get-default-bindings.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
 
-export type NubContext = InstanceType<typeof NubContext>
+@mixinCss(styles)
+export class NubContext extends MagicElement {
 
-export const NubContext = element<NubContextProperties>({
-		styles,
-		shadow: true,
-		properties: {
-			name: {type: String, reflect: true},
-			defaultBindingsJson: {attribute: false},
-			"default-bindings": {type: String},
+	get #defaultBindings() { return getDefaultBindings(this) }
 
-			actions: {attribute: false},
-			getBindings: {attribute: false},
-			updateBindings: {attribute: false},
-			restoreBindingsToDefaults: {attribute: false},
-		},
-	}).render(use => {
+	#actions = makeActionsMemory()
+	#bindings: Bindings = fallbackBindings
+	#store: BindingsStore | undefined
 
-	const [actions] =
-		use.state(stateForActions)
+	@property()
+	name: string = ""
 
-	const [{save, load}] =
-		use.state(
-			stateForBindingsStore(localStorage, use.element.name)
-		)
+	@property()
+	defaultBindingsJson: Bindings | undefined
 
-	const [bindings, setBindings, getBindings] =
-		use.state<Bindings>(
-			element => load()
-				?? element.defaultBindingsJson
-				?? (element["default-bindings"]
-					? parseBindings(element["default-bindings"])
-					: null)
-				?? defaultBindings
-		)
+	@property()
+	["default-bindings"] = ""
 
-	use.setup(
-		setupContextElementFunctions({
-			save,
-			getBindings,
-			setBindings,
+	get actions() { return this.#actions.readable }
+
+	@property({attribute: false})
+	get bindings(): Bindings { return this.#bindings }
+	set bindings(newBindings) {
+		const oldBindings = this.#bindings
+		this.#bindings = newBindings
+		setBindings({
+			newBindings,
+			oldBindings,
+			element: this,
+			store: this.#store,
 		})
-	)
+	}
 
-	const handleInput = translateInputEventsToActionEvents({
-		actions,
-		bindings,
-		element: use.element,
-	})
+	restoreBindingsToDefaults = () => {
+		this.bindings = this.#defaultBindings
+	}
 
-	return html`<slot @nub_input=${handleInput}></slot>`
-})
+	firstUpdated() {
+		super.firstUpdated()
+		this.#store = bindingsStore(localStorage, this.name)
+		this.bindings = this.#store.load() ?? this.#defaultBindings
+	}
+
+	realize() {
+		const {bindings} = this
+		const handleInput = bindings
+			? translateInputEventsToActionEvents({
+				bindings,
+				element: this,
+				actions: this.#actions.writable,
+			})
+			: () => console.warn("nub_input before bindings are set")
+
+		return html`<slot @nub_input=${handleInput}></slot>`
+	}
+}

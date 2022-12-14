@@ -12,17 +12,17 @@
 	],
 	"scripts": {
 		"build": "run-s clean && run-p importly compile",
-		"dev": "run-p start watch",
+		"start": "run-p http watch",
+		"http": "http-server",
 		"clean": "rimraf x && mkdirp x",
 		"importly": "importly --host=node_modules < package-lock.json > x/importmap.json",
 		"compile": "tsc",
 		"watch": "tsc -w",
-		"start": "http-server",
 		"test-debug": "node inspect node_modules/cynic/dist/cli.js node x/tests.test.js",
 		"test": "cynic node x/tests.test.js"
 	},
 	"dependencies": {
-		"@chasemoskal/magical": "^0.0.5",
+		"@chasemoskal/magical": "^0.1.2",
 		"lit": "^2.4.1"
 	},
 	"devDependencies": {

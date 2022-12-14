@@ -1,5 +1,5 @@
 
-import {Constructor} from "@chasemoskal/magical/x/types.js"
+import {Constructor} from "@chasemoskal/magical"
 
 export class Xevent<D> extends CustomEvent<D> {
 	constructor(name: string, detail: D) {

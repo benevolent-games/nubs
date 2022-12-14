@@ -50,7 +50,7 @@ h1 {
 	gap: 1em;
 }
 
-nub-visualizer, nub-bindings-editor {
+nub-visualizer, nub-editor {
 	background: #0004;
 	border: 2px solid #fff8;
 }
@@ -60,7 +60,7 @@ nub-stick {
 	height: 8em;
 }
 
-nub-bindings-editor {
+nub-editor {
 	max-width: 38em;
 	margin: auto;
 	margin-top: 1em;

@@ -1,12 +1,12 @@
 
 import {html} from "lit"
-import {view} from "@chasemoskal/magical/x/view/view.js"
+import {view} from "@chasemoskal/magical"
 
 import {Bindings} from "../../../bindings/types.js"
 import {parseBindings} from "../../../bindings/parse.js"
 import {buildBindings} from "../../../bindings/build.js"
 
-export const TextEditorPanelView = view(use => ({
+export const TextEditorPanelView = view({}, use => ({
 		bindings,
 		onClickSave,
 	}: {

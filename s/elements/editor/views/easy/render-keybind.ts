@@ -1,5 +1,5 @@
 
-import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
+import {StateSetter} from "@chasemoskal/magical"
 
 import {Waiting} from "../../types.js"
 import {KeybindView} from "./keybind.js"

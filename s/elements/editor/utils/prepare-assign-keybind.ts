@@ -10,7 +10,7 @@ export function prepareAssignKeybind(context: NubContext): AssignKeybind {
 			code: string,
 		) {
 
-		const bindings = <Bindings>structuredClone(context.getBindings())
+		const bindings = <Bindings>structuredClone(context.bindings)
 		const notRedundant = !bindings.key[action].some(c => c === code)
 
 		if (notRedundant) {
@@ -21,7 +21,7 @@ export function prepareAssignKeybind(context: NubContext): AssignKeybind {
 			else
 				bindings.key[action][keyIndex] = code
 
-			context.updateBindings(bindings)
+			context.bindings = bindings
 		}
 	}
 }
