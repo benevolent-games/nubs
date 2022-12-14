@@ -9,11 +9,11 @@ import {parseBindings} from "../../bindings/parse.js"
 import {defaultBindings} from "./parts/default-bindings.js"
 import {makeActionsMemory} from "./parts/actions-memory.js"
 import {Bindings, BindingsStore} from "../../bindings/types.js"
-import {stateForBindingsStore} from "./parts/state-for-bindings-store.js"
+import {bindingsStore} from "./parts/bindings-store.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
 
 @mixinCss(styles)
-export class NubContextAlpha extends MagicElement {
+export class NubContext extends MagicElement {
 	
 	@property()
 	name: string = ""
@@ -33,19 +33,19 @@ export class NubContextAlpha extends MagicElement {
 	}
 
 	#actions = makeActionsMemory()
-	#bindings: Bindings | undefined
+	#bindings: Bindings = defaultBindings
 	#store: BindingsStore | undefined
 
 	get actions() { return this.#actions.readable }
 
 	@property({attribute: false})
-	get bindings(): Bindings | undefined { return this.#bindings }
-	set bindings(newBindings) {
+	get bindings(): Bindings { return this.#bindings }
+	set bindings(bindings) {
 		const oldBindings = this.#bindings
-		this.#bindings = newBindings
+		this.#bindings = bindings
 
 		if (this.#store)
-			this.#store.save(newBindings)
+			this.#store.save(bindings)
 		else
 			console.warn("bindings set before store ready")
 
@@ -53,12 +53,12 @@ export class NubContextAlpha extends MagicElement {
 
 		NubBindingsEvent
 			.target(this)
-			.dispatch({bindings: newBindings})
+			.dispatch({bindings})
 	}
 
 	firstUpdated() {
 		super.firstUpdated()
-		this.#store = stateForBindingsStore(localStorage, this.name)()
+		this.#store = bindingsStore(localStorage, this.name)
 		this.#bindings = this.#store.load() ?? this.defaultBindings
 	}
 
@@ -80,55 +80,3 @@ export class NubContextAlpha extends MagicElement {
 		return html`<slot @nub_input=${handleInput}></slot>`
 	}
 }
-
-// export type NubContext = InstanceType<typeof NubContext>
-
-// export const NubContext = element<NubContextProperties>({
-// 		styles,
-// 		shadow: true,
-// 		properties: {
-// 			name: {type: String, reflect: true},
-// 			defaultBindingsJson: {attribute: false},
-// 			"default-bindings": {type: String},
-
-// 			actions: {attribute: false},
-// 			getBindings: {attribute: false},
-// 			updateBindings: {attribute: false},
-// 			restoreBindingsToDefaults: {attribute: false},
-// 		},
-// 	}).render(use => {
-
-// 	const [actions] =
-// 		use.state(stateForActions)
-
-// 	const [{save, load}] =
-// 		use.state(
-// 			stateForBindingsStore(localStorage, use.element.name)
-// 		)
-
-// 	const [bindings, setBindings, getBindings] =
-// 		use.state<Bindings>(
-// 			element => load()
-// 				?? element.defaultBindingsJson
-// 				?? (element["default-bindings"]
-// 					? parseBindings(element["default-bindings"])
-// 					: null)
-// 				?? defaultBindings
-// 		)
-
-// 	use.setup(
-// 		setupContextElementFunctions({
-// 			save,
-// 			getBindings,
-// 			setBindings,
-// 		})
-// 	)
-
-// 	const handleInput = translateInputEventsToActionEvents({
-// 		actions,
-// 		bindings,
-// 		element: use.element,
-// 	})
-
-// 	return html`<slot @nub_input=${handleInput}></slot>`
-// })

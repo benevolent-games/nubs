@@ -11,20 +11,20 @@ import {prepareAssignKeybind} from "./utils/prepare-assign-keybind.js"
 import {stateForClosestContext} from "./utils/state-for-closest-context.js"
 
 @mixinCss(styles)
-export class NubEditor extends MagicElement {
+export class NubBindingsEditor extends MagicElement {
 	realize() {
 		const {use} = this
 
 		const [context]
 			= use.state(stateForClosestContext(use.element))
 
-		const [bindings, setBindings]
-			= use.state<Bindings>(() => context.getBindings())
-
 		const [showTextEditor, setShowTextEditor]
 			= use.state(false)
 
-		use.setup(
+		const [bindings, setBindings]
+			= use.state<Bindings>(() => context.bindings)
+
+		use.setup(() =>
 			NubBindingsEvent
 				.target(context)
 				.listen(event => setBindings(event.detail.bindings))
@@ -41,7 +41,7 @@ export class NubEditor extends MagicElement {
 				? TextEditorPanelView({
 					bindings,
 					onClickSave(draft) {
-						context.updateBindings(draft)
+						context.bindings = draft
 					},
 				})
 				: EasyEditorPanelView({

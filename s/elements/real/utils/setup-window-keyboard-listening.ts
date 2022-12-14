@@ -19,8 +19,11 @@ export function setupWindowKeyboardListening(
 				})
 	}
 
-	const keydown = (event: KeyboardEvent) => dispatch(event, true)
-	const keyup = (event: KeyboardEvent) => dispatch(event, false)
+	const pressed = true
+	const unpressed = false
+
+	const keydown = (event: KeyboardEvent) => dispatch(event, pressed)
+	const keyup = (event: KeyboardEvent) => dispatch(event, unpressed)
 
 	window.addEventListener("keydown", keydown)
 	window.addEventListener("keyup", keyup)

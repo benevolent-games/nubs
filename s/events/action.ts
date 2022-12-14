@@ -1,6 +1,6 @@
 
 import {Nub} from "../types.js"
-import {event, MagicEventBase} from "@chasemoskal/magical"
+import {MagicEventBase, ev} from "@chasemoskal/magical"
 
 type Any = Nub.Detail.Any
 
@@ -9,7 +9,7 @@ export class NubActionEvent
 		extends MagicEventBase<D & {action: string}> {
 
 	static type = "nub_action"
-	static target = event(this).target
+	static target = ev(this).target
 
 	static switch<R = void>(
 			event: NubActionEvent,
