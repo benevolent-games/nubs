@@ -4,12 +4,12 @@ import {property} from "lit/decorators.js"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
-import {parseBindings} from "../../bindings/parse.js"
+import {setBindings} from "./parts/set-bindings.js"
 import {bindingsStore} from "./parts/bindings-store.js"
-import {NubBindingsEvent} from "../../events/bindings.js"
-import {defaultBindings} from "./parts/default-bindings.js"
 import {makeActionsMemory} from "./parts/actions-memory.js"
+import {fallbackBindings} from "./parts/fallback-bindings.js"
 import {Bindings, BindingsStore} from "../../bindings/types.js"
+import {getDefaultBindings} from "./parts/get-default-bindings.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
 
 @mixinCss(styles)
@@ -24,51 +24,38 @@ export class NubContext extends MagicElement {
 	@property()
 	["default-bindings"] = ""
 
-	get defaultBindings() {
-		return this.defaultBindingsJson
-			?? (this["default-bindings"]
-				? parseBindings(this["default-bindings"])
-				: null)
-			?? defaultBindings
-	}
-
+	get #defaultBindings() { return getDefaultBindings(this) }
 	#actions = makeActionsMemory()
-	#bindings: Bindings = defaultBindings
+	#bindings: Bindings = fallbackBindings
 	#store: BindingsStore | undefined
 
 	get actions() { return this.#actions.readable }
 
 	@property({attribute: false})
 	get bindings(): Bindings { return this.#bindings }
-	set bindings(bindings) {
+	set bindings(newBindings) {
 		const oldBindings = this.#bindings
-		this.#bindings = bindings
+		this.#bindings = newBindings
+		setBindings({
+			newBindings,
+			oldBindings,
+			element: this,
+			store: this.#store,
+		})
+	}
 
-		if (this.#store)
-			this.#store.save(bindings)
-		else
-			console.warn("bindings set before store ready")
-
-		this.requestUpdate("bindings", oldBindings)
-
-		NubBindingsEvent
-			.target(this)
-			.dispatch({bindings})
+	restoreBindingsToDefaults = () => {
+		this.bindings = this.#defaultBindings
 	}
 
 	firstUpdated() {
 		super.firstUpdated()
 		this.#store = bindingsStore(localStorage, this.name)
-		this.bindings = this.#store.load() ?? this.defaultBindings
-	}
-
-	restoreBindingsToDefaults = () => {
-		this.bindings = this.defaultBindings
+		this.bindings = this.#store.load() ?? this.#defaultBindings
 	}
 
 	realize() {
 		const {actions, bindings} = this
-
 		const handleInput = bindings
 			? translateInputEventsToActionEvents({
 				actions,
