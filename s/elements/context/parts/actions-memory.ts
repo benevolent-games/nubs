@@ -24,8 +24,12 @@ function prepareEventMemory<xDetail extends Nub.Detail.Any>() {
 		return true
 	}
 
+	const noSet = () => {
+		throw new Error("cannot change readonly actions")
+	}
+
 	return {
-		readable: new Proxy(<any>{}, {get}),
+		readable: new Proxy(<any>{}, {get, set: noSet}),
 		writable: new Proxy(<any>{}, {get, set}),
 	}
 }

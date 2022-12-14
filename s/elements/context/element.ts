@@ -14,7 +14,13 @@ import {translateInputEventsToActionEvents} from "./parts/translate-input-events
 
 @mixinCss(styles)
 export class NubContext extends MagicElement {
-	
+
+	get #defaultBindings() { return getDefaultBindings(this) }
+
+	#actions = makeActionsMemory()
+	#bindings: Bindings = fallbackBindings
+	#store: BindingsStore | undefined
+
 	@property()
 	name: string = ""
 
@@ -23,11 +29,6 @@ export class NubContext extends MagicElement {
 
 	@property()
 	["default-bindings"] = ""
-
-	get #defaultBindings() { return getDefaultBindings(this) }
-	#actions = makeActionsMemory()
-	#bindings: Bindings = fallbackBindings
-	#store: BindingsStore | undefined
 
 	get actions() { return this.#actions.readable }
 
@@ -55,12 +56,12 @@ export class NubContext extends MagicElement {
 	}
 
 	realize() {
-		const {actions, bindings} = this
+		const {bindings} = this
 		const handleInput = bindings
 			? translateInputEventsToActionEvents({
-				actions,
 				bindings,
 				element: this,
+				actions: this.#actions.writable,
 			})
 			: () => console.warn("nub_input before bindings are set")
 
