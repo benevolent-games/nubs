@@ -4,12 +4,12 @@ import {property} from "lit/decorators.js"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
-import {NubBindingsEvent} from "../../main.js"
 import {parseBindings} from "../../bindings/parse.js"
+import {bindingsStore} from "./parts/bindings-store.js"
+import {NubBindingsEvent} from "../../events/bindings.js"
 import {defaultBindings} from "./parts/default-bindings.js"
 import {makeActionsMemory} from "./parts/actions-memory.js"
 import {Bindings, BindingsStore} from "../../bindings/types.js"
-import {bindingsStore} from "./parts/bindings-store.js"
 import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
 
 @mixinCss(styles)
@@ -59,10 +59,10 @@ export class NubContext extends MagicElement {
 	firstUpdated() {
 		super.firstUpdated()
 		this.#store = bindingsStore(localStorage, this.name)
-		this.#bindings = this.#store.load() ?? this.defaultBindings
+		this.bindings = this.#store.load() ?? this.defaultBindings
 	}
 
-	restoreBindingsToDefaults() {
+	restoreBindingsToDefaults = () => {
 		this.bindings = this.defaultBindings
 	}
 

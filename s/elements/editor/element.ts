@@ -11,7 +11,7 @@ import {prepareAssignKeybind} from "./utils/prepare-assign-keybind.js"
 import {stateForClosestContext} from "./utils/state-for-closest-context.js"
 
 @mixinCss(styles)
-export class NubBindingsEditor extends MagicElement {
+export class NubEditor extends MagicElement {
 	realize() {
 		const {use} = this
 
