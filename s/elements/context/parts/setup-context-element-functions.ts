@@ -1,8 +1,8 @@
 
 import {LitElement} from "lit"
 
-import {Bindings} from "../../../bindings/types.js"
 import {NubContextProperties} from "../types.js"
+import {Bindings} from "../../../bindings/types.js"
 import {defaultBindings} from "./default-bindings.js"
 import {NubBindingsEvent} from "../../../events/bindings.js"
 

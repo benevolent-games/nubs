@@ -9,3 +9,8 @@ export interface Bindings {
 	vector2: Binds
 	key: Binds
 }
+
+export interface BindingsStore {
+	save(bindings: Bindings | undefined): void
+	load(): Bindings | undefined
+}

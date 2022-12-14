@@ -1,10 +1,10 @@
 
 import {html} from "lit"
-import {view} from "@chasemoskal/magical/x/view/view.js"
+import {view} from "@chasemoskal/magical"
 
 import {buttonLabels} from "../../utils/constants.js"
 
-export const KeycapView = view(use => ({
+export const KeycapView = view({shadow: false}, use => ({
 		code,
 		keyIndex,
 		isWaiting,

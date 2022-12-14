@@ -1,5 +1,5 @@
 
-import {Bindings} from "../../../bindings/types.js"
+import {BindingsStore} from "../../../bindings/types.js"
 import {jsonStorage} from "../../../tools/json-storage.js"
 
 export function stateForBindingsStore(
@@ -7,16 +7,16 @@ export function stateForBindingsStore(
 		name: string = "1",
 	) {
 
-	return () => {
+	return (): BindingsStore => {
 		const key = `nubs_bindings_${name}`
 		const json = jsonStorage(storage)
 
 		return {
-			save: (bindings: Bindings) =>
-				json.setItem<Bindings>(key, bindings),
+			save: (bindings) =>
+				json.setItem(key, bindings),
 
 			load: () =>
-				json.getItem<Bindings>(key),
+				json.getItem(key),
 		}
 	}
 }

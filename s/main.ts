@@ -1,6 +1,6 @@
 
-export {themeElements} from "@chasemoskal/magical/x/theme-elements.js"
-export {registerElements} from "@chasemoskal/magical/x/register-elements.js"
+export {themeElements} from "@chasemoskal/magical"
+export {registerElements} from "@chasemoskal/magical"
 
 export {Nub} from "./types.js"
 export {NubInputEvent} from "./events/input.js"
