@@ -4,11 +4,11 @@ import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
 import {Bindings} from "../../bindings/types.js"
+import {NubBindingsEvent} from "../../events/bindings.js"
 import {EasyEditorPanelView} from "./views/easy-editor-panel.js"
 import {TextEditorPanelView} from "./views/text-editor-panel.js"
 import {prepareAssignKeybind} from "./utils/prepare-assign-keybind.js"
 import {stateForClosestContext} from "./utils/state-for-closest-context.js"
-import {setupListenForBindingsChanges} from "./utils/setup-listen-for-bindings-changes.js"
 
 @mixinCss(styles)
 export class NubEditor extends MagicElement {
@@ -25,7 +25,9 @@ export class NubEditor extends MagicElement {
 			= use.state(false)
 
 		use.setup(
-			setupListenForBindingsChanges(context, setBindings)
+			NubBindingsEvent
+				.target(context)
+				.listen(event => setBindings(event.detail.bindings))
 		)
 
 		return html`

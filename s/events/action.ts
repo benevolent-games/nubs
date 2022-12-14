@@ -1,12 +1,15 @@
 
 import {Nub} from "../types.js"
-import {Xevent, xevent} from "../framework/xevent.js"
+import {event, MagicEventBase} from "@chasemoskal/magical"
 
-export class NubActionEvent<D extends Nub.Detail.Any = Nub.Detail.Any>
-	extends Xevent<D & {action: string}> {
+type Any = Nub.Detail.Any
 
-	static eventName = "nub_action"
-	static target = xevent(NubActionEvent).target
+export class NubActionEvent
+		<D extends Any = Any>
+		extends MagicEventBase<D & {action: string}> {
+
+	static type = "nub_action"
+	static target = event(this).target
 
 	static switch<R = void>(
 			event: NubActionEvent,
@@ -16,14 +19,11 @@ export class NubActionEvent<D extends Nub.Detail.Any = Nub.Detail.Any>
 				vector2: (event: NubActionEvent<Nub.Detail.Vector2>) => R
 			},
 		): R {
+
 		switch (event.detail.type) {
 			case Nub.Type.Key: return handlers.key(<any>event)
 			case Nub.Type.Mouse: return handlers.mouse(<any>event)
 			case Nub.Type.Vector2: return handlers.vector2(<any>event)
 		}
-	}
-
-	constructor(detail: D & {action: string}) {
-		super(NubActionEvent.eventName, detail)
 	}
 }

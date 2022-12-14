@@ -6,7 +6,8 @@ import {buttonLabels} from "../utils/constants.js"
 import {AssignKeybind, Waiting} from "../types.js"
 import {Bindings} from "../../../bindings/types.js"
 import {renderKeybind} from "./easy/render-keybind.js"
-import {setupListenToInputsAndActuateKeyBindAssignment} from "../utils/setup-listen-to-inputs-and-actuate-key-bind-assignment.js"
+import {NubInputEvent} from "../../../events/input.js"
+import {controlKeybindAssignments} from "../utils/setup-listen-to-inputs-and-actuate-key-bind-assignment.js"
 
 export const EasyEditorPanelView = view({}, use => ({
 		bindings,
@@ -23,12 +24,14 @@ export const EasyEditorPanelView = view({}, use => ({
 	const [waiting, setWaiting, getWaiting]
 		= use.state<undefined | Waiting>(undefined)
 
-	use.setup(setupListenToInputsAndActuateKeyBindAssignment({
-		eventTarget,
-		getWaiting,
-		setWaiting,
-		onKeybindAssignment,
-	}))
+	use.setup(() => NubInputEvent
+		.target(eventTarget)
+		.listen(controlKeybindAssignments({
+			getWaiting,
+			setWaiting,
+			onKeybindAssignment,
+		}))
+	)
 
 	return html`
 		<div data-panel=easy-editor>

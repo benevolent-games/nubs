@@ -1,14 +1,13 @@
 
 import {Nub} from "../types.js"
-import {xevent, Xevent} from "../framework/xevent.js"
+import {event, MagicEventBase} from "@chasemoskal/magical"
 
-export class NubInputEvent<D extends Nub.Detail.Any = Nub.Detail.Any>
-	extends Xevent<D> {
+type Any = Nub.Detail.Any
 
-	static eventName = "nub_input"
-	static target = xevent(NubInputEvent).target
+export class NubInputEvent
+		<D extends Any = Any>
+		extends MagicEventBase<D> {
 
-	constructor(detail: D) {
-		super(NubInputEvent.eventName, detail)
-	}
+	static readonly type = "nub_input"
+	static readonly target = event(this).target
 }
