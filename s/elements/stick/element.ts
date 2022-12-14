@@ -37,16 +37,16 @@ export class NubStick extends MagicElement {
 			getTrackingTouchId,
 			setTrackingTouchId,
 			query: () => ({
-				base: use.element.shadowRoot!.querySelector(".base")!,
-				stick: use.element.shadowRoot!.querySelector(".stick")!,
+				base: this.shadowRoot!.querySelector(".base")!,
+				stick: this.shadowRoot!.querySelector(".stick")!,
 			}),
-			triggerInput(vector: v2.V2) {
+			triggerInput: (vector: v2.V2) => {
 				NubInputEvent
-					.target(use.element)
+					.target(this)
 					.dispatch({
 						vector,
 						type: Nub.Type.Vector2,
-						name: use.element.name,
+						name: this.name,
 					})
 			},
 		}

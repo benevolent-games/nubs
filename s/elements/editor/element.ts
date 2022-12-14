@@ -16,7 +16,7 @@ export class NubEditor extends MagicElement {
 		const {use} = this
 
 		const [context]
-			= use.state(stateForClosestContext(use.element))
+			= use.state(stateForClosestContext(this))
 
 		const [showTextEditor, setShowTextEditor]
 			= use.state(false)
