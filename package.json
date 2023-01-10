@@ -13,19 +13,31 @@
 	"scripts": {
 		"build": "run-s clean && run-p importly compile",
 		"start": "run-p http watch",
-		"http": "http-server",
+		"http": "http-server x",
 		"clean": "rimraf x && mkdirp x",
 		"importly": "importly --host=node_modules < package-lock.json > x/importmap.json",
-		"compile": "tsc",
-		"watch": "tsc -w",
+		"compile": "run-p links sass && run-s typescript web",
+		"typescript": "tsc",
+		"links": "run-s link-s link-modules",
+		"link-s": "ln -s $(realpath s) x/s",
+		"link-modules": "ln -s $(realpath node_modules) x/node_modules",
+		"sass": "sass s/web/templates/:x/",
+		"web": "node x/web/build.js",
+		"watch": "run-p watch-sass watch-typescript watch-web",
+		"watch-sass": "npm run sass -s -- --watch",
+		"watch-typescript": "tsc -w",
+		"watch-web": "chokidar \"x/web/**/*\" -c \"npm run web -s && echo 'rebuilt web'\"",
 		"test-debug": "node inspect node_modules/cynic/dist/cli.js node x/tests.test.js",
 		"test": "cynic node x/tests.test.js"
 	},
 	"dependencies": {
 		"@chasemoskal/magical": "^0.1.2",
-		"lit": "^2.4.1"
+		"lit": "^2.4.1",
+		"xiome": "^0.0.33"
 	},
 	"devDependencies": {
+		"chokidar": "^3.5.3",
+		"chokidar-cli": "^3.0.0",
 		"cynic": "^0.1.0-dev.16",
 		"es-module-shims": "^1.6.2",
 		"http-server": "^14.1.1",
@@ -33,6 +45,7 @@
 		"mkdirp": "^1.0.4",
 		"npm-run-all": "^4.1.5",
 		"rimraf": "^3.0.2",
+		"sass": "^1.57.1",
 		"typescript": "^4.9.3"
 	},
 	"keywords": [
