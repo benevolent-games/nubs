@@ -4,11 +4,8 @@ import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
 import {property} from "lit/decorators.js"
-import {EditorView} from "./views/editor.js"
-import {getStarters} from "./parts/starters.js"
 import {GridButtonsView} from "./views/grid-buttons.js"
-import {DraggableContainerView} from "./views/draggable-container.js"
-import {ToggleEditorButtonView} from "./views/toggle-editor-button.js"
+import {makeTriggerInputFunction} from "./starters/trigger-input.js"
 
 @mixinCss(styles)
 export class NubGridboard extends MagicElement {
@@ -16,21 +13,17 @@ export class NubGridboard extends MagicElement {
 	@property({type: String, reflect: true})
 	name: string = "1"
 
+	#starters = {
+		triggerInput: makeTriggerInputFunction(this),
+	}
+
 	realize() {
 		const {use} = this
-
-		const starters = getStarters(this)
-		const [isEditorOpen, setEditorOpen] = use.state(false)
-		const toggleEditor = () => setEditorOpen(x => !x)
+		const {triggerInput} = this.#starters
 
 		return html`
-			<div class=shell>
-				${EditorView({isEditorOpen})}
-				<div class=grid>
-					${ToggleEditorButtonView(toggleEditor)}
-					${DraggableContainerView(starters)}
-					${GridButtonsView(starters)}
-				</div>
+			<div class=grid>
+				${GridButtonsView({triggerInput})}
 			</div>
 		`
 	}

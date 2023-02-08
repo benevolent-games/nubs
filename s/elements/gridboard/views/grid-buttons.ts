@@ -2,15 +2,15 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
+import {TriggerInput} from "../types.js"
 import {gridkeys} from "../parts/gridkeys.js"
-import {GridboardStarters} from "../types.js"
 import {prepGridboardEvents} from "../setups/prep-gridboard-events.js"
 
-export const GridButtonsView = view({}, use => (
-		starters: GridboardStarters
-	) => {
+export const GridButtonsView = view({}, use => ({triggerInput}: {
+		triggerInput: TriggerInput
+	}) => {
 
-	const events = prepGridboardEvents(starters)
+	const events = prepGridboardEvents(triggerInput)
 
 	return html`
 		${gridkeys

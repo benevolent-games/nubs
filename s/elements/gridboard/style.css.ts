@@ -13,34 +13,44 @@ export const styles = css`
 }
 
 .grid {
+	margin: auto;
 	display: grid;
-	grid-template-columns: repeat(5, 2em);
-	grid-template-rows: repeat(5, 2em);
-	font-family: sans-serif;
-	background-color: #00000021;
-	width: 100%;
-	gap: 0.3em;
-	border-radius: 5px;
-	justify-content: space-around;
+	grid-template-columns: repeat(5, 3rem);
+	grid-template-rows: repeat(4, 3rem);
+	gap: 0.5em 0.5em;
 	padding: 0.5em;
+	font-family: sans-serif;
+	width: max-content;
+	border-radius: 5px;
+	background-color: #000a;
 }
 
 .key {
-	display: flex;
-	justify-content: flex-start;
-	align-items: flex-start;
-	background-color: #0000002e;
-	height: 100%;
-	width: 100%;
-	color: white;
-	border-radius: 5px;
-	cursor: pointer;
 	border: none;
-	border-bottom: 1px solid #182252;
-	align-self: flex-end;
-	justify-self: flex-end;
-	padding-top: 0.2em;
-	font-size: 0.9em;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	font-size: 1.5em;
+	font-weight: bold;
+	background: #4448;
+	color: #fff4;
+}
+
+.key2 {
+	outline: 1px solid #f008;
+	border: 1px solid #0f08;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	height: 3em;
+	width: 3em;
+	margin: 0.5em;
+	cursor: pointer;
+	background-color: #0000002e;
+	border-radius: 5px;
+	color: #fff4;
+	font-size: 1.5em;
+	font-weigt: bold;
 }
 
 .key:hover {
@@ -48,9 +58,9 @@ export const styles = css`
 }
 
 .key[data-pressed] {
-	height: 95%;
+	// height: 95%;
 	background-color: #00000052;
-	border: none;
+	// border: none;
 }
 
 .draggable-container {
