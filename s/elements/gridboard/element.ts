@@ -1,11 +1,13 @@
 
 import {html} from "lit"
+import {property} from "lit/decorators.js"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
-import {property} from "lit/decorators.js"
+import {Keylog} from "./starters/keylog.js"
 import {GridButtonsView} from "./views/grid-buttons.js"
 import {makeTriggerInputFunction} from "./starters/trigger-input.js"
+import {listenForKeyEventsAndUpdateKeylog} from "./starters/listen-for-key-events-and-update-keylog.js"
 
 @mixinCss(styles)
 export class NubGridboard extends MagicElement {
@@ -21,9 +23,21 @@ export class NubGridboard extends MagicElement {
 		const {use} = this
 		const {triggerInput} = this.#starters
 
+		const [keylog, setKeylog, getKeylog] = (
+			use.state<Keylog>({})
+		)
+
+		use.setup(
+			listenForKeyEventsAndUpdateKeylog(
+				window,
+				getKeylog,
+				setKeylog,
+			)
+		)
+
 		return html`
 			<div class=grid>
-				${GridButtonsView({triggerInput})}
+				${GridButtonsView({keylog, triggerInput})}
 			</div>
 		`
 	}

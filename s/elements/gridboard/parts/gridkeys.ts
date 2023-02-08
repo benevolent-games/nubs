@@ -1,6 +1,7 @@
 
 export const gridkeys = [
 	[
+		["`", "Backquote"],
 		["1", "Digit1"],
 		["2", "Digit2"],
 		["3", "Digit3"],
@@ -8,6 +9,7 @@ export const gridkeys = [
 		["5", "Digit5"],
 	],
 	[
+		["tab", "Tab"],
 		["q", "KeyQ"],
 		["w", "KeyW"],
 		["e", "KeyE"],
@@ -15,6 +17,7 @@ export const gridkeys = [
 		["t", "KeyT"],
 	],
 	[
+		["caps", "CapsLock"],
 		["a", "KeyA"],
 		["s", "KeyS"],
 		["d", "KeyD"],
@@ -22,6 +25,7 @@ export const gridkeys = [
 		["g", "KeyG"],
 	],
 	[
+		["shift", "ShiftLeft"],
 		["z", "KeyZ"],
 		["x", "KeyX"],
 		["c", "KeyC"],

@@ -15,14 +15,14 @@ export const styles = css`
 .grid {
 	margin: auto;
 	display: grid;
-	grid-template-columns: repeat(5, 3rem);
+	grid-template-columns: repeat(6, 3rem);
 	grid-template-rows: repeat(4, 3rem);
 	gap: 0.5em 0.5em;
 	padding: 0.5em;
 	font-family: sans-serif;
 	width: max-content;
 	border-radius: 5px;
-	background-color: #000a;
+	background: #000a;
 }
 
 .key {
@@ -32,35 +32,21 @@ export const styles = css`
 	justify-content: center;
 	font-size: 1.5em;
 	font-weight: bold;
+	border-radius: 0.3em;
 	background: #4448;
 	color: #fff4;
-}
-
-.key2 {
-	outline: 1px solid #f008;
-	border: 1px solid #0f08;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	height: 3em;
-	width: 3em;
-	margin: 0.5em;
-	cursor: pointer;
-	background-color: #0000002e;
-	border-radius: 5px;
-	color: #fff4;
-	font-size: 1.5em;
-	font-weigt: bold;
+	text-shadow: 0 2px 1px #0007;
+	border-top: 1px solid #fff2;
+	border-bottom: 1px solid #0002;
 }
 
 .key:hover {
-	background-color: #00000052;
+	background: #ccc4;
 }
 
-.key[data-pressed] {
-	// height: 95%;
-	background-color: #00000052;
-	// border: none;
+.key[data-is-pressed] {
+	background: #eee8;
+	color: white;
 }
 
 .draggable-container {
