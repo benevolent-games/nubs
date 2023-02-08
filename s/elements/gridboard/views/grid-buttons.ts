@@ -21,20 +21,30 @@ export const GridButtonsView = view({}, use => ({
 		return keylog[code]?.pressed ?? false
 	}
 
+	function renderButton([keycap, keycode]: string[]) {
+		return html`
+			<button
+				class=key
+				data-keycap="${keycap}"
+				data-keycode="${keycode}"
+				@pointerup=${events.pointerup}
+				@pointerdown=${events.pointerdown}
+				?data-is-pressed=${isKeyPressed(keycode)}
+				>
+				${keycap}
+			</button>
+		`
+	}
+
+	function renderRow(row: string[][]) {
+		return html`
+			<div class=row>
+				${row.map(renderButton)}
+			</div>
+		`
+	}
+
 	return html`
-		${gridkeys
-			.flat()
-			.map(([keycap, keycode]) => html`
-				<button
-					class=key
-					data-keycap="${keycap}"
-					data-keycode="${keycode}"
-					@pointerup=${events.pointerup}
-					@pointerdown=${events.pointerdown}
-					?data-is-pressed="${isKeyPressed(keycode)}"
-					>
-					${keycap}
-				</button>
-			`)}
+		${gridkeys.map(renderRow)}
 	`
 })

@@ -14,31 +14,49 @@ export const styles = css`
 
 .grid {
 	margin: auto;
-	display: grid;
-	grid-template-columns: repeat(6, 3rem);
-	grid-template-rows: repeat(4, 3rem);
-	gap: 0.5em 0.5em;
-	padding: 0.5em;
-	font-family: sans-serif;
+	display: flex;
+	flex-direction: column;
 	width: max-content;
-	border-radius: 5px;
-	background: #000a;
+
+	> .row {
+		display: flex;
+		flex-direction: row;
+		background: #000a;
+		width: max-content;
+		padding: 0.25rem 0.5rem;
+		gap: 0.5rem;
+		border-radius: 0.3rem;
+
+		button {
+			border-radius: 0.3rem;
+		}
+
+		^:first-child { padding-top: 0.5rem; }
+		^:last-child { padding-bottom: 0.5rem; }
+	}
 }
 
 .key {
 	border: none;
 	display: flex;
+
+	font-size: 1.5rem;
+	width: 2em;
+	height: 2em;
+
 	align-items: flex-start;
 	justify-content: center;
-	font-size: 1.5em;
 	font-weight: bold;
-	border-radius: 0.3em;
 	background: #4448;
 	color: #fff4;
 	text-shadow: 0 2px 1px #0007;
 	border-top: 1px solid #fff2;
 	border-bottom: 1px solid #0002;
 }
+
+.key[data-keycode="Tab"] { width: 3em; }
+.key[data-keycode="CapsLock"] { width: 4em; }
+.key[data-keycode="ShiftLeft"] { width: 5em; }
 
 .key:hover {
 	background: #ccc4;
