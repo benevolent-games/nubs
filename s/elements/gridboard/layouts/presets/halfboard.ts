@@ -1,7 +1,9 @@
 
-export const gridkeys = [
+import {KeyLayout} from "../key-layout.js"
+
+export const halfboard = [
 	[
-		["`", "Backquote"],
+		["~", "Backquote"],
 		["1", "Digit1"],
 		["2", "Digit2"],
 		["3", "Digit3"],
@@ -32,4 +34,10 @@ export const gridkeys = [
 		["v", "KeyV"],
 		["b", "KeyB"],
 	],
-]
+	[
+		["ctrl", "ControlLeft"],
+		["meta", "MetaLeft"],
+		["alt", "AltLeft"],
+		["space", "Space"],
+	],
+] satisfies KeyLayout

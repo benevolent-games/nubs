@@ -5,11 +5,8 @@ export const styles = css`
 :host {
 	display: block;
 	position: relative;
-}
-
-.shell {
-	display: flex;
-	flex-direction: column;
+	--highlight-color: #43ffee;
+	--highlight-text-shadow: 0.1em 0.1em 0.05em black;
 }
 
 .grid {
@@ -17,46 +14,111 @@ export const styles = css`
 	display: flex;
 	flex-direction: column;
 	width: max-content;
+	gap: 0.2em;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	background: #0004;
 
 	> .row {
 		display: flex;
 		flex-direction: row;
-		background: #000a;
 		width: max-content;
-		padding: 0.25rem 0.5rem;
-		gap: 0.5rem;
-		border-radius: 0.3rem;
+		gap: 0.2em;
 
 		button {
-			border-radius: 0.3rem;
+			border-radius: 0.3em;
 		}
-
-		^:first-child { padding-top: 0.5rem; }
-		^:last-child { padding-bottom: 0.5rem; }
 	}
 }
 
 .key {
 	border: none;
-	display: flex;
+	display: block;
+	font-family: sans-serif;
 
-	font-size: 1.5rem;
-	width: 2em;
-	height: 2em;
+	font-size: 1em;
+	width: 3em;
+	height: 3em;
+	padding: 0.5em;
 
-	align-items: flex-start;
-	justify-content: center;
-	font-weight: bold;
-	background: #4448;
-	color: #fff4;
-	text-shadow: 0 2px 1px #0007;
-	border-top: 1px solid #fff2;
-	border-bottom: 1px solid #0002;
+	background: #444a;
+	color: #ddda;
+
+	border-top: 0.1em solid #fff2;
+	border-bottom: 0.1em solid #0002;
 }
 
-.key[data-keycode="Tab"] { width: 3em; }
-.key[data-keycode="CapsLock"] { width: 4em; }
-.key[data-keycode="ShiftLeft"] { width: 5em; }
+.key {
+	position: relative;
+
+	span {
+		display: block;
+		position: absolute;
+	}
+
+	.icon {
+		inset: 0.2em;
+		svg {
+			display: block;
+			width: 100%;
+			height: 100%;
+			fill: currentColor;
+		}
+	}
+
+	:is(.keycap, .label) {
+		color: var(--highlight-color);
+		text-shadow: var(--highlight-text-shadow);
+	}
+
+	.keycap {
+		z-index: 2;
+		top: 0;
+		left: 0.2em;
+		font-size: 0.7em;
+		text-transform: uppercase;
+		font-weightxxx: bold;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.label {
+		font-size: 0.6em;
+		bottom: 0;
+		right: 0;
+	}
+}
+
+:host([layout="halfboard"]) {
+	.key[data-keycode="Tab"] { width: 3em; }
+	.key[data-keycode="CapsLock"] { width: 3.5em; }
+	.key[data-keycode="ShiftLeft"] { width: 4.5em; }
+
+	.key[data-keycode="ControlLeft"] { width: 3em; }
+	.key[data-keycode="MetaLeft"] { width: 3em; }
+	.key[data-keycode="AltLeft"] { width: 3em; }
+
+	// give the spacebar room to stretch out
+	.row:last-child {
+		width: 100%;
+	}
+
+	// set the spacebar to be expandable
+	.key[data-keycode="Space"] {
+		width: 4em;
+		flex: 1 0 auto;
+	}
+}
+
+:host([layout="compact"]) {
+	.row:nth-child(2) {
+		margin-left: 0.5em;
+	}
+	.row:nth-child(3) {
+		margin-left: 2em;
+	}
+}
 
 .key:hover {
 	background: #ccc4;
@@ -65,6 +127,10 @@ export const styles = css`
 .key[data-is-pressed] {
 	background: #eee8;
 	color: white;
+}
+
+.key:not([data-is-embellished]) {
+	opacity: 0.2;
 }
 
 .draggable-container {
