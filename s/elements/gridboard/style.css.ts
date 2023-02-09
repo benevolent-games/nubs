@@ -4,8 +4,8 @@ export const styles = css`
 
 :host {
 	display: block;
-	position: relative;
-	--highlight-color: #43ffee;
+	color: #b0d3ff;
+	--highlight-color: #fffa;
 	--highlight-text-shadow: 0.1em 0.1em 0.05em black;
 }
 
@@ -40,9 +40,9 @@ export const styles = css`
 	width: 3em;
 	height: 3em;
 	padding: 0.5em;
-
+	
 	background: #444a;
-	color: #ddda;
+	color: inherit;
 
 	border-top: 0.1em solid #fff2;
 	border-bottom: 0.1em solid #0002;
@@ -57,12 +57,12 @@ export const styles = css`
 	}
 
 	.icon {
-		inset: 0.2em;
+		inset: 0.1em;
+		bottom: 0.5em;
 		svg {
 			display: block;
 			width: 100%;
 			height: 100%;
-			fill: currentColor;
 		}
 	}
 
@@ -73,11 +73,11 @@ export const styles = css`
 
 	.keycap {
 		z-index: 2;
-		top: 0;
-		left: 0.2em;
+		top: -0.4em;
+		left: -0.1em;
 		font-size: 0.7em;
 		text-transform: uppercase;
-		font-weightxxx: bold;
+		font-weight: bold;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -85,8 +85,10 @@ export const styles = css`
 
 	.label {
 		font-size: 0.6em;
-		bottom: 0;
+		bottom: -0.2em;
+		left: 0;
 		right: 0;
+		text-align: center;
 	}
 }
 
@@ -146,11 +148,6 @@ export const styles = css`
 	position: absolute;
 	width: 100%;
 	height: 100%;
-}
-
-svg {
-	width: 40px;
-	fill: #0000004d;
 }
 
 .toggle-editor {
