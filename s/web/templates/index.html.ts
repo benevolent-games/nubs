@@ -46,7 +46,7 @@ export default (context: WebsiteContext) => pageHtml({
 				<nub-stick name=lookstick></nub-stick>
 				<nub-visualizer></nub-visualizer>
 			</div>
-
+			<nub-stickpad></nub-stickpad>
 			<nub-editor></nub-editor>
 		</nub-context>
 	`,
