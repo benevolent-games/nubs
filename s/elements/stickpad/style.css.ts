@@ -19,13 +19,13 @@ export default css`
 	}
 
 	nub-stick::part(base) {
-		display: none;
+		visibility: hidden;
+		width: 50px;
+		height: 50px;
 	}
 
 	nub-stick[data-visible]::part(base) {
-		display: block;
-		width: 50px;
-		height: 50px;
+		visibility: visible;
 		position: absolute;
 	}
 `
