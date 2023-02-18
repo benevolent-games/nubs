@@ -36,4 +36,8 @@ export default css`
 	opacity: 0.5;
 }
 
+.container{
+	width: 100%;
+	height: 100%;
+}
 `

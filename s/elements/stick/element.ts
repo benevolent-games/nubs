@@ -18,6 +18,9 @@ export class NubStick extends MagicElement {
 	@property({type: String, reflect: true})
 	name: string = "1"
 
+	@property({type: String, reflect: true})
+	transform: string = ""
+
 	realize() {
 		const {use} = this
 
@@ -57,14 +60,20 @@ export class NubStick extends MagicElement {
 		use.setup(setupWindowEvents({...starters, ...controls}))
 
 		return html`
+		<div
+			class="container"
+			@mousedown=${baseEvents.mousedown}
+			@touchstart=${baseEvents.touchstart}
+			@touchmove=${baseEvents.touchmove}
+			@touchend=${baseEvents.touchend}
+		>
 			<div class=base
-				@mousedown=${baseEvents.mousedown}
-				@touchstart=${baseEvents.touchstart}
-				@touchmove=${baseEvents.touchmove}
-				@touchend=${baseEvents.touchend}>
+				style=${this.transform}
+				part="base">
 					<div class=stick style="${styleTransforms.stick}"></div>
 					<div class=understick style="${styleTransforms.understick}"></div>
 			</div>
+		</div>
 		`
 	}
 }

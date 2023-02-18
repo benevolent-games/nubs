@@ -17,18 +17,15 @@ export class NubStickpad extends MagicElement {
 		})
 
 		return html`
-			<div class="area"
-			@pointerdown=${(e: PointerEvent) => {
-				const {pageX, pageY} = <PointerEvent>e
-				setStick(true)
-				setPosition(`left: ${pageX - 25}px; top: ${pageY - 25}px;`)
-			}}>
-			${stick
-				? html`
-					<div class="stick" style="${position}">
-						<nub-stick></nub-stick>
-					</div>`
-				: null}
+			<div
+				class="area"
+				@pointerdown=${(e: PointerEvent) => {
+					const {pageX, pageY} = <PointerEvent>e
+					setStick(true)
+					setPosition(`left: ${pageX - 25}px; top: ${pageY - 25}px;`)
+				}}
+			>
+				<nub-stick transform=${position} ?data-visible=${stick}></nub-stick>
 			</div>
 		`
 	}
