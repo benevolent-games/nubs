@@ -29,12 +29,11 @@ export class NubStickpad extends MagicElement {
 		})
 
 		return html`
-			<div
-				class="area"
+			<nub-stick
 				@pointerdown=${(e: PointerEvent) => setCenterPosition(e)}
-			>
-				<nub-stick transform=${position} ?data-visible=${stick}></nub-stick>
-			</div>
+				transform=${position} 
+				?data-visible=${stick}>
+			</nub-stick>
 		`
 	}
 }
