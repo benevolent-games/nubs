@@ -6,6 +6,7 @@ export default css`
 		display: flex;
 		width: 30em;
 		height: 15em;
+		border: 1px solid;
 	}
 
 	nub-stick {

@@ -10,6 +10,7 @@ import {property} from "lit/decorators.js"
 import {NubInputEvent} from "../../events/input.js"
 import {prepBaseEvents} from "./setups/prep-base-events.js"
 import {prepDomControls} from "./setups/prep-dom-controls.js"
+import {setupBaseEvents} from "./setups/setup-base-events.js"
 import {setupWindowEvents} from "./setups/setup-window-events.js"
 
 @mixinCss(styles)
@@ -58,22 +59,16 @@ export class NubStick extends MagicElement {
 		const baseEvents = prepBaseEvents({...starters, ...controls})
 
 		use.setup(setupWindowEvents({...starters, ...controls}))
+		use.setup(setupBaseEvents(this, baseEvents))
 
 		return html`
-		<div
-			class="container"
-			@mousedown=${baseEvents.mousedown}
-			@touchstart=${baseEvents.touchstart}
-			@touchmove=${baseEvents.touchmove}
-			@touchend=${baseEvents.touchend}
-		>
-			<div class=base
+			<div
+				class=base
 				style=${this.transform}
 				part="base">
-					<div class=stick style="${styleTransforms.stick}"></div>
-					<div class=understick style="${styleTransforms.understick}"></div>
+				<div class=stick style="${styleTransforms.stick}"></div>
+				<div class=understick style="${styleTransforms.understick}"></div>
 			</div>
-		</div>
 		`
 	}
 }

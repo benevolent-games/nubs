@@ -2,7 +2,8 @@ import {html, TemplateResult} from "lit"
 import {MagicElement, mixinCss, UseElement} from "@chasemoskal/magical"
 
 import styles from "./style.css.js"
-import {attachEvents} from "../../tools/attach-events.js"
+import {StickpadStarters} from "./types.js"
+import {setupStickpadEvents} from "./setups/setup-stickpad-events.js"
 
 @mixinCss(styles)
 export class NubStickpad extends MagicElement {
@@ -22,16 +23,17 @@ export class NubStickpad extends MagicElement {
 			setPosition(`left: ${e.pageX - clientWidth / 2}px; top: ${e.pageY - clientHeight / 2}px;`)
 		}
 
-		use.setup(() => {
-			attachEvents(window, {
-				pointerup() {setStick(false)}
-			})
-		})
+		const starters: StickpadStarters = {
+			setStick,
+			stickPad: this,
+			setCenterPosition
+		}
+
+		use.setup(setupStickpadEvents({...starters}))
 
 		return html`
 			<nub-stick
-				@pointerdown=${(e: PointerEvent) => setCenterPosition(e)}
-				transform=${position} 
+				transform=${position}
 				?data-visible=${stick}>
 			</nub-stick>
 		`
