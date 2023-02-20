@@ -65,3 +65,18 @@ nub-editor {
 	margin: auto;
 	margin-top: 1em;
 }
+
+nub-gridboard {
+	margin: 1em auto;
+	font-size: 2em;
+}
+
+.pads {
+	display: flex;
+	border: 1px solid;
+	padding: 1em;
+
+	nub-lookpad, nub-stickpad {
+		width: 100%;
+	}
+}

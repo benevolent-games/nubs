@@ -42,6 +42,14 @@ export default (context: WebsiteContext) => pageHtml({
 			<nub-real-keyboard></nub-real-keyboard>
 			<nub-real-mouse name=lookmouse></nub-real-mouse>
 
+			<div class=pads>
+				<nub-stickpad></nub-stickpad>
+				<nub-lookpad></nub-lookpad>
+			</div>
+
+			<nub-grid-menu></nub-grid-menu>
+			<nub-gridboard layout=compact></nub-gridboard>
+
 			<div class=side-by-side>
 				<nub-stick name=lookstick></nub-stick>
 				<nub-visualizer></nub-visualizer>
