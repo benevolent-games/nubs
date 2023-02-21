@@ -18,6 +18,10 @@ html {
 	font-size: 16px;
 }
 
+body {
+	display: grid;
+}
+
 header {
 	text-align: center;
 	max-width: max-content;
@@ -74,7 +78,8 @@ nub-gridboard {
 .pads {
 	display: flex;
 	border: 1px solid;
-	padding: 1em;
+	max-width: 40rem;
+	margin: 1rem auto;
 
 	nub-lookpad, nub-stickpad {
 		width: 100%;
