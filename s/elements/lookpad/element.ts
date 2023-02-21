@@ -19,8 +19,7 @@ export class NubLookpad extends MagicElement {
 		use.setup(setupMouseAndTouchMoveListening)
 
 		return html`
-			<div class="lookpad-area">
-			</div>
+			<div></div>
 		`
 	}
 }
