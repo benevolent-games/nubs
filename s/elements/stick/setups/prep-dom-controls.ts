@@ -8,7 +8,7 @@ import {findClosestPointOnCircle} from "./utils/find-closest-point-on-circle.js"
 export function prepDomControls({
 		query,
 		triggerInput,
-		setStyleTransforms,
+		setVector,
 	}: StickStarters): StickControls {
 
 	return {
@@ -22,13 +22,13 @@ export function prepDomControls({
 				let y = clientY - middleY
 				if (!withinRadius(basis, x, y))
 					[x, y] = findClosestPointOnCircle(basis, x, y)
-				registerFinalValues(setStyleTransforms, triggerInput, basis, x, y)
+				registerFinalValues(setVector, triggerInput, basis, x, y)
 			}
 		},
 		resetStick() {
 			const basis = getBasis(query())
 			if (basis)
-				registerFinalValues(setStyleTransforms, triggerInput, basis, 0, 0)
+				registerFinalValues(setVector, triggerInput, basis, 0, 0)
 		},
 	}
 }

@@ -19,9 +19,6 @@ export class NubStick extends MagicElement {
 	@property({type: String, reflect: true})
 	name: string = "1"
 
-	@property({type: String, reflect: true})
-	transform: string = ""
-
 	realize() {
 		const {use} = this
 
@@ -31,18 +28,22 @@ export class NubStick extends MagicElement {
 		const [, setTrackingTouchId, getTrackingTouchId] =
 			use.state<number | undefined>(undefined)
 
-		const [styleTransforms, setStyleTransforms] =
-			use.state({stick: "", understick: ""})
+		const [vector, setVector] = use.state({
+			x: 0,
+			y: 0
+		})
 
 		const starters: StickStarters = {
-			setStyleTransforms,
+			setVector,
 			getTrackingMouse,
 			setTrackingMouse,
 			getTrackingTouchId,
 			setTrackingTouchId,
 			query: () => ({
-				base: this.shadowRoot!.querySelector(".base")!,
-				stick: this.shadowRoot!.querySelector(".stick")!,
+				base: this.shadowRoot?.querySelector("nub-stick-graphic")!
+					.shadowRoot?.querySelector("[part='base']")!,
+				stick: this.shadowRoot?.querySelector("nub-stick-graphic")!
+					.shadowRoot?.querySelector("[part='stick']")!
 			}),
 			triggerInput: (vector: v2.V2) => {
 				NubInputEvent
@@ -62,13 +63,7 @@ export class NubStick extends MagicElement {
 		use.setup(setupBaseEvents(this, baseEvents))
 
 		return html`
-			<div
-				class=base
-				style=${this.transform}
-				part="base">
-				<div class=stick style="${styleTransforms.stick}"></div>
-				<div class=understick style="${styleTransforms.understick}"></div>
-			</div>
+			<nub-stick-graphic .vector=${vector}></nub-stick-graphic>
 		`
 	}
 }

@@ -9,7 +9,7 @@ export interface StickStarters {
 
 	triggerInput: (v: V2) => void
 
-	setStyleTransforms: (s: {stick: string, understick: string}) => void
+	setVector: (n: {x: number, y: number}) => void
 
 	setTrackingMouse: (x: boolean) => void
 	getTrackingMouse: () => boolean
