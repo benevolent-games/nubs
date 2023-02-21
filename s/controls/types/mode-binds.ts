@@ -1,6 +1,6 @@
 
-import {ActionBinds} from "./action-binds.js"
+import {KindBinds} from "./kind-binds.js"
 
 export type ModeBinds = {
-	[mode: string]: ActionBinds
+	[mode: string]: KindBinds
 }

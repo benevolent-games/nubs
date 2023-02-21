@@ -38,3 +38,6 @@ const example = `
 
 const result = parseControls(example)
 console.log("result", result)
+
+console.log("json")
+console.log(JSON.stringify(result.modes, undefined, "\t"))
