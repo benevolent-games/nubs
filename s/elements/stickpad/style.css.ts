@@ -9,19 +9,16 @@ export default css`
 		border: 1px solid;
 	}
 
-	nub-stick {
-		width: 100%;
-		height: 100%;
-	}
-
-	nub-stick::part(base) {
-		visibility: hidden;
-		width: 50px;
-		height: 50px;
-	}
-
-	nub-stick[data-visible]::part(base) {
-		visibility: visible;
+	nub-stick-graphic {
 		position: absolute;
+		width: 8em;
+	}
+	
+	nub-stick-graphic::part(base) {
+		visibility: visible;
+	}
+
+	nub-stick-graphic[data-visible]::part(base) {
+		visibility: visible;
 	}
 `
