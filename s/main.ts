@@ -24,6 +24,7 @@ import {NubStickpad} from "./elements/stickpad/element.js"
 import {NubRealKeyboard} from "./elements/real/keyboard.js"
 import {NubGridboard} from "./elements/gridboard/element.js"
 import {NubVisualizer} from "./elements/visualizer/element.js"
+import {NubStickGraphic} from "./graphics/nub-stick-graphic/element.js"
 
 export const getElements = () => ({
 	NubStick,
@@ -33,5 +34,6 @@ export const getElements = () => ({
 	NubGridboard,
 	NubRealMouse,
 	NubVisualizer,
-	NubRealKeyboard,
+	NubStickGraphic,
+	NubRealKeyboard
 })
