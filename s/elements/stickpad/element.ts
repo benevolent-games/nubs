@@ -4,15 +4,15 @@ import * as v2 from "../../tools/v2.js"
 import {Nub} from "../../types.js"
 
 import styles from "./style.css.js"
+import {property} from "lit/decorators.js"
 import {StickpadStarters} from "./types.js"
-import {setupStickpadEvents} from "./setups/setup-stickpad-events.js"
 import {StickStarters} from "../stick/types.js"
 import {NubInputEvent} from "../../events/input.js"
-import {prepDomControls} from "../stick/setups/prep-dom-controls.js"
-import {prepBaseEvents} from "../stick/setups/prep-base-events.js"
-import {setupWindowEvents} from "../stick/setups/setup-window-events.js"
-import {setupBaseEvents} from "../stick/setups/setup-base-events.js"
-import {property} from "lit/decorators.js"
+import {prepBaseEvents} from "../../setups/prep-base-events.js"
+import {prepDomControls} from "../../setups/prep-dom-controls.js"
+import {setupBaseEvents} from "../../setups/setup-base-events.js"
+import {setupStickpadEvents} from "./setups/setup-stickpad-events.js"
+import {setupWindowEvents} from "../../setups/setup-window-events.js"
 
 @mixinCss(styles)
 export class NubStickpad extends MagicElement {

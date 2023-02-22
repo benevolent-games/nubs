@@ -8,10 +8,10 @@ import * as v2 from "../../tools/v2.js"
 import {StickStarters} from "./types.js"
 import {property} from "lit/decorators.js"
 import {NubInputEvent} from "../../events/input.js"
-import {prepBaseEvents} from "./setups/prep-base-events.js"
-import {prepDomControls} from "./setups/prep-dom-controls.js"
-import {setupBaseEvents} from "./setups/setup-base-events.js"
-import {setupWindowEvents} from "./setups/setup-window-events.js"
+import {prepBaseEvents} from "../../setups/prep-base-events.js"
+import {prepDomControls} from "../../setups/prep-dom-controls.js"
+import {setupBaseEvents} from "../../setups/setup-base-events.js"
+import {setupWindowEvents} from "../../setups/setup-window-events.js"
 
 @mixinCss(styles)
 export class NubStick extends MagicElement {

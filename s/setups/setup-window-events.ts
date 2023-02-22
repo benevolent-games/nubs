@@ -1,6 +1,6 @@
 
-import {StickControls, StickStarters} from "../types.js"
-import {attachEvents} from "../../../tools/attach-events.js"
+import {StickControls, StickStarters} from "../elements/stick/types.js"
+import {attachEvents} from "../tools/attach-events.js"
 
 export function setupWindowEvents({
 		setTrackingPointerId,

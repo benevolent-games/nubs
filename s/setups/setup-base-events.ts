@@ -1,7 +1,6 @@
-import {attachEvents} from "../../../tools/attach-events.js"
-import {LitListener} from "../../../tools/lit-listener.js"
-import {NubStickpad} from "../../stickpad/element.js"
-import {NubStick} from "../element.js"
+import {attachEvents} from "../tools/attach-events.js"
+import {NubStickpad} from "../elements/stickpad/element.js"
+import {NubStick} from "../main.js"
 import {BaseEvents} from "./prep-base-events.js"
 
 export function setupBaseEvents(

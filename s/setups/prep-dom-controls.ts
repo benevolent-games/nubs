@@ -1,7 +1,7 @@
 
 import {getBasis} from "./utils/get-basis.js"
 import {withinRadius} from "./utils/within-radius.js"
-import {StickControls, StickStarters} from "../types.js"
+import {StickControls, StickStarters} from "../elements/stick/types.js"
 import {registerFinalValues} from "./utils/register-final-values.js"
 import {findClosestPointOnCircle} from "./utils/find-closest-point-on-circle.js"
 

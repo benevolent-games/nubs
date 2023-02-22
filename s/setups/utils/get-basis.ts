@@ -1,5 +1,4 @@
-
-import {Basis} from "../../types.js"
+import {Basis} from "../../elements/stick/types.js"
 
 export function getBasis({base, stick}: {
 		base: HTMLElement
