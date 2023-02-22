@@ -1,5 +1,5 @@
-import {html, TemplateResult} from "lit"
-import {MagicElement, mixinCss, UseElement} from "@chasemoskal/magical"
+import {html} from "lit"
+import {MagicElement, mixinCss} from "@chasemoskal/magical"
 import * as v2 from "../../tools/v2.js"
 import {Nub} from "../../types.js"
 
@@ -22,18 +22,21 @@ export class NubStickpad extends MagicElement {
 
 	get nubStickBasePart() {
 		return this.shadowRoot?.querySelector("nub-stick-graphic")!
-			.shadowRoot?.querySelector("[part='base']")!
+			.shadowRoot?.querySelector("[part='base']")! as HTMLElement
 	}
 
-	realize(use: UseElement<this>): void | TemplateResult<1 | 2> {
-		
+	get nubStickPart() {
+		return this.shadowRoot?.querySelector("nub-stick-graphic")!
+			.shadowRoot?.querySelector("[part='stick']")! as HTMLElement
+	}
+
+	realize() {
+		const {use} = this
+
 		const [stick, setStick] = use.state(false)
 		const [position, setPosition] = use.state("")
 		
-		const [, setTrackingMouse, getTrackingMouse] =
-			use.state(false)
-
-		const [, setTrackingTouchId, getTrackingTouchId] =
+		const [, setTrackingPointerId, getTrackingPointerId] =
 			use.state<number | undefined>(undefined)
 
 		const [vector, setVector] = use.state({
@@ -41,17 +44,13 @@ export class NubStickpad extends MagicElement {
 			y: 0
 		})
 
-		const stickStarters: StickStarters = {
+		const stickStarters: StickStarters & StickpadStarters = {
 			setVector,
-			getTrackingMouse,
-			setTrackingMouse,
-			getTrackingTouchId,
-			setTrackingTouchId,
+			getTrackingPointerId,
+			setTrackingPointerId,
 			query: () => ({
-				base: this.shadowRoot?.querySelector("nub-stick-graphic")!
-					.shadowRoot?.querySelector("[part='base']")!,
-				stick: this.shadowRoot?.querySelector("nub-stick-graphic")!
-					.shadowRoot?.querySelector("[part='stick']")!
+				base: this.nubStickBasePart,
+				stick: this.nubStickPart
 			}),
 			triggerInput: (vector: v2.V2) => {
 				NubInputEvent
@@ -62,29 +61,28 @@ export class NubStickpad extends MagicElement {
 						name: this.name,
 					})
 			},
-		}
-		const setCenterPosition = (e: PointerEvent) => {
-			setStick(true)
-			const {clientWidth, clientHeight} = this.nubStickBasePart
-			setPosition(`left: ${e.pageX - clientWidth / 2}px; top: ${e.pageY - clientHeight / 2}px;`)
-		}
-
-		const stickPadStarters: StickpadStarters = {
-			setStick,
+			setCenterPosition: (e: PointerEvent) => {
+				setStick(true)
+				const {clientWidth, clientHeight} = this.nubStickBasePart
+				setPosition(`left: ${e.pageX - clientWidth / 2}px; top: ${e.pageY - clientHeight / 2}px;`)
+			},
 			stickPad: this,
-			setCenterPosition
+			setStick
 		}
-
-		use.setup(setupStickpadEvents({...stickPadStarters}))
 
 		const controls = prepDomControls(stickStarters)
 		const baseEvents = prepBaseEvents({...stickStarters, ...controls})
-
-		use.setup(setupWindowEvents({...stickStarters, ...controls}))
+		
 		use.setup(setupBaseEvents(this, baseEvents))
+		use.setup(setupStickpadEvents({...stickStarters}))
+		use.setup(setupWindowEvents({...stickStarters, ...controls}))
 
 		return html`
-			<nub-stick-graphic .vector=${vector} ?data-visible=${stick} style=${position}></nub-stick-graphic>
+			<nub-stick-graphic
+				.vector=${vector}
+				?data-visible=${stick}
+				style=${position}>
+			</nub-stick-graphic>
 		`
 	}
 }

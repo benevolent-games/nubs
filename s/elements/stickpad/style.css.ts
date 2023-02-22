@@ -7,6 +7,7 @@ export default css`
 		width: 30em;
 		height: 15em;
 		border: 1px solid;
+		touch-action: none;
 	}
 
 	nub-stick-graphic {
