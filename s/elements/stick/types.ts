@@ -11,11 +11,9 @@ export interface StickStarters {
 
 	setVector: (n: {x: number, y: number}) => void
 
-	setTrackingMouse: (x: boolean) => void
-	getTrackingMouse: () => boolean
+	setTrackingPointerId: (x: number | undefined) => void
+	getTrackingPointerId: () => number | undefined
 
-	setTrackingTouchId: (x: number | undefined) => void
-	getTrackingTouchId: () => number | undefined
 }
 
 export interface StickControls {

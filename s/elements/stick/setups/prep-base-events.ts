@@ -8,44 +8,34 @@ export type BaseEvents = ReturnType<typeof prepBaseEvents>
 export function prepBaseEvents({
 		moveStick,
 		resetStick,
-		setTrackingMouse,
-		setTrackingTouchId,
-		getTrackingTouchId,
+		setTrackingPointerId,
+		getTrackingPointerId,
 	}: StickStarters & StickControls) {
 
 	return {
-		mousedown: asLitListener<MouseEvent>({
-			handleEvent({clientX, clientY}) {
-				setTrackingMouse(true)
-				moveStick(clientX, clientY)
-			},
-		}),
-		touchstart: asLitListener<TouchEvent>({
-			passive: false,
+		pointerdown: asLitListener<PointerEvent>({
 			handleEvent(event) {
-				const touch = event.targetTouches[0]
-				setTrackingTouchId(touch.identifier)
-				const {clientX, clientY} = touch
-				moveStick(clientX, clientY)
 				event.preventDefault()
+				setTrackingPointerId(event.pointerId)
+				moveStick(event.clientX, event.clientY)
 			},
 		}),
-		touchmove: asLitListener<TouchEvent>({
+		pointermove: asLitListener<PointerEvent>({
 			passive: false,
 			handleEvent(event) {
-				const touch = findTouchAppleFriendly(getTrackingTouchId(), event.touches)
-				if (touch) {
-					const {clientX, clientY} = touch
+				const pointer = findTouchAppleFriendly(getTrackingPointerId(), event.getCoalescedEvents())
+				if (pointer) {
+					const {clientX, clientY} = pointer
 					moveStick(clientX, clientY)
 				}
 				event.preventDefault()
 			},
 		}),
-		touchend: asLitListener<TouchEvent>({
+		pointerup: asLitListener<PointerEvent>({
 			handleEvent() {
-				setTrackingTouchId(undefined)
+				setTrackingPointerId(undefined)
 				resetStick()
 			},
-		}),
+		})
 	}
 }

@@ -1,15 +1,15 @@
 
 export function findTouchAppleFriendly(
-		touchId: undefined | number,
-		touches: TouchList,
+		pointerId: undefined | number,
+		pointers: PointerEvent[],
 	) {
 
-	if (touchId === undefined)
+	if (pointerId === undefined)
 		return undefined
 
-	for (let i = 0; i < touches.length; i++) {
-		const touch = touches[i]
-		if (touch.identifier === touchId)
-			return touch
+	for (let i = 0; i < pointers.length; i++) {
+		const pointer = pointers[i]
+		if (pointer.pointerId === pointerId)
+			return pointer
 	}
 }

@@ -9,9 +9,8 @@ export function setupBaseEvents(
 	baseEvents: BaseEvents)
 {
 	return () => attachEvents(nubStick, {
-		mousedown: baseEvents.mousedown,
-		touchstart: baseEvents.touchstart,
-		touchmove: baseEvents.touchmove,
-		touchend: baseEvents.touchend
+		pointerdown: baseEvents.pointerdown,
+		pointermove: baseEvents.pointermove,
+		pointerup: baseEvents.pointerup
 	})
 }

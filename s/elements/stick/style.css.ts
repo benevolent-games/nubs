@@ -6,6 +6,7 @@ export default css`
 	display: block;
 	width: 20em;
 	height: 20em;
+	touch-action: none;
 }
 
 .base {

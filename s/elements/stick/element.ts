@@ -22,10 +22,7 @@ export class NubStick extends MagicElement {
 	realize() {
 		const {use} = this
 
-		const [, setTrackingMouse, getTrackingMouse] =
-			use.state(false)
-
-		const [, setTrackingTouchId, getTrackingTouchId] =
+		const [, setTrackingPointerId, getTrackingPointerId] =
 			use.state<number | undefined>(undefined)
 
 		const [vector, setVector] = use.state({
@@ -35,10 +32,8 @@ export class NubStick extends MagicElement {
 
 		const starters: StickStarters = {
 			setVector,
-			getTrackingMouse,
-			setTrackingMouse,
-			getTrackingTouchId,
-			setTrackingTouchId,
+			setTrackingPointerId,
+			getTrackingPointerId,
 			query: () => ({
 				base: this.shadowRoot?.querySelector("nub-stick-graphic")!
 					.shadowRoot?.querySelector("[part='base']")!,
