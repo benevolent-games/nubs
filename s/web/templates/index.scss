@@ -75,13 +75,7 @@ nub-gridboard {
 	font-size: 2em;
 }
 
-.pads {
-	display: flex;
-	border: 1px solid;
-	max-width: 40rem;
+nub-lookpad {
+	--lookpad-max-width: 15rem;
 	margin: 1rem auto;
-
-	nub-lookpad, nub-stickpad {
-		width: 100%;
-	}
 }

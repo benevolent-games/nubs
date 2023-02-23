@@ -6,5 +6,8 @@ export const styles = css`
 	display: block;
 	border: 1px solid;
 	touch-action: none;
+
+	max-width: var(--lookpad-max-width, 25rem);
+	aspect-ratio: var(--lookpad-aspect-ratio, 2/1);
 }
 `

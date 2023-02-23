@@ -44,11 +44,8 @@ export default (context: WebsiteContext) => pageHtml({
 
 			<nub-grid-menu></nub-grid-menu>
 			<nub-gridboard layout=compact></nub-gridboard>
-			
-			<div class=pads>
-				<nub-stickpad></nub-stickpad>
-				<nub-lookpad name=lookmouse></nub-lookpad>
-			</div>
+
+			<nub-lookpad name=lookmouse></nub-lookpad>
 
 			<div class=side-by-side>
 				<nub-stick name=lookstick></nub-stick>
