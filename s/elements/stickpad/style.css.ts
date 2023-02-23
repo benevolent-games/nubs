@@ -14,12 +14,4 @@ export default css`
 		position: absolute;
 		width: 8em;
 	}
-	
-	nub-stick-graphic::part(base) {
-		visibility: visible;
-	}
-
-	nub-stick-graphic[data-visible]::part(base) {
-		visibility: visible;
-	}
 `

@@ -1,21 +1,27 @@
 import {MagicElement, mixinCss, UseElement} from "@chasemoskal/magical"
 import {html, TemplateResult} from "lit"
 import {property} from "lit/decorators.js"
+import {V2} from "../../tools/v2.js"
 import styles from "./style.css.js"
 
 @mixinCss(styles)
 export class NubStickGraphic extends MagicElement {
 
+	get basePart() {
+		return this.shadowRoot?.querySelector("[part='base']")
+	}
+
+	get stickPart() {
+		return this.shadowRoot?.querySelector("[part='stick']")
+	}
+
 	@property({type: Number, reflect: true})
-	vector: {
-		x: 0
-		y: 0
-	} | undefined
+	vector: V2 = [0, 0]
 
-	realize(use: UseElement<this>): void | TemplateResult<1 | 2> {
+	realize() {
 
-	const underX = this.vector!.x * 0.5
-	const underY = this.vector!.y * 0.5
+	const underX = this.vector[0] * 0.5
+	const underY = this.vector[1] * 0.5
 
 		return html`
 			<div
@@ -24,7 +30,7 @@ export class NubStickGraphic extends MagicElement {
 				<div
 					class=stick
 					part="stick"
-					style="${`transform: translate(${this.vector?.x}px, ${this.vector?.y}px);`}">
+					style="${`transform: translate(${this.vector[0]}px, ${this.vector[1]}px);`}">
 				</div>
 				<div
 					style=${`transform: translate(${underX}px, ${underY}px);`}

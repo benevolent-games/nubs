@@ -9,7 +9,7 @@ export interface StickStarters {
 
 	triggerInput: (v: V2) => void
 
-	setVector: (n: {x: number, y: number}) => void
+	setVector: (n: V2) => void
 
 	setTrackingPointerId: (x: number | undefined) => void
 	getTrackingPointerId: () => number | undefined

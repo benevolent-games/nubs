@@ -4,19 +4,18 @@ import {StickpadStarters} from "../types.js"
 export function setupStickpadEvents(
 	{
 	stickPad,
-	setStick,
+	setVisibility,
 	setCenterPosition
 	}: StickpadStarters) {
 
-	return () => {
-		attachEvents(window, {
-			pointerup() {setStick(false)}
-		})
+	return () =>
+		(attachEvents(window, {
+			pointerup() {setVisibility(false)}
+		}),
 		attachEvents(stickPad, {
 			pointerdown(e) {
 				const ev = <PointerEvent>e
 				setCenterPosition(ev)
 			}
-		})
-	}
+		}))
 }

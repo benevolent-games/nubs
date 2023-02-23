@@ -13,6 +13,7 @@ import {prepDomControls} from "../../setups/prep-dom-controls.js"
 import {setupBaseEvents} from "../../setups/setup-base-events.js"
 import {setupStickpadEvents} from "./setups/setup-stickpad-events.js"
 import {setupWindowEvents} from "../../setups/setup-window-events.js"
+import {NubStickGraphic} from "../../graphics/nub-stick-graphic/element.js"
 
 @mixinCss(styles)
 export class NubStickpad extends MagicElement {
@@ -20,37 +21,29 @@ export class NubStickpad extends MagicElement {
 	@property({type: String, reflect: true})
 	name: string = "1"
 
-	get nubStickBasePart() {
-		return this.shadowRoot?.querySelector("nub-stick-graphic")!
-			.shadowRoot?.querySelector("[part='base']")! as HTMLElement
-	}
-
-	get nubStickPart() {
-		return this.shadowRoot?.querySelector("nub-stick-graphic")!
-			.shadowRoot?.querySelector("[part='stick']")! as HTMLElement
+	get nubStickGraphicParts() {
+		const {basePart, stickPart} = this.shadowRoot?.querySelector("nub-stick-graphic") as NubStickGraphic
+		return {basePart, stickPart} as {basePart: HTMLElement, stickPart: HTMLElement}
 	}
 
 	realize() {
 		const {use} = this
 
-		const [stick, setStick] = use.state(false)
+		const [isVisible, setVisibility] = use.state(false)
 		const [position, setPosition] = use.state("")
 		
 		const [, setTrackingPointerId, getTrackingPointerId] =
 			use.state<number | undefined>(undefined)
 
-		const [vector, setVector] = use.state({
-			x: 0,
-			y: 0
-		})
+		const [vector, setVector] = use.state<v2.V2>([0, 0])
 
 		const stickStarters: StickStarters & StickpadStarters = {
 			setVector,
 			getTrackingPointerId,
 			setTrackingPointerId,
 			query: () => ({
-				base: this.nubStickBasePart,
-				stick: this.nubStickPart
+				base: this.nubStickGraphicParts.basePart,
+				stick: this.nubStickGraphicParts.stickPart
 			}),
 			triggerInput: (vector: v2.V2) => {
 				NubInputEvent
@@ -62,12 +55,12 @@ export class NubStickpad extends MagicElement {
 					})
 			},
 			setCenterPosition: (e: PointerEvent) => {
-				setStick(true)
-				const {clientWidth, clientHeight} = this.nubStickBasePart
+				setVisibility(true)
+				const {clientWidth, clientHeight} = this.nubStickGraphicParts.basePart 
 				setPosition(`left: ${e.pageX - clientWidth / 2}px; top: ${e.pageY - clientHeight / 2}px;`)
 			},
 			stickPad: this,
-			setStick
+			setVisibility
 		}
 
 		const controls = prepDomControls(stickStarters)
@@ -80,7 +73,7 @@ export class NubStickpad extends MagicElement {
 		return html`
 			<nub-stick-graphic
 				.vector=${vector}
-				?data-visible=${stick}
+				?data-visible=${isVisible}
 				style=${position}>
 			</nub-stick-graphic>
 		`

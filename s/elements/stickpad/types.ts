@@ -3,6 +3,6 @@ import {NubStickpad} from "./element.js"
 
 export interface StickpadStarters {
 	stickPad: NubStickpad;
-	setStick: StateSetter<boolean>;
+	setVisibility: StateSetter<boolean>;
 	setCenterPosition: (e: PointerEvent) => void;
 }
