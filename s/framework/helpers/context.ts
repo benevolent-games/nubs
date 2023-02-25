@@ -1,11 +1,11 @@
 
 import {dashify} from "@chasemoskal/magical"
-import {NubContext2} from "../../elements/context2/element.js"
+import {NubContext} from "../../elements/context/element.js"
 
-const tag = dashify(NubContext2.name)
+const tag = dashify(NubContext.name)
 
 export function setupContextGetter(element: HTMLElement) {
-	let context: NubContext2 | undefined
+	let context: NubContext | undefined
 
 	return () => {
 
@@ -13,7 +13,7 @@ export function setupContextGetter(element: HTMLElement) {
 			return context
 
 		else {
-			context = element.closest<NubContext2>(tag) ?? undefined
+			context = element.closest<NubContext>(tag) ?? undefined
 
 			if (!context)
 				throw new Error(`unable to find <${tag}>`)

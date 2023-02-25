@@ -9,7 +9,7 @@ import {setupActionDomWiring} from "../../actions/dom-wiring.js"
 import {fallbackBindings} from "../../actions/parts/fallback-bindings.js"
 import {ActionController} from "../../actions/types/action-controller.js"
 
-export class NubContext2 extends LitElement {
+export class NubContext extends LitElement {
 	#controller: ActionController
 	#store = new BindingsStore(localStorage)
 	#handleInput: (event: NubInputEvent) => void
