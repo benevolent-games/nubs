@@ -1,16 +1,16 @@
 
-import {ActionContext} from "../action-context.js"
+import {ActionState} from "../types/action-state.js"
 
-export function findActionsForInputName({kind, name, context: {modes, bindings}}: {
-		context: ActionContext
+export function findActionsForInputName({kind, name, state}: {
+		state: ActionState
 		kind: string
 		name: string
 	}) {
 
 	const matchingActions = new Set<string>()
 
-	for (const mode of modes) {
-		const kindbinds = bindings[mode] ?? {}
+	for (const mode of state.modes) {
+		const kindbinds = state.bindings[mode] ?? {}
 		const binds = kindbinds[kind] ?? {}
 
 		for (const [action, bindlist] of Object.entries(binds)) {

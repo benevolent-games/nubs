@@ -2,17 +2,22 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 
-import {Nub} from "../types.js"
 import {Bindings} from "./types/bindings.js"
-import {NubInputEvent} from "../events/input.js"
-import {ActionContext} from "./action-context.js"
-import {NubActionEvent} from "../events/action.js"
-import {NubBindingsEvent} from "../events/bindings.js"
-import {setupContextController} from "./context-controller.js"
-import {ReadableSet} from "../tools/regulated-set/types/readable-set.js"
-import {interpretInputEventsAsActions} from "./interpret-input-events-as-actions.js"
+import {setupActionDomWiring} from "./dom-wiring.js"
 
 export class NubContext2 extends LitElement {
+	#dispose = () => {}
+	#wiring: ReturnType<typeof setupActionDomWiring> | undefined
+
+	#startListening() {
+		if (this.#wiring)
+			this.#dispose = this.#wiring.startListening()
+	}
+
+	get controller() { return this.#wiring?.controller }
+
+	@property({type: Boolean})
+	["events-on-window"]: boolean = false
 
 	@property({type: String})
 	["default-bindings"]: string = ""
@@ -20,40 +25,35 @@ export class NubContext2 extends LitElement {
 	@property({type: String})
 	["initial-modes"]: string = "default"
 
-	#onModesChange = (modes: ReadableSet<string>) => {
-
+	connectedCallback() {
+		super.connectedCallback()
+		this.#startListening()
 	}
 
-	// TODO bindings any
-	#onBindingsChange = (bindings: any) => {
-		NubBindingsEvent
-			.target(this)
-			.dispatch({bindings})
-	}
-
-	#onAction = (detail: Nub.Detail.Action) => {
-		NubActionEvent
-			.target(this)
-			.dispatch(detail)
+	disconnectedCallback() {
+		super.disconnectedCallback()
+		this.#dispose()
+		this.#dispose = () => {}
 	}
 
 	firstUpdated() {
-		const bindings: Bindings = JSON.parse(this["default-bindings"])
-		const modes: string[] = this["initial-modes"].split(/\s+/gm)
-		const context = new ActionContext({modes, bindings})
+		const defaultBindings: Bindings = JSON.parse(this["default-bindings"])
+		const initialModes: string[] = this["initial-modes"]
+			.split(/\s+/gm)
+			.filter(s => s.length > 0)
 
-		const controller = setupContextController({
-			context,
-			onModesChange: this.#onModesChange,
-			onBindingsChange: this.#onBindingsChange,
+		const eventTarget = this["events-on-window"]
+			? window
+			: this
+
+		this.#wiring = setupActionDomWiring({
+			initialModes,
+			defaultBindings,
+			eventDispatchingTarget: eventTarget,
+			inputEventListeningTarget: eventTarget,
 		})
 
-		NubInputEvent
-			.target(this)
-			.listen(interpretInputEventsAsActions({
-				context,
-				onAction: this.#onAction,
-			}))
+		this.#startListening()
 	}
 
 	render() {

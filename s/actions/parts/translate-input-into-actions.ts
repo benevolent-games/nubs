@@ -1,27 +1,27 @@
 
 import {Nub} from "../../types.js"
-import {ActionContext} from "../action-context.js"
+import {ActionState} from "../types/action-state.js"
 import {findActionsForInputName} from "./find-actions-for-input-name.js"
 
-export function translateInputIntoActions({detail, context}: {
+export function translateInputIntoActions({detail, state}: {
 		detail: Nub.Detail.Any
-		context: ActionContext
+		state: ActionState
 	}) {
 
 	const {kind, name} = detail
 	const matchingActions = findActionsForInputName({
 		kind,
 		name,
-		context,
+		state,
 	})
 
 	const actionDetails: Nub.Detail.Action[] = []
 
-	if (!context.actions.hasOwnProperty(kind))
-		context.actions[kind] = {}
+	if (!state.actions.hasOwnProperty(kind))
+		state.actions[kind] = {}
 
 	for (const action of matchingActions) {
-		context.actions[kind][action] = detail
+		state.actions[kind][action] = detail
 		actionDetails.push({...detail, action})
 	}
 
