@@ -5,12 +5,6 @@ export namespace Nub {
 
 	export type Kind = "key" | "mouse" | "vector2"
 
-	export enum Type {
-		Key,
-		Mouse,
-		Vector2,
-	}
-
 	export namespace Data {
 		export interface Key {
 			code: string
@@ -27,21 +21,17 @@ export namespace Nub {
 
 	export namespace Detail {
 		export interface Base {
-			type: Type
 			kind: Kind
 			name: string
 		}
 		export type Key = Base & Data.Key & {
 			kind: "key"
-			type: Type.Key
 		}
 		export type Mouse = Base & Data.Mouse & {
 			kind: "mouse"
-			type: Type.Mouse
 		}
 		export type Vector2 = Base & Data.Vector2 & {
 			kind: "vector2"
-			type: Type.Vector2
 		}
 		export type Any = Mouse | Key | Vector2
 		export type Action = Any & {action: string}

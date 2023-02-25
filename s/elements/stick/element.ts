@@ -45,8 +45,8 @@ export class NubStick extends MagicElement {
 					.target(this)
 					.dispatch({
 						vector,
-						type: Nub.Type.Vector2,
 						name: this.name,
+						kind: "vector2",
 					})
 			},
 		}

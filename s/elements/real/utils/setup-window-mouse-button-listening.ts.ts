@@ -1,6 +1,5 @@
 
 import {LitElement} from "lit"
-import {Nub} from "../../../types.js"
 import {NubInputEvent} from "../../../events/input.js"
 import {convertMouseButtonToKeyCode} from "./convert-mouse-button-to-key-code.js"
 
@@ -17,7 +16,7 @@ export function setupWindowMouseButtonListening(
 				.dispatch({
 					code,
 					pressed,
-					type: Nub.Type.Key,
+					kind: "key",
 					name: element.name,
 				})
 		},
@@ -29,7 +28,7 @@ export function setupWindowMouseButtonListening(
 				.dispatch({
 					code,
 					pressed,
-					type: Nub.Type.Key,
+					kind: "key",
 					name: element.name,
 				})
 		},

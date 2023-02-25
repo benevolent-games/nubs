@@ -10,7 +10,7 @@ export function makeTriggerInputFunction(
 			.target(element)
 			.dispatch({
 				...data,
-				type: Nub.Type.Key,
+				kind: "key",
 				name: element.name,
 			})
 	}

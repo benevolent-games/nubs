@@ -1,6 +1,4 @@
-import {ActionController} from "./action-controller.js"
 
-export type ActionDomWiring = {
-	controller: ActionController
-	startListening: () => () => void
-}
+import {setupActionDomWiring} from "../dom-wiring.js"
+
+export type ActionDomWiring = ReturnType<typeof setupActionDomWiring>

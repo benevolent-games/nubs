@@ -13,6 +13,11 @@ export class RegulatedSet<T> {
 		add: x => this.#set.add(x),
 		delete: x => this.#set.delete(x),
 		clear: () => this.#set.clear(),
+		assign: items => {
+			this.#set.clear()
+			for (const item of items)
+				this.#set.add(item)
+		},
 	}
 
 	writable: WritableSet<T>

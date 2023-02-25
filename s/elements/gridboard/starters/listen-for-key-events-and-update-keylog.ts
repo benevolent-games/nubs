@@ -13,7 +13,7 @@ export function listenForKeyEventsAndUpdateKeylog(
 		.target(target)
 		.listen(({detail}) => {
 
-			const key = detail.type === Nub.Type.Key
+			const key = detail.kind === "key"
 				? detail as Nub.Detail.Key
 				: undefined
 

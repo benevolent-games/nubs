@@ -1,6 +1,5 @@
 
 import {LitElement} from "lit"
-import {Nub} from "../../../types.js"
 import {NubInputEvent} from "../../../events/input.js"
 
 export function setupWindowKeyboardListening(
@@ -14,7 +13,7 @@ export function setupWindowKeyboardListening(
 				.dispatch({
 					code,
 					pressed,
-					type: Nub.Type.Key,
+					kind: "key",
 					name: element.name,
 				})
 	}

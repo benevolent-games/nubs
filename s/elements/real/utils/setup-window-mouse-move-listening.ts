@@ -1,6 +1,5 @@
 
 import {LitElement} from "lit"
-import {Nub} from "../../../types.js"
 import {NubInputEvent} from "../../../events/input.js"
 
 export function setupWindowMouseMoveListening(
@@ -14,7 +13,7 @@ export function setupWindowMouseMoveListening(
 				movement: [movementX, movementY],
 				position: [clientX, clientY],
 				name: element.name,
-				type: Nub.Type.Mouse,
+				kind: "mouse",
 			})
 	}
 
