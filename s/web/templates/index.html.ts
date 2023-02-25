@@ -24,25 +24,10 @@ export default (context: WebsiteContext) => pageHtml({
 		</button>
 		</header>
 
-		<nub-context default-bindings="
-			👼 Cool Default Bindings
-			🖱 look :: lookmouse
-			🕹️ look :: lookstick
-			🕹️ move :: movestick
-			*️⃣ forward :: KeyW ArrowUp
-			*️⃣ backward :: KeyS ArrowDown
-			*️⃣ leftward :: KeyA ArrowLeft
-			*️⃣ rightward :: KeyD ArrowRight
-			*️⃣ jump :: Space
-			*️⃣ use :: KeyF Mouse3
-			*️⃣ primary :: Mouse1
-			*️⃣ secondary :: Mouse2
-			">
-
+		<nub-context>
 			<nub-real-keyboard></nub-real-keyboard>
 			<nub-real-mouse name=lookmouse></nub-real-mouse>
 
-			<nub-grid-menu></nub-grid-menu>
 			<nub-gridboard layout=compact></nub-gridboard>
 
 			<div class=side-by-side>

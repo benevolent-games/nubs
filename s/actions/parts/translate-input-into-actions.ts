@@ -9,10 +9,13 @@ export function translateInputIntoActions({detail, state}: {
 	}) {
 
 	const {kind, name} = detail
+
 	const matchingActions = findActionsForInputName({
 		kind,
-		name,
 		state,
+		name: kind === "key"
+			? detail.code
+			: name,
 	})
 
 	const actionDetails: Nub.Detail.Action[] = []

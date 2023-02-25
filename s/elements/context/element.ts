@@ -8,6 +8,7 @@ import {BindingsStore} from "../../actions/bindings-store.js"
 import {setupActionDomWiring} from "../../actions/dom-wiring.js"
 import {fallbackBindings} from "../../actions/parts/fallback-bindings.js"
 import {ActionController} from "../../actions/types/action-controller.js"
+import {parseBindings} from "../../actions/parse-bindings.js"
 
 export class NubContext extends LitElement {
 	#controller: ActionController
@@ -38,17 +39,13 @@ export class NubContext extends LitElement {
 
 		store.name = this["name"]
 
-		const defaultBindings: Bindings = this["default-bindings"]
-			? JSON.parse(this["default-bindings"])
-			: undefined
-
 		const initialModes: string[] = this["initial-modes"]
 			.split(/\s+/gm)
 			.filter(s => s.length > 0)
 
 		controller.bindings = (
 			store.bindings
-				?? defaultBindings
+				?? parseBindings(this["default-bindings"])
 				?? fallbackBindings
 		)
 
