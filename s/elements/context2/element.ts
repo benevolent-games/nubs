@@ -2,12 +2,12 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 
-import {Bindings} from "./types/bindings.js"
-import {NubInputEvent} from "../events/input.js"
-import {BindingsStore} from "./bindings-store.js"
-import {setupActionDomWiring} from "./dom-wiring.js"
-import {fallbackBindings} from "./parts/fallback-bindings.js"
-import {ActionController} from "./types/action-controller.js"
+import {Bindings} from "../../actions/types/bindings.js"
+import {NubInputEvent} from "../../events/input.js"
+import {BindingsStore} from "../../actions/bindings-store.js"
+import {setupActionDomWiring} from "../../actions/dom-wiring.js"
+import {fallbackBindings} from "../../actions/parts/fallback-bindings.js"
+import {ActionController} from "../../actions/types/action-controller.js"
 
 export class NubContext2 extends LitElement {
 	#controller: ActionController
