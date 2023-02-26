@@ -18,10 +18,6 @@ html {
 	font-size: 16px;
 }
 
-body {
-	display: grid;
-}
-
 header {
 	text-align: center;
 	max-width: max-content;
@@ -70,12 +66,7 @@ nub-editor {
 	margin-top: 1em;
 }
 
-nub-gridboard {
-	margin: 1em auto;
-	font-size: 2em;
-}
-
 nub-lookpad {
-	--lookpad-max-width: 15rem;
 	margin: 1rem auto;
+	width: 15em;
 }

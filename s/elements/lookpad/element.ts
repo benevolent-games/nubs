@@ -11,15 +11,10 @@ import {setupMouseAndTouchMoveListening} from "./utils/setup-mouse-and-touch-mov
 export class NubLookpad extends MagicElement {
 
 	@property({type: String, reflect: true})
-	name: string = "p"
+	name: string = "1"
 
 	realize() {
 		const {use} = this
-
 		use.setup(setupMouseAndTouchMoveListening)
-
-		return html`
-			<div></div>
-		`
 	}
 }
