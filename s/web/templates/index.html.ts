@@ -42,9 +42,6 @@ export default (context: WebsiteContext) => pageHtml({
 			<nub-real-keyboard></nub-real-keyboard>
 			<nub-real-mouse name=lookmouse></nub-real-mouse>
 
-			<nub-grid-menu></nub-grid-menu>
-			<nub-gridboard layout=compact></nub-gridboard>
-
 			<nub-lookpad name=lookmouse></nub-lookpad>
 
 			<div class=side-by-side>
