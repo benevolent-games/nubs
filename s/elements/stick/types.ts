@@ -9,13 +9,11 @@ export interface StickStarters {
 
 	triggerInput: (v: V2) => void
 
-	setStyleTransforms: (s: {stick: string, understick: string}) => void
+	setVector: (n: V2) => void
 
-	setTrackingMouse: (x: boolean) => void
-	getTrackingMouse: () => boolean
+	setTrackingPointerId: (x: number | undefined) => void
+	getTrackingPointerId: () => number | undefined
 
-	setTrackingTouchId: (x: number | undefined) => void
-	getTrackingTouchId: () => number | undefined
 }
 
 export interface StickControls {

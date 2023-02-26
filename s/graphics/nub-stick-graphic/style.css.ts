@@ -1,14 +1,7 @@
 
 import {css} from "@chasemoskal/magical"
+
 export default css`
-
-:host {
-	display: block;
-	width: 20em;
-	height: 20em;
-	touch-action: none;
-}
-
 .base {
 	position: relative;
 	aspect-ratio: 1/1;
@@ -36,5 +29,4 @@ export default css`
 .understick {
 	opacity: 0.5;
 }
-
 `
