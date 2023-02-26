@@ -21,9 +21,9 @@ export class NubStickpad extends MagicElement {
 	@property({type: String, reflect: true})
 	name: string = "1"
 
-	get nubStickGraphicParts() {
-		const {basePart, stickPart} = this.shadowRoot?.querySelector("nub-stick-graphic") as NubStickGraphic
-		return {basePart, stickPart} as {basePart: HTMLElement, stickPart: HTMLElement}
+	get nubStickGraphic() {
+		const nubStickGraphic = this.shadowRoot?.querySelector("nub-stick-graphic") as NubStickGraphic
+		return nubStickGraphic
 	}
 
 	realize() {
@@ -42,8 +42,8 @@ export class NubStickpad extends MagicElement {
 			getTrackingPointerId,
 			setTrackingPointerId,
 			query: () => ({
-				base: this.nubStickGraphicParts.basePart,
-				stick: this.nubStickGraphicParts.stickPart
+				base: this.nubStickGraphic.basePart as HTMLElement,
+				stick: this.nubStickGraphic.stickPart as HTMLElement
 			}),
 			triggerInput: (vector: v2.V2) => {
 				NubInputEvent
@@ -56,8 +56,9 @@ export class NubStickpad extends MagicElement {
 			},
 			setCenterPosition: (e: PointerEvent) => {
 				setVisibility(true)
-				const {clientWidth, clientHeight} = this.nubStickGraphicParts.basePart 
-				setPosition(`left: ${e.pageX - clientWidth / 2}px; top: ${e.pageY - clientHeight / 2}px;`)
+				const {clientWidth, clientHeight} = this.nubStickGraphic.basePart as HTMLElement
+				const {left} = this.getBoundingClientRect()
+				setPosition(`left: ${e.clientX - left - clientWidth / 2}px; top: ${e.offsetY - clientHeight / 2}px;`)
 			},
 			stickPad: this,
 			setVisibility
@@ -74,7 +75,10 @@ export class NubStickpad extends MagicElement {
 			<nub-stick-graphic
 				.vector=${vector}
 				?data-visible=${isVisible}
-				style=${position}>
+				style=${this.nubStickGraphic
+				?.hasAttribute("data-visible")
+					? position
+					: `inset: 0; margin: auto;`}>
 			</nub-stick-graphic>
 		`
 	}
