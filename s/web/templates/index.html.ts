@@ -47,6 +47,10 @@ export default (context: WebsiteContext) => pageHtml({
 			<div class=side-by-side>
 				<nub-stick name=lookstick></nub-stick>
 				<nub-visualizer></nub-visualizer>
+				<nub-button>
+					<label slot="text">Text</label>
+					<svg slot="icon"></svg>
+				</nub-button>
 			</div>
 			<nub-stickpad name=movestick></nub-stickpad>
 			<nub-editor></nub-editor>
