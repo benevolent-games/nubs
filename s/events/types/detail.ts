@@ -26,4 +26,5 @@ export namespace NubDetail {
 	}
 
 	export type Any = Key | Pointer | Stick
+	export type Effect<D extends Any = Any> = D & {effect: string}
 }

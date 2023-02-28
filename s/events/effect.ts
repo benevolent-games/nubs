@@ -5,7 +5,7 @@ import {ev, MagicEventBase} from "@chasemoskal/magical"
 type Any = NubDetail.Any
 
 export class NubEffectEvent<D extends Any = Any>
-	extends MagicEventBase<D> {
+	extends MagicEventBase<NubDetail.Effect<D>> {
 
 	static type = "nub_effect"
 	static target = ev(this).target
