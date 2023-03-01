@@ -2,9 +2,9 @@
 import {NubCauseEvent} from "../../../events/cause.js"
 import {attachEvents} from "../../../tools/attach-events.js"
 import {EventTargeting} from "../../../framework/types/event-targeting.js"
-import {convertMouseButtonToCause} from "./convert-mouse-button-to-cause.js"
+import {convert_mouse_button_to_cause} from "./convert_mouse_button_to_cause.js"
 
-export function setupPointerButtonListening({
+export function setup_pointer_button_listening({
 		listenTo,
 		dispatchTo,
 	}: EventTargeting) {
@@ -15,7 +15,7 @@ export function setupPointerButtonListening({
 		return (event: PointerEvent) => dispatch({
 			pressed,
 			kind: "key",
-			cause: convertMouseButtonToCause(event.button),
+			cause: convert_mouse_button_to_cause(event.button),
 		})
 	}
 

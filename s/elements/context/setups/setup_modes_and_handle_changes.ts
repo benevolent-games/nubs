@@ -1,10 +1,7 @@
 
 import {RegulatedSet} from "../../../tools/regulated-set/regulated-set.js"
-import {ReadableSet} from "../../../tools/regulated-set/types/readable-set.js"
+import {OnSetChange} from "../../../tools/regulated-set/types/on-set-change.js"
 
-export default function(
-		onChange: (modes: ReadableSet<string>) => void
-	) {
-
-	return new RegulatedSet(new Set<string>(), onChange)
-}
+export const setup_modes_and_handle_changes =
+	(onChange: OnSetChange<string>) =>
+		new RegulatedSet(new Set<string>(), onChange)

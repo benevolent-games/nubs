@@ -10,9 +10,16 @@ import {SetWritingFunctions} from "./types/set-writing-functions.js"
 export class RegulatedSet<T> {
 	#set: Set<T>
 	#writing: SetWritingFunctions<T> = {
-		add: x => this.#set.add(x),
-		delete: x => this.#set.delete(x),
-		clear: () => this.#set.clear(),
+		add: (...xs) => {
+			for (const x of xs)
+				this.#set.add(x)
+		},
+		delete: x => {
+			this.#set.delete(x)
+		},
+		clear: () => {
+			this.#set.clear()
+		},
 		assign: items => {
 			this.#set.clear()
 			for (const item of items)

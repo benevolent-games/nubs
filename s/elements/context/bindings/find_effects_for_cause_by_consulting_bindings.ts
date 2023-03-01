@@ -3,7 +3,11 @@ import {Bindings} from "./types/bindings.js"
 import {NubDetail} from "../../../events/types/detail.js"
 import {ReadableSet} from "../../../tools/regulated-set/types/readable-set.js"
 
-export default function({bindings, modes, cause_detail}: {
+export function find_effects_for_cause_by_consulting_bindings({
+		modes,
+		bindings,
+		cause_detail,
+	}: {
 		bindings: Bindings
 		modes: ReadableSet<string>
 		cause_detail: NubDetail.Any
@@ -16,9 +20,11 @@ export default function({bindings, modes, cause_detail}: {
 		const kindbinds = bindings[mode] ?? {}
 		const binds = kindbinds[kind] ?? {}
 
-		for (const [effect, bindlist] of Object.entries(binds))
-			if (bindlist.includes(cause))
+		for (const [effect, bindlist] of Object.entries(binds)) {
+			if (bindlist.includes(cause)) {
 				matching_effect_names.add(effect)
+			}
+		}
 	})
 
 	return matching_effect_names

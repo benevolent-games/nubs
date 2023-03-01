@@ -1,7 +1,7 @@
 
 import {css} from "@chasemoskal/magical"
 
-export default css`
+export const hiddenCss = css`
 
 :host {
 	display: none;

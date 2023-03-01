@@ -3,7 +3,7 @@
  * convert a button number, from a mouse event, into a string that resembles a keyboard event code
  * - see https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button#value
  */
-export function convertMouseButtonToCause(button: number) {
+export function convert_mouse_button_to_cause(button: number) {
 	switch (button) {
 		case 0: return "Mouse1"
 		case 1: return "Mouse3"

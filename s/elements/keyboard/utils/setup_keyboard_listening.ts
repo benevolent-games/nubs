@@ -3,7 +3,7 @@ import {NubCauseEvent} from "../../../events/cause.js"
 import {attachEvents} from "../../../tools/attach-events.js"
 import {EventTargeting} from "../../../framework/types/event-targeting.js"
 
-export function setupKeyboardListening({
+export function setup_keyboard_listening({
 		listenTo,
 		dispatchTo,
 	}: EventTargeting) {

@@ -1,13 +1,13 @@
 
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
-import hiddenCss from "../../framework/styles/hidden.css.js"
-import {setupKeyboardListening} from "./utils/setup-keyboard-listening.js"
+import {hiddenCss} from "../../framework/styles/hidden.css.js"
+import {setup_keyboard_listening} from "./utils/setup_keyboard_listening.js"
 
 @mixinCss(hiddenCss)
 export class NubKeyboard extends MagicElement {
 
-	#listening = setupKeyboardListening({
+	#listening = setup_keyboard_listening({
 		listenTo: window,
 		dispatchTo: this,
 	})

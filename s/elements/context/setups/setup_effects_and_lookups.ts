@@ -1,11 +1,9 @@
 
 import {clone} from "../../../tools/clone.js"
-import {Effects} from "../bindings/types/effects.js"
 import {NubDetail} from "../../../events/types/detail.js"
-import {EffectLookups} from "../bindings/types/effect-lookups.js"
-import {EffectReports} from "../bindings/types/effect-reports.js"
+import {EffectLookups, EffectReports, Effects} from "../bindings/types/effects.js"
 
-export default function() {
+export function setup_effects_and_lookups() {
 	const writable = {
 		key: {} as EffectReports<NubDetail.Key>,
 		pointer: {} as EffectReports<NubDetail.Pointer>,
