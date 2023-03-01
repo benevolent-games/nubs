@@ -1,0 +1,70 @@
+
+import {html} from "lit"
+import {MagicElement, mixinCss} from "@chasemoskal/magical"
+
+import styles from "./styles.css.js"
+import {property} from "lit/decorators.js"
+import {printVector2} from "./parts/printing.js"
+import {RecentKeyStats, Stats} from "./parts/types.js"
+import {setupListeningToActionsAndRecordingStats} from "./parts/setup-listening-to-actions-and-recording-stats.js"
+
+@mixinCss(styles)
+export class NubVisualizer extends MagicElement {
+
+	@property({type: String, reflect: true})
+	name: string = "1"
+
+	realize() {
+		const {use} = this
+
+		const [recentKeyStats, setRecentKeyStats, getRecentKeyStats] = (
+			use.state<RecentKeyStats>({})
+		)
+
+		const [statsForPointer, setStatsForPointer] = (
+			use.state<Stats.Pointer>(() => ({
+				movement: [0, 0],
+				position: [0, 0],
+			}))
+		)
+
+		const [statsForStick, setStatsForStick] = (
+			use.state<Stats.Stick>(() => ({
+				vector: [0, 0],
+			}))
+		)
+
+		use.setup(setupListeningToActionsAndRecordingStats({
+			eventTarget: window,
+			getRecentKeyStats,
+			setRecentKeyStats,
+			setStatsForPointer,
+			setStatsForStick,
+		}))
+
+		return html`
+			<div class=coordinatesbar>
+				<p>
+					<strong>mouse  </strong>
+					<span>${printVector2(statsForPointer.movement)}</span>
+					<span>${printVector2(statsForPointer.position)}</span>
+				</p>
+				<p>
+					<strong>vector2</strong>
+					<span>${printVector2(statsForStick.vector)}</span>
+				</p>
+			</div>
+			<ul class=keystats>
+				${Object
+					.entries(recentKeyStats)
+					.filter(([,stats]) => stats.detail.pressed)
+					.map(([action, stats]) => html`
+						<li data-action="${action}">
+							<strong>${action}</strong>
+							<span>${stats.detail.cause}</span>
+						</li>
+					`)}
+			</ul>
+		`
+	}
+}

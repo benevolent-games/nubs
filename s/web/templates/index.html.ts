@@ -27,6 +27,7 @@ export default (context: WebsiteContext) => pageHtml({
 
 		<nub-context>
 			<nub-keyboard></nub-keyboard>
+			<nub-visualizer></nub-visualizer>
 		</nub-context>
 	`,
 })
