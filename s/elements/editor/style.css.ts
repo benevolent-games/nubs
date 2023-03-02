@@ -26,6 +26,14 @@ export const styles = css`
 	}
 }
 
+.modetabs {
+	button {
+		^[data-is-current] {
+			font-weight: bold;
+		}
+	}
+}
+
 [data-panel="text-editor"] {
 	padding: 1em;
 

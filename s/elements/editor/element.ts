@@ -10,6 +10,7 @@ import {TextEditorPanelView} from "./views/text-editor-panel.js"
 import {default_mode} from "../context/bindings/fallback_bindings.js"
 import {parse_modes_string} from "../context/utils/parse_modes_string.js"
 import {setupContextGetter} from "../../framework/setup-context-getter.js"
+import {GuiEditorPanelView} from "./views/gui-editor-panel.js"
 
 @mixinCss(styles)
 export class NubEditor extends MagicElement {
@@ -56,21 +57,25 @@ export class NubEditor extends MagicElement {
 			</div>
 
 			${editingApproach === "text"
+
 				? TextEditorPanelView({
 					bindings,
 					onClickSave(draft) {
 						context.bindings = draft
 					},
 				})
-				: html`gui`
-			}
+
+				: GuiEditorPanelView({
+					bindings,
+					currentMode,
+					availableModes,
+					eventTarget: context,
+					setCurrentMode,
+					onResetDefaults: context.restoreBindingsToDefaults,
+					onKeybindAssignment: () => {}, //prepareAssignKeybind(context),
+				})}
+
 		`
 	}
 }
 
-				// : EasyEditorPanelView({
-				// 	bindings,
-				// 	eventTarget: context,
-				// 	onResetDefaults: context.restoreBindingsToDefaults,
-				// 	onKeybindAssignment: prepareAssignKeybind(context),
-				// })}
