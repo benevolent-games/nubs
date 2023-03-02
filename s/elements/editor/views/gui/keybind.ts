@@ -2,7 +2,7 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
-import {Waiting} from "../../types.js"
+import {Waiting} from "./types/waiting.js"
 import {renderKeycap} from "./render-keycap.js"
 import {buttonLabels} from "../../utils/constants.js"
 

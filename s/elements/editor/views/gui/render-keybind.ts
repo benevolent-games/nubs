@@ -1,7 +1,7 @@
 
 import {StateSetter} from "@chasemoskal/magical"
 
-import {Waiting} from "../../types.js"
+import {Waiting} from "./types/waiting.js"
 import {KeybindView} from "./keybind.js"
 
 export function renderKeybind(

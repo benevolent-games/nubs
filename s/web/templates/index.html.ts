@@ -21,7 +21,7 @@ export default (context: WebsiteContext) => pageHtml({
 				a <a href="${urls.website}">benevolent.games</a> project..
 			</p>
 			<button onclick="localStorage.clear(); location.reload()">
-				reset
+				reset everything
 			</button>
 		</header>
 

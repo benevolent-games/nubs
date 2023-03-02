@@ -2,28 +2,26 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
-import {buttonLabels} from "../utils/constants.js"
-import {AssignKeybind, Waiting} from "../types.js"
+import {Waiting} from "./gui/types/waiting.js"
+import {renderKeybind} from "./gui/render-keybind.js"
 import {NubCauseEvent} from "../../../events/cause.js"
 import {Bindings} from "../../context/bindings/types/bindings.js"
-import {controlKeybindAssignments} from "../utils/setup-listen-to-inputs-and-actuate-key-bind-assignment.js"
+import {controlKeybindAssignments} from "../utils/control-keybind-assignments.js"
 
 export const GuiEditorPanelView = view({}, use => ({
-		bindings,
 		eventTarget,
-		currentMode,
 		availableModes,
-		setCurrentMode,
-		onResetDefaults,
-		onKeybindAssignment,
+		getMode,
+		setMode,
+		getBindings,
+		setBindings,
 	}: {
-		bindings: Bindings
 		eventTarget: EventTarget
-		currentMode: string
 		availableModes: string[]
-		setCurrentMode: (mode: string) => void
-		onResetDefaults: () => void
-		onKeybindAssignment: AssignKeybind
+		getMode: () => string
+		setMode: (mode: string) => void
+		getBindings: () => Bindings
+		setBindings: (b: Bindings) => void
 	}) => {
 
 	const [waiting, setWaiting, getWaiting] =
@@ -35,35 +33,36 @@ export const GuiEditorPanelView = view({}, use => ({
 			.listen(controlKeybindAssignments({
 				getWaiting,
 				setWaiting,
-				onKeybindAssignment,
+				getBindings,
+				setBindings,
+				getMode,
 			}))
 	)
 
+	const mode = getMode()
+	const bindings = getBindings()
+	const kindbinds = bindings[mode]
+	const keybinds = kindbinds?.key ?? {}
+
 	return html`
-		<div data-panel=easy-editor>
+		<div data-panel=gui-editor>
 
 			<div class=modetabs>
-				${availableModes.map(mode => html`
+				${availableModes.map(availableMode => html`
 					<button
-						?data-is-current=${mode === currentMode}
-						@click=${() => setCurrentMode(mode)}>
-						${mode}
+						?data-is-current=${availableMode === mode}
+						@click=${() => setMode(availableMode)}>
+						${availableMode}
 					</button>
 				`)}
 			</div>
 
-			<div class=buttons>
-				<button @click=${onResetDefaults}>
-					${buttonLabels.resetDefaults}
-				</button>
+			<div class=keybindlist>
+				${Object
+					.entries(keybinds)
+					.map(renderKeybind(waiting, setWaiting))}
 			</div>
 
 		</div>
 	`
 })
-
-			// <div class=keybindlist>
-			// 	${Object
-			// 		.entries(bindings.key)
-			// 		.map(renderKeybind(waiting, setWaiting))}
-			// </div>

@@ -13,7 +13,7 @@ export const fallback_bindings: Bindings = {
 			"move": ["movestick"]
 		},
 		"key": {
-			"open_menu": ["KeyQ", "Backquote"],
+			"open menu": ["KeyQ", "Backquote"],
 			"forward": ["KeyW", "ArrowUp"],
 			"backward": ["KeyS", "ArrowDown"],
 			"leftward": ["KeyA", "ArrowLeft"],
@@ -23,5 +23,10 @@ export const fallback_bindings: Bindings = {
 			"primary": ["Mouse1"],
 			"secondary": ["Mouse2"]
 		}
-	}
+	},
+	"menu": {
+		"key": {
+			"back": ["KeyQ"],
+		},
+	},
 }
