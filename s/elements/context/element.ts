@@ -15,6 +15,7 @@ import {setup_effects_and_lookups} from "./setups/setup_effects_and_lookups.js"
 import {setup_modes_and_handle_changes} from "./setups/setup_modes_and_handle_changes.js"
 import {setup_bindings_and_handle_changes} from "./setups/setup_bindings_and_handle_changes.js"
 import {setup_cause_and_effect_translation} from "./setups/setup_cause_and_effect_translation.js"
+import {fallback_bindings} from "./bindings/fallback_bindings.js"
 
 export class NubContext extends LitElement {
 
@@ -61,6 +62,10 @@ export class NubContext extends LitElement {
 		this.#bindings.bindings = b
 	}
 
+	restoreBindingsToDefaults() {
+		this.bindings = fallback_bindings
+	}
+
 	@property({type: String})
 	["name"]: string = "default"
 
@@ -72,7 +77,7 @@ export class NubContext extends LitElement {
 		initially_load_bindings_from_storage(
 			this.#bindings,
 			this.#bindings_store,
-			this["name"]
+			this["name"],
 		)
 	}
 

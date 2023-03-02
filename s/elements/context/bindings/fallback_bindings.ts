@@ -1,8 +1,10 @@
 
 import {Bindings} from "./types/bindings.js"
 
+export const default_mode = "humanoid"
+
 export const fallback_bindings: Bindings = {
-	"default": {
+	[default_mode]: {
 		"mouse": {
 			"look": ["lookmouse"]
 		},
