@@ -5,22 +5,27 @@ export const styles = css`
 
 :host {
 	display: block;
+	width: 38em;
+	max-width: 100%;
 	background: #111e;
+
 	color: #fffc;
 	--outline-soft: #fff4;
 	--outline-hard: #fff8;
 	--pad-keygap: 0.4em;
 	--pad-keyinner: 0.2em;
+
+	> * {
+		padding-top: 0.5em;
+		^:last-child { padding-bottom: 0.5em; }
+	}
 }
 
 .metabar {
-	padding: 0.5em;
 	text-align: center;
 }
 
 [data-panel="text-editor"] {
-	padding: 1em;
-
 	textarea {
 		max-width: 100%;
 		width: 100%;
@@ -33,8 +38,6 @@ export const styles = css`
 }
 
 [data-panel="gui-editor"] {
-	padding: 1em;
-
 	> *:not(:first-child) {
 		background: #3338;
 	}
@@ -140,33 +143,7 @@ export const styles = css`
 .buttons {
 	display: flex;
 	justify-content: center;
-	// width: 100%;
-	// margin: 1em;
-	gap: 1em;
-
-	button {
-		font: inherit;
-		padding: 0.5em;
-		background: #81818126;
-		padding: 0.5em;
-		color: white;
-		border: 1px solid var(--outline-soft);
-		border-radius: 0.5em;
-		cursor: pointer;
-
-		^[disabled] {
-			opacity: 0.2;
-		}
-
-		^:is(:hover, :focus):not([disabled]) {
-			background: rgb(183 183 183 / 15%);
-			border-color: var(--outline-hard);
-		}
-
-		^:active:not([disabled]) {
-			border: none;
-		}
-	}
+	gap: 0.5em;
 }
 
 ::-webkit-scrollbar {

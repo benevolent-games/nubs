@@ -19,13 +19,16 @@ export class NubEditor extends MagicElement {
 		const {use} = this
 		const context = this.#getContext()
 
-		const [bindings, setBindings, getBindings] =
+		const [bindingsDraft, setBindingsDraft, getBindingsDraft] =
 			use.state<Bindings>(() => context.bindings)
+
+		const [showSaveButton, setShowSaveButton] =
+			use.state(false)
 
 		const [editingApproach, setEditingApproach] =
 			use.state<"gui" | "text">("gui")
 
-		const availableModes = Object.keys(bindings)
+		const availableModes = Object.keys(bindingsDraft)
 		const [primaryMode = default_mode] = availableModes
 
 		const [, setMode, getMode] =
@@ -34,7 +37,10 @@ export class NubEditor extends MagicElement {
 		use.setup(() =>
 			NubBindingsEvent
 				.target(context)
-				.listen(event => setBindings(event.detail.bindings))
+				.listen(event => {
+					setBindingsDraft(event.detail.bindings)
+					setShowSaveButton(false)
+				})
 		)
 
 		const toggleApproach = () => {
@@ -43,6 +49,15 @@ export class NubEditor extends MagicElement {
 					? "text"
 					: "gui"
 			)
+		}
+
+		function changeBindingsDraftAndShowSaveButton(b: Bindings) {
+			setBindingsDraft(b)
+			setShowSaveButton(true)
+		}
+
+		function save() {
+			context.bindings = getBindingsDraft()
 		}
 
 		return html`
@@ -54,7 +69,7 @@ export class NubEditor extends MagicElement {
 						: "switch to gui editor"}
 				</button>
 
-				<button @click=${context.restoreBindingsToDefaults}>
+				<button @click=${() => context.restoreBindingsToDefaults()}>
 					reset to defaults
 				</button>
 
@@ -63,21 +78,31 @@ export class NubEditor extends MagicElement {
 			${editingApproach === "text"
 
 				? TextEditorPanelView({
-					bindings,
-					onClickSave(draft) {
-						context.bindings = draft
-					},
+					bindingsDraft,
+					setBindingsDraft: changeBindingsDraftAndShowSaveButton,
 				})
 
 				: GuiEditorPanelView({
+					bindingsDraft,
+					setBindingsDraft: changeBindingsDraftAndShowSaveButton,
+					getBindingsDraft,
+
 					availableModes,
-					eventTarget: context,
 					getMode,
 					setMode,
-					getBindings,
-					setBindings,
+
+					listenForCauseEventsOn: context,
 				})}
+
+			<div class=buttons>
+				${showSaveButton ?html`
+					<button
+						class=save
+						@click=${save}>
+						save
+					</button>
+				` :undefined}
+			</div>
 		`
 	}
 }
-

@@ -3,25 +3,33 @@ import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
 import {Waiting} from "./gui/types/waiting.js"
-import {renderKeybind} from "./gui/render-keybind.js"
 import {NubCauseEvent} from "../../../events/cause.js"
+import {Setter} from "../../../framework/types/setter.js"
+import {Getter} from "../../../framework/types/getter.js"
+import {renderKeybind} from "./gui/renderers/render-keybind.js"
 import {Bindings} from "../../context/bindings/types/bindings.js"
-import {controlKeybindAssignments} from "../utils/control-keybind-assignments.js"
+import {controlKeybindAssignments} from "./gui/utils/control-keybind-assignments.js"
 
 export const GuiEditorPanelView = view({}, use => ({
-		eventTarget,
+		bindingsDraft,
+		setBindingsDraft,
+		getBindingsDraft,
+
 		availableModes,
 		getMode,
 		setMode,
-		getBindings,
-		setBindings,
+
+		listenForCauseEventsOn,
 	}: {
-		eventTarget: EventTarget
+		bindingsDraft: Bindings
+		setBindingsDraft: Setter<Bindings>
+		getBindingsDraft: Getter<Bindings>
+
 		availableModes: string[]
 		getMode: () => string
 		setMode: (mode: string) => void
-		getBindings: () => Bindings
-		setBindings: (b: Bindings) => void
+
+		listenForCauseEventsOn: EventTarget
 	}) => {
 
 	const [waiting, setWaiting, getWaiting] =
@@ -29,19 +37,18 @@ export const GuiEditorPanelView = view({}, use => ({
 
 	use.setup(() =>
 		NubCauseEvent
-			.target(eventTarget)
+			.target(listenForCauseEventsOn)
 			.listen(controlKeybindAssignments({
 				getWaiting,
 				setWaiting,
-				getBindings,
-				setBindings,
+				getBindingsDraft,
+				setBindingsDraft,
 				getMode,
 			}))
 	)
 
 	const mode = getMode()
-	const bindings = getBindings()
-	const kindbinds = bindings[mode]
+	const kindbinds = bindingsDraft[mode]
 	const keybinds = kindbinds?.key ?? {}
 
 	return html`

@@ -1,21 +1,20 @@
 
 import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
 
-import {Waiting} from "../views/gui/types/waiting.js"
-import {NubCauseEvent} from "../../../events/cause.js"
-import {Bindings} from "../../context/bindings/types/bindings.js"
-import {clone} from "../../../tools/clone.js"
+import {Waiting} from "../types/waiting.js"
+import {NubCauseEvent} from "../../../../../events/cause.js"
+import {Bindings} from "../../../../context/bindings/types/bindings.js"
 
 export function controlKeybindAssignments({
 		getMode,
-		getBindings,
-		setBindings,
+		getBindingsDraft,
+		setBindingsDraft,
 		getWaiting,
 		setWaiting,
 	}: {
 		getMode: () => string
-		getBindings: () => Bindings
-		setBindings: (b: Bindings) => void
+		getBindingsDraft: () => Bindings
+		setBindingsDraft: (b: Bindings) => void
 		getWaiting: () => undefined | Waiting
 		setWaiting: StateSetter<undefined | Waiting>
 	}) {
@@ -31,7 +30,7 @@ export function controlKeybindAssignments({
 				setWaiting(undefined)
 
 				const mode = getMode()
-				const bindings = clone(getBindings())
+				const bindings = getBindingsDraft()
 				const isEscapeKey = cause === "Escape"
 				const keybinds = bindings[mode].key[effect]
 				const redundant = keybinds.some(c => c === cause)
@@ -42,7 +41,7 @@ export function controlKeybindAssignments({
 					else
 						keybinds[keyIndex] = cause
 
-					setBindings(bindings)
+					setBindingsDraft(bindings)
 				}
 			}
 		}

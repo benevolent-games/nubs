@@ -2,59 +2,35 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
+import {Setter} from "../../../framework/types/setter.js"
 import {Bindings} from "../../context/bindings/types/bindings.js"
-import {text_to_bindings} from "../../context/bindings/text/text_to_bindings.js"
 import {bindings_to_text} from "../../context/bindings/text/bindings_to_text.js"
+import {prepTextAreaChangeHandling} from "./text/prep-text-area-change-handling.js"
 
 export const TextEditorPanelView = view({}, use => ({
-		bindings,
-		onClickSave,
+		bindingsDraft,
+		setBindingsDraft,
 	}: {
-		bindings: Bindings
-		onClickSave: (draft: Bindings) => void
+		bindingsDraft: Bindings
+		setBindingsDraft: Setter<Bindings>
 	}) => {
 
+	const text = bindings_to_text(bindingsDraft)
 	const [problem, setProblem] = use.state<string>("")
-	const [draft, setDraft] = use.state<undefined | Bindings>(undefined)
+	const onTextAreaChange = prepTextAreaChangeHandling(
+		setBindingsDraft,
+		setProblem,
+	)
 
-	function onTextAreaChange(event: InputEvent) {
-		const target = <HTMLTextAreaElement>event.target
-		setProblem("")
-		setDraft(undefined)
-		try {
-			setDraft(
-				text_to_bindings(target.value)
-			)
-		}
-		catch (error) {
-			if (error instanceof Error)
-				setProblem(error.message)
-		}
-	}
-
-	const text = bindings_to_text(bindings)
-	const showSaveButton = (draft && !problem)
-	const saveButtonHandler = showSaveButton
-		? () => onClickSave(draft)
-		: () => {}
 
 	return html`
 		<div data-panel=text-editor>
+
 			<textarea @input=${onTextAreaChange}>${text}</textarea>
 
 			${problem && html`
-				<div class=problem>
-					${problem}
-				</div>
+				<div class=problem>${problem}</div>
 			`}
-
-			<div class=buttons>
-				<button
-					?disabled=${!showSaveButton}
-					@click=${saveButtonHandler}>
-					save
-				</button>
-			</div>
 		</div>
 	`
 })
