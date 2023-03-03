@@ -3,6 +3,8 @@ import {html} from "lit"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
+import {ButtonsView} from "./views/buttons.js"
+import {MetabarView} from "./views/metabar.js"
 import {NubBindingsEvent} from "../../events/bindings.js"
 import {Bindings} from "../context/bindings/types/bindings.js"
 import {GuiEditorPanelView} from "./views/gui-editor-panel.js"
@@ -56,24 +58,16 @@ export class NubEditor extends MagicElement {
 			setShowSaveButton(true)
 		}
 
-		function save() {
+		function onSaveClick() {
 			context.bindings = getBindingsDraft()
 		}
 
+		function resetBindings() {
+			context.restoreBindingsToDefaults()
+		}
+
 		return html`
-			<div class=metabar>
-
-				<button @click=${toggleApproach}>
-					${editingApproach === "gui"
-						? "switch to text editor"
-						: "switch to gui editor"}
-				</button>
-
-				<button @click=${() => context.restoreBindingsToDefaults()}>
-					reset to defaults
-				</button>
-
-			</div>
+			${MetabarView(editingApproach, toggleApproach, resetBindings)}
 
 			${editingApproach === "text"
 
@@ -94,15 +88,7 @@ export class NubEditor extends MagicElement {
 					listenForCauseEventsOn: context,
 				})}
 
-			<div class=buttons>
-				${showSaveButton ?html`
-					<button
-						class=save
-						@click=${save}>
-						save
-					</button>
-				` :undefined}
-			</div>
+			${ButtonsView(showSaveButton, onSaveClick)}
 		`
 	}
 }
