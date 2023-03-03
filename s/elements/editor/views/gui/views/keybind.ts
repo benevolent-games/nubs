@@ -5,6 +5,7 @@ import {view} from "@chasemoskal/magical"
 import {Waiting} from "../types/waiting.js"
 import {buttonLabels} from "../../../utils/constants.js"
 import {renderKeycap} from "../renderers/render-keycap.js"
+import {when} from "../../../../../framework/helpers/when.js"
 
 export const KeybindView = view({}, use => ({
 		effect,
@@ -44,20 +45,20 @@ export const KeybindView = view({}, use => ({
 					})
 				)}
 
-				${(showWaitingIndicatorForNewBind || null) && html`
+				${when(showWaitingIndicatorForNewBind, () => html`
 					<button class=keycap data-waiting>
 						${buttonLabels.waitingForKeyPress}
 					</button>
-				`}
+				`)}
 
-				${(!waiting || null) && html`
+				${when(!waiting, () => html`
 					<button
 						class=keycap
 						data-add-new
 						@click=${onClickAddNewBind}>
 							${buttonLabels.addNewKeyBind}
 					</button>
-				`}
+				`)}
 			</div>
 		</div>
 	`

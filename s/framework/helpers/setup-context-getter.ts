@@ -1,6 +1,6 @@
 
 import {dashify} from "@chasemoskal/magical"
-import {NubContext} from "../elements/context/element.js"
+import {NubContext} from "../../elements/context/element.js"
 
 const tag = dashify(NubContext.name)
 

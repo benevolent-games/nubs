@@ -8,7 +8,7 @@ import {Bindings} from "../context/bindings/types/bindings.js"
 import {GuiEditorPanelView} from "./views/gui-editor-panel.js"
 import {TextEditorPanelView} from "./views/text-editor-panel.js"
 import {default_mode} from "../context/bindings/fallback_bindings.js"
-import {setupContextGetter} from "../../framework/setup-context-getter.js"
+import {setupContextGetter} from "../../framework/helpers/setup-context-getter.js"
 
 @mixinCss(styles)
 export class NubEditor extends MagicElement {

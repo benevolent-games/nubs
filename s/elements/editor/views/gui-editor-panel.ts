@@ -3,11 +3,9 @@ import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
 import {Waiting} from "./gui/types/waiting.js"
+import {GuiOptions} from "./gui/types/gui-options.js"
 import {NubCauseEvent} from "../../../events/cause.js"
-import {Setter} from "../../../framework/types/setter.js"
-import {Getter} from "../../../framework/types/getter.js"
 import {renderKeybind} from "./gui/renderers/render-keybind.js"
-import {Bindings} from "../../context/bindings/types/bindings.js"
 import {controlKeybindAssignments} from "./gui/utils/control-keybind-assignments.js"
 
 export const GuiEditorPanelView = view({}, use => ({
@@ -20,17 +18,7 @@ export const GuiEditorPanelView = view({}, use => ({
 		setMode,
 
 		listenForCauseEventsOn,
-	}: {
-		bindingsDraft: Bindings
-		setBindingsDraft: Setter<Bindings>
-		getBindingsDraft: Getter<Bindings>
-
-		availableModes: string[]
-		getMode: () => string
-		setMode: (mode: string) => void
-
-		listenForCauseEventsOn: EventTarget
-	}) => {
+	}: GuiOptions) => {
 
 	const [waiting, setWaiting, getWaiting] =
 		use.state<undefined | Waiting>(undefined)
@@ -39,11 +27,11 @@ export const GuiEditorPanelView = view({}, use => ({
 		NubCauseEvent
 			.target(listenForCauseEventsOn)
 			.listen(controlKeybindAssignments({
+				getMode,
 				getWaiting,
 				setWaiting,
 				getBindingsDraft,
 				setBindingsDraft,
-				getMode,
 			}))
 	)
 
