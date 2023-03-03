@@ -181,7 +181,7 @@ export const styles = css`
 	display: flex;
 }
 
-.actions {
+.effects {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -190,16 +190,16 @@ export const styles = css`
 	flex: 1;
 }
 
-.action {
+.effect {
 	border: none;
 	color: white;
 }
 
-.action option {
+.effect option {
 	color: black;
 }
 
-.edit-keys, .actions {
+.edit-keys, .effects {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -208,7 +208,7 @@ export const styles = css`
 	justify-content: center;
 }
 
-.edit-key, .action {
+.edit-key, .effect {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -217,11 +217,11 @@ export const styles = css`
 	text-align: center;
 }
 
-.action:nth-child(even) {
+.effect:nth-child(even) {
 	background-color: #00000073;
 }
 
-.action:nth-child(odd) {
+.effect:nth-child(odd) {
 	background-color: #8080801f;
 }
 

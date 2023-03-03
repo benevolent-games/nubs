@@ -2,7 +2,7 @@
 import {RecentKeyStats, Stats} from "./types.js"
 import {NubEffectEvent} from "../../../events/effect.js"
 
-export function setupListeningToActionsAndRecordingStats({
+export function setupListeningToEffectsAndRecordingStats({
 		eventTarget,
 		getRecentKeyStats,
 		setRecentKeyStats,

@@ -6,7 +6,7 @@ import styles from "./styles.css.js"
 import {property} from "lit/decorators.js"
 import {printVector2} from "./parts/printing.js"
 import {RecentKeyStats, Stats} from "./parts/types.js"
-import {setupListeningToActionsAndRecordingStats} from "./parts/setup-listening-to-actions-and-recording-stats.js"
+import {setupListeningToEffectsAndRecordingStats} from "./parts/setup-listening-to-effects-and-recording-stats.js"
 
 @mixinCss(styles)
 export class NubVisualizer extends MagicElement {
@@ -34,7 +34,7 @@ export class NubVisualizer extends MagicElement {
 			}))
 		)
 
-		use.setup(setupListeningToActionsAndRecordingStats({
+		use.setup(setupListeningToEffectsAndRecordingStats({
 			eventTarget: window,
 			getRecentKeyStats,
 			setRecentKeyStats,
@@ -58,9 +58,9 @@ export class NubVisualizer extends MagicElement {
 				${Object
 					.entries(recentKeyStats)
 					.filter(([,stats]) => stats.detail.pressed)
-					.map(([action, stats]) => html`
-						<li data-action="${action}">
-							<strong>${action}</strong>
+					.map(([effect, stats]) => html`
+						<li data-effect="${effect}">
+							<strong>${effect}</strong>
 							<span>${stats.detail.cause}</span>
 						</li>
 					`)}

@@ -4,10 +4,10 @@ import {KeycapView} from "../views/keycap.js"
 
 export function renderKeycap({
 		waiting,
-		currentlyWaitingForThisAction,
+		currentlyWaitingForThisEffect,
 		onClickRebind,
 	}: {
-		currentlyWaitingForThisAction: boolean
+		currentlyWaitingForThisEffect: boolean
 		waiting: undefined | Waiting
 		onClickRebind: (keyIndex: number) => void
 	}) {
@@ -19,7 +19,7 @@ export function renderKeycap({
 		code: code ? code : "-",
 
 		isWaiting: (
-			currentlyWaitingForThisAction &&
+			currentlyWaitingForThisEffect &&
 			waiting?.keyIndex === keyIndex
 		),
 

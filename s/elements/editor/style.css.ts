@@ -76,7 +76,7 @@ export const styles = css`
 			flex-wrap: wrap;
 		}
 
-		.action {
+		.effect {
 			flex: 0 0 auto;
 			width: 12em;
 			padding: calc(var(--pad-keygap) + var(--pad-keyinner));

@@ -21,26 +21,26 @@ export const KeybindView = view({}, use => ({
 		onClickAddNewBind: () => void
 	}) => {
 
-	const currentlyWaitingForThisAction =
+	const currentlyWaitingForThisEffect =
 		waiting?.effect === effect
 
 	const showWaitingIndicatorForNewBind =
-		currentlyWaitingForThisAction &&
+		currentlyWaitingForThisEffect &&
 		waiting.keyIndex === keycodes.length
 
 	return html`
 		<div
 			class=keybind
-			data-action="${effect}"
-			?data-assigning=${currentlyWaitingForThisAction}>
+			data-effect="${effect}"
+			?data-assigning=${currentlyWaitingForThisEffect}>
 
-			<div class=action>${effect}</div>
+			<div class=effect>${effect}</div>
 
 			<div class=keys>
 				${keycodes.map(
 					renderKeycap({
 						waiting,
-						currentlyWaitingForThisAction,
+						currentlyWaitingForThisEffect,
 						onClickRebind,
 					})
 				)}
