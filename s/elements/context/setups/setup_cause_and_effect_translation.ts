@@ -9,13 +9,13 @@ import {find_effects_for_cause_by_consulting_bindings} from "../bindings/find_ef
 export const setup_cause_and_effect_translation = ({
 		modes,
 		effects,
-		on_effect,
+		dispatch_effect,
 		get_current_bindings,
 	}: {
 		effects: Effects
 		modes: ReadableSet<string>
 		get_current_bindings: () => Bindings
-		on_effect: (detail: NubDetail.Effect) => void
+		dispatch_effect: (detail: NubDetail.Effect) => void
 	}) => (
 
 	({detail: cause_detail}: NubCauseEvent) => {
@@ -31,7 +31,7 @@ export const setup_cause_and_effect_translation = ({
 		for (const effect of matching_effect_names) {
 			const effect_detail = {...cause_detail, effect}
 			effects[cause_detail.kind][effect] = effect_detail
-			on_effect(effect_detail)
+			dispatch_effect(effect_detail)
 		}
 	}
 )

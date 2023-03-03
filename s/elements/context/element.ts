@@ -9,13 +9,13 @@ import {NubEffectEvent} from "../../events/effect.js"
 import {NubBindingsEvent} from "../../events/bindings.js"
 import {BindingsStore} from "./bindings/bindings_store.js"
 import {set_initial_modes} from "./utils/set_initial_modes.js"
+import {fallback_bindings} from "./bindings/fallback_bindings.js"
 import {initially_load_bindings_from_storage} from "./utils/initially_load_bindings_from_storage.js"
 
 import {setup_effects_and_lookups} from "./setups/setup_effects_and_lookups.js"
 import {setup_modes_and_handle_changes} from "./setups/setup_modes_and_handle_changes.js"
 import {setup_bindings_and_handle_changes} from "./setups/setup_bindings_and_handle_changes.js"
 import {setup_cause_and_effect_translation} from "./setups/setup_cause_and_effect_translation.js"
-import {fallback_bindings} from "./bindings/fallback_bindings.js"
 
 export class NubContext extends LitElement {
 
@@ -39,7 +39,7 @@ export class NubContext extends LitElement {
 		modes: this.#modes.readable,
 		effects: this.#effects.writable,
 		get_current_bindings: () => this.#bindings.bindings,
-		on_effect: detail =>
+		dispatch_effect: detail =>
 			NubEffectEvent
 				.target(this)
 				.dispatch(detail),
@@ -70,7 +70,7 @@ export class NubContext extends LitElement {
 	["name"]: string = "default"
 
 	@property({type: String})
-	["initial-modes"]: string = "default"
+	["initial-modes"]: string = "humanoid"
 
 	firstUpdated() {
 		set_initial_modes(this.#modes.writable, this["initial-modes"])
