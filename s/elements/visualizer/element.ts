@@ -1,9 +1,9 @@
 
 import {html} from "lit"
+import {property} from "lit/decorators.js"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import styles from "./styles.css.js"
-import {property} from "lit/decorators.js"
 import {printVector2} from "./parts/printing.js"
 import {RecentKeyStats, Stats} from "./parts/types.js"
 import {setupListeningToEffectsAndRecordingStats} from "./parts/setup-listening-to-effects-and-recording-stats.js"
