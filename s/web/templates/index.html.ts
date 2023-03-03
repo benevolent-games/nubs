@@ -26,6 +26,7 @@ export default (context: WebsiteContext) => pageHtml({
 		</header>
 
 		<nub-context>
+			<nub-gridboard></nub-gridboard>
 			<nub-editor modes="humanoid main_menu lol"></nub-editor>
 			<nub-visualizer></nub-visualizer>
 			<nub-keyboard></nub-keyboard>
