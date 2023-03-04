@@ -9,20 +9,16 @@
 [⚡ **live demo!** *nubs.benevolent.games*](https://nubs.benevolent.games/)  
 
 👂 nubs listens to keyboards, mice, gamepads, etc  
-📝 nubs has ui for users to edit their own key bindings  
-📣 nubs emits `nub_action` events, based on inputs and user bindings  
 🕹️ nubs has mobile-friendly virtual devices, like thumbsticks and buttons  
+📝 nubs has a keybinds editor so users to customize their controls  
+🔠 nubs has a grid-based menu system that is good for hotkeys  
 
 👼 a project by [benevolent.games](https://benevolent.games/)  
 💖 free and open source  
 
 <br/>
 
-## nubs installation
-
-first, you have to get nubs installed onto your web page.
-
-choose ONE path — the easy way, or the hard way:
+## install nubs onto your html page
 
 - **the easy way** *(for html enthusiasts)*
   - install these scripts into your page's `<head>`
@@ -43,103 +39,98 @@ choose ONE path — the easy way, or the hard way:
     ></script>
     ```
 - **the advanced way** *(for web developers)*
-    - install nubs npm package
-      ```sh
-      npm install @benev/nubs
-      ```
-    - import nubs elements, register them to the dom
-      ```js
-      import {getElements, themeElements, registerElements, themeCss} from "@benev/nubs"
+  - install the nubs npm package
+    ```sh
+    npm install @benev/nubs
+    ```
+  - import nubs elements, register them to the dom
+    ```js
+    import {getElements, registerElements, themeElements, themeCss} from "@benev/nubs"
 
-      // run customElements.define
-      registerElements(
+    // run customElements.define
+    registerElements(
 
-        // apply a common css theme
-        themeElements(
+      // apply a common css theme
+      themeElements(
 
-          // stylesheet applied into the shadow doms
-          themeCss,
+        // stylesheet applied into the shadow doms
+        themeCss,
 
-          // get all nub element classes
-          getElements(),
-        )
+        // get all nub element classes
+        getElements(),
       )
-      ```
+    )
+    ```
 
 <br/>
 
-## nubs usage
+## how to start using nubs
 
-now that nubs is installed onto your web page, you can start using nub elements.
-
-1. let's insert some cool nub elements into your html `<body>`
+1. let's add some cool nub devices to your html `<body>`
     - ```html
       <nub-stick></nub-stick>
       ```
       - it's a mobile-friendly thumbstick!
-      - it will emit `nub_input` events
+      - it will emit `nub_cause` events
     - ```html
-      <nub-real-mouse></nub-real-mouse>
+      <nub-pointer></nub-pointer>
       ```
-      - also emits `nub_input` events
-      - this one doesn't render any ui (all of the "real" elements are like this)
-    - you can add a `name` attribute to name and differentiate inputs
-      ```html
-      <nub-stick name=movestick></nubstick>
-      <nub-stick name=lookstick></nubstick>
-      ```
-      - then, for each nub_input event, name is available as `event.detail.name`
-1. wrap your nub elements inside a `context`
+      - also emits `nub_cause` events
+      - this one doesn't render any ui (all of the "real" devices are like this)
+1. wrap your nub elements inside a `<nub-context>`
     ```html
-    <nub-context
-      default-bindings="
-      👼 Cool Default Bindings
-      🖱 look :: lookmouse
-      🕹️ look :: lookstick
-      🕹️ move :: movestick
-      *️⃣ forward :: KeyW ArrowUp
-      *️⃣ backward :: KeyS ArrowDown
-      *️⃣ leftward :: KeyA ArrowLeft
-      *️⃣ rightward :: KeyD ArrowRight
-      *️⃣ jump :: Space
-      *️⃣ use :: KeyF Mouse3
-      *️⃣ primary :: Mouse1
-      *️⃣ secondary :: Mouse2
-      ">
+    <nub-context>
+      <nub-keyboard></nub-keyboard>
+      <nub-pointer></nub-pointer>
 
-      <!-- group nub elements together into a context! -->
-
-      <nub-real-keyboard></nub-real-keyboard>
-      <nub-real-mouse name=lookmouse></nub-real-mouse>
-
-      <nub-stick name=movestick></nub-stick>
-      <nub-stick name=lookstick></nub-stick>
+      <nub-stick name=Stick1></nub-stick>
+      <nub-stick name=Stick2></nub-stick>
     </nub-context>
     ```
-    - nub-context is for grouping nub inputs
-      - the context will only listen to inputs nested under it
-      - the context may contain virtual devices and editing ui
-      - `nub-real-*` elements render nothing and do not appear
-    - nub-context introduces key `bindings`
-      - bindings define the associations between "inputs" and "actions"
+    - nub-context is for grouping nub devices
+      - the context will only listen to devices nested under it
+      - the context may contain devices and editing ui
+    - nub-context introduces `bindings`
+      - bindings define the associations between "causes" and "effects"
       - nub-context has ui that allows users to edit their `bindings`
-      - an example input might be `KeyW`
-      - an example action might be `forward`
-      - in most cases, you probably want your app to listen to `nub_action` events like `forward` rather than the specific keys
-    - `bindings` has its own funny little text format
-      - it uses emojis unironically, to indicate nub types
-      - it's just sugar for a JSON format that operates under the hood
-      - it's intended for users to be able to copy-paste these bindings files, to easily share them over discord or whatever
+      - an example *cause* might be `KeyW`
+      - an example *effect* might be `forward`
+      - in most cases, you probably want your app to listen to `nub_effect` events like `forward` rather than the causes
 
 <br/>
 
-## nub elements documentation
+## understanding *cause* and *effect* in nubs
 
-coming soon lol
+- **`nub_cause`** events:
+  like keyboard key presses and mouse movements.
+  all nub *devices* like `<nub-keyboard>` or `<nub-stick>` dispatch these events.
+- **`nub_effect`** events:
+  like "forward" or "open menu".
+  these are dispatched by a `<nub-context>` element, based on the user's bindings.
+  the bindings allow users to customize which *effects* are triggered by which *causes*.
 
-- `<nub-context>`
-- `<nub-real-mouse>`
-- `<nub-real-keyboard>`
-- `<nub-stick>`
-- `<nub-gridboard>`
-- `<nub-editor>`
+<br/>
+
+## nubs element reference
+
+devices
+- **`<nub-keyboard>`** *(real device)*
+  listens to real mouse or touch inputs.
+- **`<nub-pointer>`** *(real device)*
+  listens to real keyboard inputs.
+- **`<nub-stick>`** *(virtual device)*
+  mobile-friendly thumbstick.
+- **`<nub-stickpad>`** *(virtual device)*
+  thumbstick area, which centers the stick wherever your touch starts.
+- **`<nub-lookpad>`** *(virtual device)*
+  area for tracking touch movements, to emulate a mouse.
+- **`<nub-gridboard>`** *(hybrid device)*
+
+bindings, editing, and troubleshooting
+- **`<nub-context>`**
+    listens for `nub_cause` events, and dispatches `nub_effect` events, based on the current `bindings`.
+    only listens to `nub_cause` events nested within the nub-context element.
+- **`<nub-editor>`**
+    interface for users to customize their bindings.
+- **`<nub-visualizer>`**
+    see what's going on, which `nub_effect` events are being dispatched.
