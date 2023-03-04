@@ -1,70 +1,89 @@
 
-import {html} from "lit"
+import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
-import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
-import {styles} from "./style.css.js"
-import {setBindings} from "./parts/set-bindings.js"
-import {bindingsStore} from "./parts/bindings-store.js"
-import {makeActionsMemory} from "./parts/actions-memory.js"
-import {fallbackBindings} from "./parts/fallback-bindings.js"
-import {Bindings, BindingsStore} from "../../bindings/types.js"
-import {getDefaultBindings} from "./parts/get-default-bindings.js"
-import {translateInputEventsToActionEvents} from "./parts/translate-input-events-to-action-events.js"
+import {clone} from "../../tools/clone.js"
+import {NubModesEvent} from "../../events/modes.js"
+import {Bindings} from "./bindings/types/bindings.js"
+import {NubEffectEvent} from "../../events/effect.js"
+import {NubBindingsEvent} from "../../events/bindings.js"
+import {BindingsStore} from "./bindings/bindings_store.js"
+import {set_initial_modes} from "./utils/set_initial_modes.js"
+import {fallback_bindings} from "./bindings/fallback_bindings.js"
+import {initially_load_bindings_from_storage} from "./utils/initially_load_bindings_from_storage.js"
 
-@mixinCss(styles)
-export class NubContext extends MagicElement {
+import {setup_effects_and_lookups} from "./setups/setup_effects_and_lookups.js"
+import {setup_modes_and_handle_changes} from "./setups/setup_modes_and_handle_changes.js"
+import {setup_bindings_and_handle_changes} from "./setups/setup_bindings_and_handle_changes.js"
+import {setup_cause_and_effect_translation} from "./setups/setup_cause_and_effect_translation.js"
 
-	get #defaultBindings() { return getDefaultBindings(this) }
+export class NubContext extends LitElement {
 
-	#actions = makeActionsMemory()
-	#bindings: Bindings = fallbackBindings
-	#store: BindingsStore | undefined
+	#effects = setup_effects_and_lookups()
 
-	@property()
-	name: string = ""
+	#modes = setup_modes_and_handle_changes(modes =>
+		NubModesEvent
+			.target(this)
+			.dispatch({modes})
+	)
 
-	@property()
-	defaultBindingsJson: Bindings | undefined
+	#bindings = setup_bindings_and_handle_changes(bindings =>
+		NubBindingsEvent
+			.target(this)
+			.dispatch({bindings})
+	)
 
-	@property()
-	["default-bindings"] = ""
+	#bindings_store = new BindingsStore(localStorage)
 
-	get actions() { return this.#actions.readable }
+	#translate = setup_cause_and_effect_translation({
+		modes: this.#modes.readable,
+		effects: this.#effects.writable,
+		get_current_bindings: () => this.#bindings.bindings,
+		dispatch_effect: detail =>
+			NubEffectEvent
+				.target(this)
+				.dispatch(detail),
+	})
 
-	@property({attribute: false})
-	get bindings(): Bindings { return this.#bindings }
-	set bindings(newBindings) {
-		const oldBindings = this.#bindings
-		this.#bindings = newBindings
-		setBindings({
-			newBindings,
-			oldBindings,
-			element: this,
-			store: this.#store,
-		})
+	get effects() {
+		return this.#effects.lookups
 	}
 
-	restoreBindingsToDefaults = () => {
-		this.bindings = this.#defaultBindings
+	get modes() {
+		return this.#modes.writable
 	}
+
+	get bindings() {
+		return clone(this.#bindings.bindings)
+	}
+
+	set bindings(b: Bindings) {
+		this.#bindings_store.bindings = b
+		this.#bindings.bindings = b
+	}
+
+	restoreBindingsToDefaults() {
+		this.bindings = fallback_bindings
+	}
+
+	@property({type: String})
+	["name"]: string = "default"
+
+	@property({type: String})
+	["initial-modes"]: string = "humanoid"
 
 	firstUpdated() {
-		super.firstUpdated()
-		this.#store = bindingsStore(localStorage, this.name)
-		this.bindings = this.#store.load() ?? this.#defaultBindings
+		set_initial_modes(this.#modes.writable, this["initial-modes"])
+		initially_load_bindings_from_storage(
+			this.#bindings,
+			this.#bindings_store,
+			this["name"],
+		)
 	}
 
-	realize() {
-		const {bindings} = this
-		const handleInput = bindings
-			? translateInputEventsToActionEvents({
-				bindings,
-				element: this,
-				actions: this.#actions.writable,
-			})
-			: () => console.warn("nub_input before bindings are set")
-
-		return html`<slot @nub_input=${handleInput}></slot>`
+	render() {
+		return html`
+			<slot @nub_cause=${this.#translate}></slot>
+		`
 	}
 }

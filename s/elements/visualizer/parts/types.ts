@@ -1,21 +1,21 @@
 
-import {Nub} from "../../../types.js"
 import {V2} from "../../../tools/v2.js"
+import {NubDetail} from "../../../events/types/detail.js"
 
 export namespace Stats {
 	export interface Key {
 		time: number
-		detail: Nub.Detail.Key & {action: string}
+		detail: NubDetail.Key & {effect: string}
 	}
-	export interface Mouse {
+	export interface Pointer {
 		movement: V2
 		position: V2
 	}
-	export interface Vector2 {
+	export interface Stick {
 		vector: V2
 	}
 }
 
 export interface RecentKeyStats {
-	[action: string]: Stats.Key
+	[effect: string]: Stats.Key
 }

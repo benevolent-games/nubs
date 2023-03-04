@@ -2,55 +2,32 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
-import {Bindings} from "../../../bindings/types.js"
-import {parseBindings} from "../../../bindings/parse.js"
-import {buildBindings} from "../../../bindings/build.js"
+import {TextOptions} from "./text/text-options.js"
+import {when} from "../../../framework/helpers/when.js"
+import {bindings_to_text} from "../../context/bindings/text/bindings_to_text.js"
+import {prepTextAreaChangeHandling} from "./text/prep-text-area-change-handling.js"
 
 export const TextEditorPanelView = view({}, use => ({
-		bindings,
-		onClickSave,
-	}: {
-		bindings: Bindings
-		onClickSave: (draft: Bindings) => void
-	}) => {
+		bindingsDraft,
+		setBindingsDraft,
+	}: TextOptions) => {
 
+	const text = bindings_to_text(bindingsDraft)
 	const [problem, setProblem] = use.state<string>("")
-	const [draft, setDraft] = use.state<undefined | Bindings>(undefined)
 
-	function onTextAreaChange(event: InputEvent) {
-		const target = <HTMLTextAreaElement>event.target
-		setProblem("")
-		setDraft(undefined)
-		try {
-			setDraft(
-				parseBindings(target.value)
-			)
-		}
-		catch (error) {
-			if (error instanceof Error)
-				setProblem(error.message)
-		}
-	}
-
-	const text = buildBindings(bindings)
+	const onTextAreaChange = prepTextAreaChangeHandling(
+		setBindingsDraft,
+		setProblem,
+	)
 
 	return html`
 		<div data-panel=text-editor>
+
 			<textarea @input=${onTextAreaChange}>${text}</textarea>
 
-			${problem && html`
-				<div class=problem>
-					${problem}
-				</div>
-			`}
-
-			<div class=buttons>
-				${((draft && !problem) && html`
-					<button @click=${() => onClickSave(draft)}>
-						save
-					</button>
-				`) || null}
-			</div>
+			${when(problem, () => html`
+				<div class=problem>${problem}</div>
+			`)}
 		</div>
 	`
 })

@@ -3,53 +3,93 @@ import {html} from "lit"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import {styles} from "./style.css.js"
-import {Bindings} from "../../bindings/types.js"
+import {ButtonsView} from "./views/buttons.js"
+import {MetabarView} from "./views/metabar.js"
 import {NubBindingsEvent} from "../../events/bindings.js"
-import {EasyEditorPanelView} from "./views/easy-editor-panel.js"
+import {Bindings} from "../context/bindings/types/bindings.js"
+import {GuiEditorPanelView} from "./views/gui-editor-panel.js"
 import {TextEditorPanelView} from "./views/text-editor-panel.js"
-import {prepareAssignKeybind} from "./utils/prepare-assign-keybind.js"
-import {stateForClosestContext} from "./utils/state-for-closest-context.js"
+import {default_mode} from "../context/bindings/fallback_bindings.js"
+import {setupContextGetter} from "../../framework/helpers/setup-context-getter.js"
 
 @mixinCss(styles)
 export class NubEditor extends MagicElement {
+
+	#getContext = setupContextGetter(this)
+
 	realize() {
 		const {use} = this
+		const context = this.#getContext()
 
-		const [context]
-			= use.state(stateForClosestContext(this))
+		const [bindingsDraft, setBindingsDraft, getBindingsDraft] =
+			use.state<Bindings>(() => context.bindings)
 
-		const [showTextEditor, setShowTextEditor]
-			= use.state(false)
+		const [showSaveButton, setShowSaveButton] =
+			use.state(false)
 
-		const [bindings, setBindings]
-			= use.state<Bindings>(() => context.bindings)
+		const [editingApproach, setEditingApproach] =
+			use.state<"gui" | "text">("gui")
+
+		const availableModes = Object.keys(bindingsDraft)
+		const [primaryMode = default_mode] = availableModes
+
+		const [, setMode, getMode] =
+			use.state(primaryMode)
 
 		use.setup(() =>
 			NubBindingsEvent
 				.target(context)
-				.listen(event => setBindings(event.detail.bindings))
+				.listen(event => {
+					setBindingsDraft(event.detail.bindings)
+					setShowSaveButton(false)
+				})
 		)
 
-		return html`
-			<div class=metabar>
-				<button @click=${() => setShowTextEditor(x => !x)}>
-					${showTextEditor ? "text mode" : "easy mode"}
-				</button>
-			</div>
+		function changeBindingsDraftAndShowSaveButton(b: Bindings) {
+			setBindingsDraft(b)
+			setShowSaveButton(true)
+		}
 
-			${showTextEditor
+		return html`
+			${MetabarView(
+				editingApproach,
+				function toggleApproach() {
+					setEditingApproach(
+						editingApproach === "gui"
+							? "text"
+							: "gui"
+					)
+				},
+				function resetDefault() {
+					context.restoreBindingsToDefaults()
+				},
+			)}
+
+			${editingApproach === "text"
+
 				? TextEditorPanelView({
-					bindings,
-					onClickSave(draft) {
-						context.bindings = draft
-					},
+					bindingsDraft,
+					setBindingsDraft: changeBindingsDraftAndShowSaveButton,
 				})
-				: EasyEditorPanelView({
-					bindings,
-					eventTarget: context,
-					onResetDefaults: context.restoreBindingsToDefaults,
-					onKeybindAssignment: prepareAssignKeybind(context),
+
+				: GuiEditorPanelView({
+					bindingsDraft,
+					setBindingsDraft: changeBindingsDraftAndShowSaveButton,
+					getBindingsDraft,
+
+					availableModes,
+					getMode,
+					setMode,
+
+					listenForCauseEventsOn: context,
 				})}
+
+			${ButtonsView(
+				showSaveButton,
+				function onSaveClick() {
+					context.bindings = getBindingsDraft()
+				},
+			)}
 		`
 	}
 }

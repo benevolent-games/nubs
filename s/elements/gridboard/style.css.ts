@@ -4,53 +4,135 @@ export const styles = css`
 
 :host {
 	display: block;
-	position: relative;
-}
-
-.shell {
-	display: flex;
-	flex-direction: column;
+	color: #b0d3ff;
+	--highlight-color: #fffa;
+	--highlight-text-shadow: 0.1em 0.1em 0.05em black;
 }
 
 .grid {
-	display: grid;
-	grid-template-columns: repeat(5, 2em);
-	grid-template-rows: repeat(5, 2em);
-	font-family: sans-serif;
-	background-color: #00000021;
-	width: 100%;
-	gap: 0.3em;
-	border-radius: 5px;
-	justify-content: space-around;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	width: max-content;
+	gap: 0.2em;
 	padding: 0.5em;
+	border-radius: 0.5em;
+	background: #0004;
+
+	> .row {
+		display: flex;
+		flex-direction: row;
+		width: max-content;
+		gap: 0.2em;
+
+		button {
+			border-radius: 0.3em;
+		}
+	}
 }
 
 .key {
-	display: flex;
-	justify-content: flex-start;
-	align-items: flex-start;
-	background-color: #0000002e;
-	height: 100%;
-	width: 100%;
-	color: white;
-	border-radius: 5px;
-	cursor: pointer;
 	border: none;
-	border-bottom: 1px solid #182252;
-	align-self: flex-end;
-	justify-self: flex-end;
-	padding-top: 0.2em;
-	font-size: 0.9em;
+	display: block;
+	font-family: sans-serif;
+
+	font-size: 1em;
+	width: 3em;
+	height: 3em;
+	padding: 0.5em;
+	
+	background: #444a;
+	color: inherit;
+
+	border-top: 0.1em solid #fff2;
+	border-bottom: 0.1em solid #0002;
+}
+
+.key {
+	position: relative;
+
+	span {
+		display: block;
+		position: absolute;
+	}
+
+	.icon {
+		inset: 0.1em;
+		bottom: 0.5em;
+		svg {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	:is(.keycap, .label) {
+		color: var(--highlight-color);
+		text-shadow: var(--highlight-text-shadow);
+	}
+
+	.keycap {
+		z-index: 2;
+		top: -0.4em;
+		left: -0.1em;
+		font-size: 0.7em;
+		text-transform: uppercase;
+		font-weight: bold;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.label {
+		font-size: 0.6em;
+		bottom: -0.2em;
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
+}
+
+:host([layout="halfboard"]) {
+	.key[data-keycode="Tab"] { width: 3em; }
+	.key[data-keycode="CapsLock"] { width: 3.5em; }
+	.key[data-keycode="ShiftLeft"] { width: 4.5em; }
+
+	.key[data-keycode="ControlLeft"] { width: 3em; }
+	.key[data-keycode="MetaLeft"] { width: 3em; }
+	.key[data-keycode="AltLeft"] { width: 3em; }
+
+	// give the spacebar room to stretch out
+	.row:last-child {
+		width: 100%;
+	}
+
+	// set the spacebar to be expandable
+	.key[data-keycode="Space"] {
+		width: 4em;
+		flex: 1 0 auto;
+	}
+}
+
+:host([layout="compact"]) {
+	.row:nth-child(2) {
+		margin-left: 0.5em;
+	}
+	.row:nth-child(3) {
+		margin-left: 2em;
+	}
 }
 
 .key:hover {
-	background-color: #00000052;
+	background: #ccc4;
 }
 
-.key[data-pressed] {
-	height: 95%;
-	background-color: #00000052;
-	border: none;
+.key[data-is-pressed] {
+	background: #eee8;
+	color: white;
+}
+
+.key:not([data-is-embellished]) {
+	opacity: 0.2;
 }
 
 .draggable-container {
@@ -66,11 +148,6 @@ export const styles = css`
 	position: absolute;
 	width: 100%;
 	height: 100%;
-}
-
-svg {
-	width: 40px;
-	fill: #0000004d;
 }
 
 .toggle-editor {
@@ -104,7 +181,7 @@ svg {
 	display: flex;
 }
 
-.actions {
+.effects {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -113,16 +190,16 @@ svg {
 	flex: 1;
 }
 
-.action {
+.effect {
 	border: none;
 	color: white;
 }
 
-.action option {
+.effect option {
 	color: black;
 }
 
-.edit-keys, .actions {
+.edit-keys, .effects {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -131,7 +208,7 @@ svg {
 	justify-content: center;
 }
 
-.edit-key, .action {
+.edit-key, .effect {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -140,11 +217,11 @@ svg {
 	text-align: center;
 }
 
-.action:nth-child(even) {
+.effect:nth-child(even) {
 	background-color: #00000073;
 }
 
-.action:nth-child(odd) {
+.effect:nth-child(odd) {
 	background-color: #8080801f;
 }
 

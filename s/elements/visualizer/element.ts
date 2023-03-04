@@ -1,12 +1,12 @@
 
 import {html} from "lit"
+import {property} from "lit/decorators.js"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
 
 import styles from "./styles.css.js"
-import {property} from "lit/decorators.js"
 import {printVector2} from "./parts/printing.js"
 import {RecentKeyStats, Stats} from "./parts/types.js"
-import {setupListeningToActionsAndRecordingStats} from "./parts/setup-listening-to-actions-and-recording-stats.js"
+import {setupListeningToEffectsAndRecordingStats} from "./parts/setup-listening-to-effects-and-recording-stats.js"
 
 @mixinCss(styles)
 export class NubVisualizer extends MagicElement {
@@ -21,47 +21,47 @@ export class NubVisualizer extends MagicElement {
 			use.state<RecentKeyStats>({})
 		)
 
-		const [statsForMouse, setStatsForMouse] = (
-			use.state<Stats.Mouse>(() => ({
+		const [statsForPointer, setStatsForPointer] = (
+			use.state<Stats.Pointer>(() => ({
 				movement: [0, 0],
 				position: [0, 0],
 			}))
 		)
 
-		const [statsForVector2, setStatsForVector2] = (
-			use.state<Stats.Vector2>(() => ({
+		const [statsForStick, setStatsForStick] = (
+			use.state<Stats.Stick>(() => ({
 				vector: [0, 0],
 			}))
 		)
 
-		use.setup(setupListeningToActionsAndRecordingStats({
+		use.setup(setupListeningToEffectsAndRecordingStats({
 			eventTarget: window,
 			getRecentKeyStats,
 			setRecentKeyStats,
-			setStatsForMouse,
-			setStatsForVector2,
+			setStatsForPointer,
+			setStatsForStick,
 		}))
 
 		return html`
 			<div class=coordinatesbar>
 				<p>
 					<strong>mouse  </strong>
-					<span>${printVector2(statsForMouse.movement)}</span>
-					<span>${printVector2(statsForMouse.position)}</span>
+					<span>${printVector2(statsForPointer.movement)}</span>
+					<span>${printVector2(statsForPointer.position)}</span>
 				</p>
 				<p>
 					<strong>vector2</strong>
-					<span>${printVector2(statsForVector2.vector)}</span>
+					<span>${printVector2(statsForStick.vector)}</span>
 				</p>
 			</div>
 			<ul class=keystats>
 				${Object
 					.entries(recentKeyStats)
 					.filter(([,stats]) => stats.detail.pressed)
-					.map(([action, stats]) => html`
-						<li data-action="${action}">
-							<strong>${action}</strong>
-							<span>${stats.detail.code}</span>
+					.map(([effect, stats]) => html`
+						<li data-effect="${effect}">
+							<strong>${effect}</strong>
+							<span>${stats.detail.cause}</span>
 						</li>
 					`)}
 			</ul>

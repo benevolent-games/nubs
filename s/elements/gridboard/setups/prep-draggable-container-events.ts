@@ -1,12 +1,12 @@
 
-import {GridboardStarters} from "../types.js"
+import {Query} from "../types.js"
 
 function setTranslate(xPos: string | number, yPos: string | number, el: HTMLElement) {
 	el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)"
 }
 
-export function prepDraggableContainerEvents({query}: GridboardStarters) {
-	const {element, draggableItem} = query()
+export function prepDraggableContainerEvents(query: Query) {
+	const {element} = query()
 
 	let active = false
 	let currentX: number

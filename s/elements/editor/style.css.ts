@@ -5,31 +5,29 @@ export const styles = css`
 
 :host {
 	display: block;
-	font-family: monospace;
+	width: 38em;
+	max-width: 100%;
 	background: #111e;
+
 	color: #fffc;
 	--outline-soft: #fff4;
 	--outline-hard: #fff8;
 	--pad-keygap: 0.4em;
 	--pad-keyinner: 0.2em;
-}
 
-.metabar {
-	padding: 0.1em 0.5em;
-	button {
-		background: transparent;
-		border: none;
-		color: inherit;
-		opacity: 0.7;
-		cursor: pointer;
-		^:is(:hover) { opacity: 1; }
+	> * {
+		padding-top: 0.5em;
+		^:last-child { padding-bottom: 0.5em; }
 	}
 }
 
-[data-panel="text-editor"] {
-	padding: 1em;
+.metabar {
+	text-align: center;
+}
 
+[data-panel="text-editor"] {
 	textarea {
+		max-width: 100%;
 		width: 100%;
 		min-height: 24em;
 		background: #0007;
@@ -39,9 +37,33 @@ export const styles = css`
 	}
 }
 
+[data-panel="gui-editor"] {
+	> *:not(:first-child) {
+		background: #3338;
+	}
+
+	.modetabs {
+		display: flex;
+		justify-content: center;
+		gap: 0.2em;
+
+		button {
+			opacity: 0.3;
+			border: none;
+			background: #3338;
+			border-radius: 0.2em 0.2em 0 0;
+
+			^[data-is-current] {
+				opacity: 1;
+				background: #3338;
+			}
+		}
+	}
+}
+
 .keybindlist {
-	margin: 1em;
-	padding-right: 1em;
+	padding: 0.5em;
+	min-height: 10em;
 	overflow-x: hidden;
 	overflow-y: scroll;
 
@@ -54,7 +76,7 @@ export const styles = css`
 			flex-wrap: wrap;
 		}
 
-		.action {
+		.effect {
 			flex: 0 0 auto;
 			width: 12em;
 			padding: calc(var(--pad-keygap) + var(--pad-keyinner));
@@ -114,37 +136,14 @@ export const styles = css`
 	}
 }
 
+.problem {
+	color: orange;
+}
+
 .buttons {
 	display: flex;
 	justify-content: center;
-	width: 100%;
-	margin: 1em;
-	gap: 1em;
-
-	button {
-		font: inherit;
-		padding: 0.5em;
-		background: #81818126;
-		padding: 0.5em;
-		color: white;
-		border: 1px solid var(--outline-soft);
-		border-radius: 0.5em;
-		cursor: pointer;
-
-		^:is(:hover, :focus) {
-			background: rgb(183 183 183 / 15%);
-			border-color: var(--outline-hard);
-		}
-
-		^[disabled] {
-			color: rgb(129 129 129 / 11%);
-			background: rgb(255 255 255 / 2%);
-		}
-
-		^:active:not([disabled]) {
-			border: none;
-		}
-	}
+	gap: 0.5em;
 }
 
 ::-webkit-scrollbar {

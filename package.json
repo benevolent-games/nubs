@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"type": "module",
-	"main": "x/main.js",
+	"main": "x/index.js",
 	"files": [
 		"x",
 		"s"
@@ -24,6 +24,7 @@
 		"sass": "sass s/web/templates/:x/",
 		"web": "node x/web/build.js",
 		"watch": "run-p watch-sass watch-typescript watch-web",
+		"watchtest": "chokidar 'x/**/*.js' -c 'node x/controls/parse/parse.test.js'",
 		"watch-sass": "npm run sass -s -- --watch",
 		"watch-typescript": "tsc -w",
 		"watch-web": "chokidar \"x/web/**/*\" -c \"npm run web -s && echo 'rebuilt web'\"",

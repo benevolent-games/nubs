@@ -1,10 +1,9 @@
 
-import {Nub} from "../../types.js"
+import {NubDetail} from "../../events/types/detail.js"
 
-export interface GridboardStarters {
-	query(): {
-		element: HTMLElement
-		draggableItem: HTMLElement,
-	}
-	triggerInput: ({}: Nub.Data.Key) => void
+export type Query = () => {
+	element: HTMLElement
+	draggableItem: HTMLElement
 }
+
+export type DispatchCause = ({}: {cause: string, pressed: boolean}) => void

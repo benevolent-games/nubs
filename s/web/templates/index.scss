@@ -50,9 +50,8 @@ h1 {
 	gap: 1em;
 }
 
-nub-visualizer, nub-editor {
-	background: #0004;
-	border: 2px solid #fff8;
+nub-visualizer {
+	margin: auto;
 }
 
 nub-stick {
@@ -61,9 +60,13 @@ nub-stick {
 }
 
 nub-editor {
-	max-width: 38em;
 	margin: auto;
 	margin-top: 1em;
+}
+
+nub-gridboard {
+	margin: 1em auto;
+	font-size: 2em;
 }
 
 nub-lookpad {

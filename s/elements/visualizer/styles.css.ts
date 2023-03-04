@@ -6,6 +6,11 @@ export default css`
 	display: block;
 	font-family: monospace;
 	user-select: none;
+	width: 32em;
+	max-width: 100%;
+
+	background: #0004;
+	border: 1px solid #fff4;
 }
 
 .coordinatesbar {
@@ -29,7 +34,6 @@ export default css`
 	justify-content: center;
 	align-items: flex-start;
 	min-height: 10em;
-	background: #0004;
 	padding: 1em;
 	border-top: 2px solid #fff4;
 
