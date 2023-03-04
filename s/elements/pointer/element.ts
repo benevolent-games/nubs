@@ -10,7 +10,7 @@ import {setup_pointer_button_listening} from "./utils/setup_pointer_button_liste
 export class NubPointer extends MagicElement {
 
 	@property({type: String, reflect: true})
-	cause: string = "pointer"
+	cause: string = "Pointer"
 
 	#listenPointerMove = setup_pointer_move_listening({
 		listenTo: window,

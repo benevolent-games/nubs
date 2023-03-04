@@ -5,12 +5,12 @@ export const default_mode = "humanoid"
 
 export const fallback_bindings: Bindings = {
 	[default_mode]: {
-		"mouse": {
-			"look": ["lookmouse"]
+		"pointer": {
+			"look": ["Pointer", "Lookpad"]
 		},
-		"vector2": {
-			"look": ["lookstick"],
-			"move": ["movestick"]
+		"stick": {
+			"move": ["Stick", "Stickpad"],
+			"look": ["Stick2", "Stickpad2"]
 		},
 		"key": {
 			"open menu": ["KeyQ", "Backquote"],

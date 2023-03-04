@@ -1,13 +1,13 @@
+
 import {html} from "lit"
+import {property} from "lit/decorators.js"
 import {MagicElement, mixinCss} from "@chasemoskal/magical"
-import * as v2 from "../../tools/v2.js"
-import {Nub} from "../../types.js"
 
 import styles from "./style.css.js"
-import {property} from "lit/decorators.js"
+import {V2} from "../../tools/v2.js"
 import {StickpadStarters} from "./types.js"
 import {StickStarters} from "../stick/types.js"
-import {NubInputEvent} from "../../events/input.js"
+import {NubCauseEvent} from "../../events/cause.js"
 import {prepBaseEvents} from "../../setups/prep-base-events.js"
 import {prepDomControls} from "../../setups/prep-dom-controls.js"
 import {setupBaseEvents} from "../../setups/setup-base-events.js"
@@ -19,7 +19,7 @@ import {NubStickGraphic} from "../../graphics/nub-stick-graphic/element.js"
 export class NubStickpad extends MagicElement {
 
 	@property({type: String, reflect: true})
-	name: string = "1"
+	cause: string = "Stickpad"
 
 	get nubStickGraphic() {
 		const nubStickGraphic = this.shadowRoot?.querySelector("nub-stick-graphic") as NubStickGraphic
@@ -35,7 +35,7 @@ export class NubStickpad extends MagicElement {
 		const [, setTrackingPointerId, getTrackingPointerId] =
 			use.state<number | undefined>(undefined)
 
-		const [vector, setVector] = use.state<v2.V2>([0, 0])
+		const [vector, setVector] = use.state<V2>([0, 0])
 
 		const stickStarters: StickStarters & StickpadStarters = {
 			setVector,
@@ -45,13 +45,13 @@ export class NubStickpad extends MagicElement {
 				base: this.nubStickGraphic.basePart as HTMLElement,
 				stick: this.nubStickGraphic.stickPart as HTMLElement
 			}),
-			triggerInput: (vector: v2.V2) => {
-				NubInputEvent
+			triggerInput: (vector: V2) => {
+				NubCauseEvent
 					.target(this)
 					.dispatch({
 						vector,
-						type: Nub.Type.Vector2,
-						name: this.name,
+						kind: "stick",
+						cause: this.cause,
 					})
 			},
 			setCenterPosition: (e: PointerEvent) => {

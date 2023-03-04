@@ -1,8 +1,10 @@
-import {MagicElement, mixinCss, UseElement} from "@chasemoskal/magical"
-import {html, TemplateResult} from "lit"
+
+import {html} from "lit"
 import {property} from "lit/decorators.js"
-import {V2} from "../../tools/v2.js"
+import {MagicElement, mixinCss} from "@chasemoskal/magical"
+
 import styles from "./style.css.js"
+import {V2} from "../../tools/v2.js"
 
 @mixinCss(styles)
 export class NubStickGraphic extends MagicElement {

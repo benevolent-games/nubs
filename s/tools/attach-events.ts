@@ -1,8 +1,12 @@
+
 import {LitListener} from "./lit-listener.js"
 
 export function attachEvents(
 		target: EventTarget,
-		spec: {[key: string]: ((event: Event) => void) | LitListener<Event>}
+		spec: {
+			[key: string]:
+				((event: Event & any) => void) | LitListener<Event & any>
+		}
 	) {
 
 	const disposers = new Set<() => void>()
