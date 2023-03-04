@@ -45,29 +45,25 @@ export class NubEditor extends MagicElement {
 				})
 		)
 
-		const toggleApproach = () => {
-			setEditingApproach(
-				editingApproach === "gui"
-					? "text"
-					: "gui"
-			)
-		}
-
 		function changeBindingsDraftAndShowSaveButton(b: Bindings) {
 			setBindingsDraft(b)
 			setShowSaveButton(true)
 		}
 
-		function onSaveClick() {
-			context.bindings = getBindingsDraft()
-		}
-
-		function resetBindings() {
-			context.restoreBindingsToDefaults()
-		}
-
 		return html`
-			${MetabarView(editingApproach, toggleApproach, resetBindings)}
+			${MetabarView(
+				editingApproach,
+				function toggleApproach() {
+					setEditingApproach(
+						editingApproach === "gui"
+							? "text"
+							: "gui"
+					)
+				},
+				function resetDefault() {
+					context.restoreBindingsToDefaults()
+				},
+			)}
 
 			${editingApproach === "text"
 
@@ -88,7 +84,12 @@ export class NubEditor extends MagicElement {
 					listenForCauseEventsOn: context,
 				})}
 
-			${ButtonsView(showSaveButton, onSaveClick)}
+			${ButtonsView(
+				showSaveButton,
+				function onSaveClick() {
+					context.bindings = getBindingsDraft()
+				},
+			)}
 		`
 	}
 }
