@@ -5,7 +5,7 @@ import {view} from "@chasemoskal/magical"
 import {Waiting} from "../types/waiting.js"
 import {buttonLabels} from "../../../utils/constants.js"
 import {renderKeycap} from "../renderers/render-keycap.js"
-import {when} from "../../../../../framework/helpers/when.js"
+import {when} from "../../../../../tools/when.js"
 
 export const KeybindView = view({}, use => ({
 		effect,

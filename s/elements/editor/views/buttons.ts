@@ -9,13 +9,13 @@ export const ButtonsView = view({}, use => (
 
 	return html`
 		<div class=buttons>
+
 			${showSaveButton ?html`
-				<button
-					class=save
-					@click=${onSaveClick}>
+				<button class=save @click=${onSaveClick}>
 					save
 				</button>
 			` :undefined}
+
 		</div>
 	`
 })
