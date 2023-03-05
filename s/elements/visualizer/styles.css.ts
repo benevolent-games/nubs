@@ -1,6 +1,6 @@
 
 import {css} from "@chasemoskal/magical"
-export default css`
+export const styles = css`
 
 :host {
 	display: block;
