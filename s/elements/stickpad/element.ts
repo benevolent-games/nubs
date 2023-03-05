@@ -35,14 +35,14 @@ export class NubStickpad extends LitElement {
 		return this.area?.getBoundingClientRect()
 	}
 
-	#reset_offset_to_center() {
+	#reset_offset_to_center = () => {
 		this.offset = calculate_centered_offset(
 			this.graphic!.basis!,
 			this.#area_rect!,
 		)
 	}
 
-	#update_vector_and_dispatch_cause(vector: V2) {
+	#update_vector_and_dispatch_cause = (vector: V2) => {
 		this.vector = vector
 		NubCauseEvent
 			.target(this)
