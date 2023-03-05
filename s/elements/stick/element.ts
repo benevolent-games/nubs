@@ -1,64 +1,62 @@
 
-import {html} from "lit"
-import {property} from "lit/decorators.js"
-import {MagicElement, mixinCss} from "@chasemoskal/magical"
+import {html, LitElement} from "lit"
+import {mixinCss} from "@chasemoskal/magical"
+import {property, query} from "lit/decorators.js"
 
-import styles from "./style.css.js"
 import {V2} from "../../tools/v2.js"
-import {StickStarters} from "./types.js"
+import {styles} from "./styles.css.js"
 import {NubCauseEvent} from "../../events/cause.js"
-import {prepBaseEvents} from "../../setups/prep-base-events.js"
-import {prepDomControls} from "../../setups/prep-dom-controls.js"
-import {setupBaseEvents} from "../../setups/setup-base-events.js"
-import {setupWindowEvents} from "../../setups/setup-window-events.js"
-import {NubStickGraphic} from "../../graphics/nub-stick-graphic/element.js"
+import {NubStickGraphic} from "../stick-graphic/element.js"
+import {make_pointer_listeners} from "./utils/make_pointer_listeners.js"
+import {calculate_new_vector_from_pointer_position} from "./utils/calculate_new_vector_from_pointer_position.js"
 
 @mixinCss(styles)
-export class NubStick extends MagicElement {
+export class NubStick extends LitElement {
 
 	@property({type: String, reflect: true})
 	cause: string = "Stick"
 
-	get nubStickGraphicParts() {
-		const {basePart, stickPart} = this.shadowRoot?.querySelector("nub-stick-graphic") as NubStickGraphic
-		return {basePart, stickPart} as {basePart: HTMLElement, stickPart: HTMLElement}
+	@query(NubStickGraphic.tag)
+	private graphic: NubStickGraphic | undefined
+
+	@property()
+	private vector: V2 = [0, 0]
+
+	#update_vector_and_dispatch_cause = (vector: V2) => {
+		this.vector = vector
+		NubCauseEvent
+			.target(this)
+			.dispatch({
+				vector,
+				kind: "stick",
+				cause: this.cause,
+			})
 	}
 
-	realize() {
-		const {use} = this
+	#pointer_listeners = make_pointer_listeners({
+		get_pointer_capture_element: () => this.graphic!,
+		set_vector: this.#update_vector_and_dispatch_cause,
+		set_pointer_position: position => {
+			this.#update_vector_and_dispatch_cause(
+				calculate_new_vector_from_pointer_position(
+					this.graphic!.basis!,
+					position,
+				)
+			)
+		},
+	})
 
-		const [, setTrackingPointerId, getTrackingPointerId] =
-			use.state<number | undefined>(undefined)
-
-		const [vector, setVector] = use.state<V2>([0, 0])
-
-		const starters: StickStarters = {
-			setVector,
-			setTrackingPointerId,
-			getTrackingPointerId,
-			query: () => ({
-				base: this.nubStickGraphicParts.basePart,
-				stick: this.nubStickGraphicParts.stickPart
-			}),
-			triggerInput: (vector: V2) => {
-				NubCauseEvent
-					.target(this)
-					.dispatch({
-						vector,
-						kind: "stick",
-						cause: this.cause,
-					})
-			},
-		}
-
-		const controls = prepDomControls(starters)
-		const baseEvents = prepBaseEvents({...starters, ...controls})
-
-		use.setup(setupWindowEvents({...starters, ...controls}))
-		use.setup(setupBaseEvents(this, baseEvents))
-
+	render() {
+		const listeners = this.#pointer_listeners
 		return html`
-			<nub-stick-graphic .vector=${vector}></nub-stick-graphic>
+			<nub-stick-graphic
+				part=graphic
+				exportparts="base over under"
+				.vector=${this.vector}
+				@pointerdown=${listeners.pointerdown}
+				@pointermove=${listeners.pointermove}
+				@pointerup=${listeners.pointerup}
+			></nub-stick-graphic>
 		`
 	}
 }

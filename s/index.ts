@@ -11,10 +11,8 @@ export * from "./elements/keyboard/element.js"
 export * from "./elements/lookpad/element.js"
 export * from "./elements/pointer/element.js"
 export * from "./elements/stick/element.js"
-export * from "./elements/stickpad/element.js"
+export * from "./elements/stick-graphic/element.js"
 export * from "./elements/visualizer/element.js"
-
-export * from "./graphics/nub-stick-graphic/element.js"
 
 export * from "./events/bindings.js"
 export * from "./events/cause.js"

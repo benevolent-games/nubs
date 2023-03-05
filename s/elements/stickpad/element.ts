@@ -1,85 +1,109 @@
 
-import {html} from "lit"
-import {property} from "lit/decorators.js"
-import {MagicElement, mixinCss} from "@chasemoskal/magical"
+import {html, LitElement} from "lit"
+import {property, query} from "lit/decorators.js"
+import {mixinCss, nap} from "@chasemoskal/magical"
 
-import styles from "./style.css.js"
 import {V2} from "../../tools/v2.js"
-import {StickpadStarters} from "./types.js"
-import {StickStarters} from "../stick/types.js"
+import {styles} from "./styles.css.js"
+import {NubStickGraphic} from "../stick-graphic/element.js"
+import {calculate_offset} from "./utils/calculate_offset.js"
+import {transform} from "../stick-graphic/utils/transform.js"
+import {calculate_centered_offset} from "./utils/calculate_centered_offset.js"
+import {make_pointer_listeners} from "../stick/utils/make_pointer_listeners.js"
+import {calculate_new_vector_from_pointer_position} from "../stick/utils/calculate_new_vector_from_pointer_position.js"
 import {NubCauseEvent} from "../../events/cause.js"
-import {prepBaseEvents} from "../../setups/prep-base-events.js"
-import {prepDomControls} from "../../setups/prep-dom-controls.js"
-import {setupBaseEvents} from "../../setups/setup-base-events.js"
-import {setupStickpadEvents} from "./setups/setup-stickpad-events.js"
-import {setupWindowEvents} from "../../setups/setup-window-events.js"
-import {NubStickGraphic} from "../../graphics/nub-stick-graphic/element.js"
 
 @mixinCss(styles)
-export class NubStickpad extends MagicElement {
+export class NubStickpad extends LitElement {
 
 	@property({type: String, reflect: true})
-	cause: string = "Stickpad"
+	cause: string = "Stick"
 
-	get nubStickGraphic() {
-		const nubStickGraphic = this.shadowRoot?.querySelector("nub-stick-graphic") as NubStickGraphic
-		return nubStickGraphic
+	@property()
+	private vector: V2 = [0, 0]
+
+	@property()
+	private offset: V2 = [0, 0]
+
+	@query(`[part="area"]`)
+	private area: HTMLElement | undefined
+
+	@query(NubStickGraphic.tag)
+	private graphic: NubStickGraphic | undefined
+
+	get #area_rect(): DOMRect | undefined {
+		return this.area?.getBoundingClientRect()
 	}
 
-	realize() {
-		const {use} = this
+	#reset_offset_to_center() {
+		this.offset = calculate_centered_offset(
+			this.graphic!.basis!,
+			this.#area_rect!,
+		)
+	}
 
-		const [isVisible, setVisibility] = use.state(false)
-		const [position, setPosition] = use.state("")
-		
-		const [, setTrackingPointerId, getTrackingPointerId] =
-			use.state<number | undefined>(undefined)
+	#update_vector_and_dispatch_cause(vector: V2) {
+		this.vector = vector
+		NubCauseEvent
+			.target(this)
+			.dispatch({
+				vector,
+				kind: "stick",
+				cause: this.cause,
+			})
+	}
 
-		const [vector, setVector] = use.state<V2>([0, 0])
+	#pointer_listeners = make_pointer_listeners({
+		get_pointer_capture_element: () => this.graphic!,
+		set_vector: this.#update_vector_and_dispatch_cause,
+		set_pointer_position: position => {
+			this.#update_vector_and_dispatch_cause(
+				calculate_new_vector_from_pointer_position(
+					this.graphic!.basis!,
+					position,
+				)
+			)
+		},
+	})
 
-		const stickStarters: StickStarters & StickpadStarters = {
-			setVector,
-			getTrackingPointerId,
-			setTrackingPointerId,
-			query: () => ({
-				base: this.nubStickGraphic.basePart as HTMLElement,
-				stick: this.nubStickGraphic.stickPart as HTMLElement
-			}),
-			triggerInput: (vector: V2) => {
-				NubCauseEvent
-					.target(this)
-					.dispatch({
-						vector,
-						kind: "stick",
-						cause: this.cause,
-					})
-			},
-			setCenterPosition: (e: PointerEvent) => {
-				setVisibility(true)
-				const {clientWidth, clientHeight} = this.nubStickGraphic.basePart as HTMLElement
-				const {left} = this.getBoundingClientRect()
-				setPosition(`left: ${e.clientX - left - clientWidth / 2}px; top: ${e.offsetY - clientHeight / 2}px;`)
-			},
-			stickPad: this,
-			setVisibility
-		}
+	#pointer_listeners_augmented_to_change_offset = {
+		pointerdown: (event: PointerEvent) => {
+			this.offset = calculate_offset(
+				event,
+				this.graphic!.basis!,
+				this.#area_rect!,
+			)
+			this.#pointer_listeners.pointerdown.handleEvent(event)
+		},
+		pointerup: (event: PointerEvent) => {
+			this.#reset_offset_to_center()
+			this.#pointer_listeners.pointerup.handleEvent(event)
+		},
+	}
 
-		const controls = prepDomControls(stickStarters)
-		const baseEvents = prepBaseEvents({...stickStarters, ...controls})
-		
-		use.setup(setupBaseEvents(this, baseEvents))
-		use.setup(setupStickpadEvents({...stickStarters}))
-		use.setup(setupWindowEvents({...stickStarters, ...controls}))
+	firstUpdated() {
+		nap(0).then(() => this.#reset_offset_to_center())
+	}
+
+	render() {
+		const listeners = this.#pointer_listeners
+		const augmented = this.#pointer_listeners_augmented_to_change_offset
+		const graphic_style = transform(...this.offset)
 
 		return html`
-			<nub-stick-graphic
-				.vector=${vector}
-				?data-visible=${isVisible}
-				style=${this.nubStickGraphic
-				?.hasAttribute("data-visible")
-					? position
-					: `inset: 0; margin: auto;`}>
-			</nub-stick-graphic>
+			<div
+				part=area
+				@pointerdown=${augmented.pointerdown}
+				@pointermove=${listeners.pointermove}
+				@pointerup=${augmented.pointerup}
+				>
+				<nub-stick-graphic
+					part=graphic
+					exportparts="base over under"
+					style="${graphic_style}"
+					.vector=${this.vector}
+				></nub-stick-graphic>
+			</div>
 		`
 	}
 }
