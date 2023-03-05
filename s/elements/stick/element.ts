@@ -5,6 +5,7 @@ import {property, query} from "lit/decorators.js"
 
 import {V2} from "../../tools/v2.js"
 import {styles} from "./styles.css.js"
+import {NubCauseEvent} from "../../events/cause.js"
 import {NubStickGraphic} from "../stick-graphic/element.js"
 import {make_pointer_listeners} from "./utils/make_pointer_listeners.js"
 import {calculate_new_vector_from_pointer_position} from "./utils/calculate_new_vector_from_pointer_position.js"
@@ -21,13 +22,26 @@ export class NubStick extends LitElement {
 	@property()
 	private vector: V2 = [0, 0]
 
+	#update_vector_and_dispatch_cause = (vector: V2) => {
+		this.vector = vector
+		NubCauseEvent
+			.target(this)
+			.dispatch({
+				vector,
+				kind: "stick",
+				cause: this.cause,
+			})
+	}
+
 	#pointer_listeners = make_pointer_listeners({
 		get_pointer_capture_element: () => this.graphic!,
-		set_vector: vector => this.vector = vector,
+		set_vector: this.#update_vector_and_dispatch_cause,
 		set_pointer_position: position => {
-			this.vector = calculate_new_vector_from_pointer_position(
-				this.graphic!.basis!,
-				position,
+			this.#update_vector_and_dispatch_cause(
+				calculate_new_vector_from_pointer_position(
+					this.graphic!.basis!,
+					position,
+				)
 			)
 		},
 	})

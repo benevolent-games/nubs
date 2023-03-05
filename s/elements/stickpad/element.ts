@@ -11,6 +11,7 @@ import {transform} from "../stick-graphic/utils/transform.js"
 import {calculate_centered_offset} from "./utils/calculate_centered_offset.js"
 import {make_pointer_listeners} from "../stick/utils/make_pointer_listeners.js"
 import {calculate_new_vector_from_pointer_position} from "../stick/utils/calculate_new_vector_from_pointer_position.js"
+import {NubCauseEvent} from "../../events/cause.js"
 
 @mixinCss(styles)
 export class NubStickpad extends LitElement {
@@ -41,13 +42,26 @@ export class NubStickpad extends LitElement {
 		)
 	}
 
+	#update_vector_and_dispatch_cause(vector: V2) {
+		this.vector = vector
+		NubCauseEvent
+			.target(this)
+			.dispatch({
+				vector,
+				kind: "stick",
+				cause: this.cause,
+			})
+	}
+
 	#pointer_listeners = make_pointer_listeners({
 		get_pointer_capture_element: () => this.graphic!,
-		set_vector: vector => this.vector = vector,
+		set_vector: this.#update_vector_and_dispatch_cause,
 		set_pointer_position: position => {
-			this.vector = calculate_new_vector_from_pointer_position(
-				this.graphic!.basis!,
-				position,
+			this.#update_vector_and_dispatch_cause(
+				calculate_new_vector_from_pointer_position(
+					this.graphic!.basis!,
+					position,
+				)
 			)
 		},
 	})
