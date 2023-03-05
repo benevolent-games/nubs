@@ -5,13 +5,13 @@ import {mixinCss, nap} from "@chasemoskal/magical"
 
 import {V2} from "../../tools/v2.js"
 import {styles} from "./styles.css.js"
+import {NubCauseEvent} from "../../events/cause.js"
 import {NubStickGraphic} from "../stick-graphic/element.js"
 import {calculate_offset} from "./utils/calculate_offset.js"
 import {transform} from "../stick-graphic/utils/transform.js"
 import {calculate_centered_offset} from "./utils/calculate_centered_offset.js"
 import {make_pointer_listeners} from "../stick/utils/make_pointer_listeners.js"
 import {calculate_new_vector_from_pointer_position} from "../stick/utils/calculate_new_vector_from_pointer_position.js"
-import {NubCauseEvent} from "../../events/cause.js"
 
 @mixinCss(styles)
 export class NubStickpad extends LitElement {
