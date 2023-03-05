@@ -37,6 +37,7 @@ export class NubStick extends LitElement {
 		return html`
 			<nub-stick-graphic
 				part=graphic
+				exportparts="base over under"
 				.vector=${this.vector}
 				@pointerdown=${listeners.pointerdown}
 				@pointermove=${listeners.pointermove}

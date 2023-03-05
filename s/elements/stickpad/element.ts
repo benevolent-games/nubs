@@ -1,7 +1,7 @@
 
 import {html, LitElement} from "lit"
-import {mixinCss, nap} from "@chasemoskal/magical"
 import {property, query} from "lit/decorators.js"
+import {mixinCss, nap} from "@chasemoskal/magical"
 
 import {V2} from "../../tools/v2.js"
 import {styles} from "./styles.css.js"
@@ -85,6 +85,7 @@ export class NubStickpad extends LitElement {
 				>
 				<nub-stick-graphic
 					part=graphic
+					exportparts="base over under"
 					style="${graphic_style}"
 					.vector=${this.vector}
 				></nub-stick-graphic>
