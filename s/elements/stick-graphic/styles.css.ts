@@ -4,8 +4,11 @@ export const styles = css`
 
 :host {
 	display: block;
-	width: 10em;
-	height: 10em;
+	width: 8em;
+	height: 8em;
+	--size: var(--nub-stick-size, 66%);
+	--background: var(--nub-stick-background, black);
+	--color: var(--nub-stick-color, white);
 }
 
 [part="base"] {
@@ -13,22 +16,22 @@ export const styles = css`
 	aspect-ratio: 1/1;
 	width: 100%;
 	height: 100%;
-	background: var(--thumb-stick-background, #000);
+	background: var(--background);
 	border-radius: 100%;
 }
 
-[part="stick"], [part="understick"] {
+[part="over"], [part="under"] {
 	position: absolute;
 	inset: 0;
-	width: var(--thumb-stick-size, 66%);
-	height: var(--thumb-stick-size, 66%);
+	width: var(--size);
+	height: var(--size);
 	border-radius: 100%;
-	background: var(--thumb-stick-color, #fff);
 	margin: auto;
 	pointer-events: none;
+	background: var(--color);
 }
 
-[part="understick"] {
+[part="under"] {
 	opacity: 0.5;
 }
 

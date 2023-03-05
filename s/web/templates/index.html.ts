@@ -27,6 +27,7 @@ export default (context: WebsiteContext) => pageHtml({
 
 		<nub-context>
 			<nub-stick></nub-stick>
+			<nub-stickpad></nub-stickpad>
 			<nub-lookpad></nub-lookpad>
 			<nub-visualizer></nub-visualizer>
 			<nub-gridboard></nub-gridboard>
