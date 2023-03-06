@@ -1,12 +1,8 @@
 
 export type Bindings = {
-	[mode: string]: Kinds
-}
-
-export type Kinds = {
-	[kind: string]: Binds
-}
-
-export type Binds = {
-	[effect: string]: string[]
+	[mode: string]: {
+		[kind: string]: {
+			[effect: string]: string[]
+		}
+	}
 }
