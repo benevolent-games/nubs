@@ -1,6 +1,6 @@
 
-export type ReadableSet<T> = {
-	forEach(f: (x: T) => void): void
-	has(x: T): boolean
-	array(): T[]
+export type ReadableSet<X> = {
+	forEach(f: (item: X) => void): void
+	has(item: X): boolean
+	array(): X[]
 }

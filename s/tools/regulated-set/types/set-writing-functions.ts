@@ -1,7 +1,7 @@
 
-export type SetWritingFunctions<T> = {
-	add(...x: T[]): void
-	delete(x: T): void
+export type SetWritingFunctions<X> = {
+	add(...items: X[]): void
+	delete(item: X): void
 	clear(): void
-	assign(items: T[]): void
+	assign(items: X[]): void
 }
