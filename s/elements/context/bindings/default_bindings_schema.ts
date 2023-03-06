@@ -3,7 +3,7 @@ import {BindingsSchema} from "./types/bindings-schema.js"
 
 export const default_mode = "humanoid"
 
-export const fallback_bindings_schema = {
+export const default_bindings_schema = {
 	[default_mode]: {
 		pointer: {
 			look: {causes: ["Pointer", "Lookpad"]},

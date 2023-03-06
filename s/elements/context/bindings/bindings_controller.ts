@@ -3,12 +3,12 @@ import {Bindings} from "./types/bindings.js"
 import {extract_bindings} from "./extract_bindings.js"
 import {BindingsSchema} from "./types/bindings-schema.js"
 import {jsonStorageProxy} from "../../../tools/json-storage.js"
-import {fallback_bindings_schema} from "./fallback_bindings_schema.js"
+import {default_bindings_schema} from "./default_bindings_schema.js"
 
 export class Bindings_Controller {
 	storage_key: string = `nub_bindings`
 
-	#schema: BindingsSchema = fallback_bindings_schema
+	#schema: BindingsSchema = default_bindings_schema
 
 	#bindings: Bindings = this.defaults
 
