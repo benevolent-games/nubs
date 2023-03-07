@@ -1,7 +1,6 @@
 
 import {V2} from "../../../tools/v2.js"
 import {asLitListener} from "../../../tools/lit-listener.js"
-import {findTouchAppleFriendly} from "../../../tools/find-touch-ios-friendly.js"
 
 export function make_pointer_listeners({
 		get_pointer_capture_element, set_vector, set_pointer_position,
@@ -18,8 +17,14 @@ export function make_pointer_listeners({
 		pointerdown: asLitListener<PointerEvent>({
 			handleEvent: event => {
 				event.preventDefault()
-				get_pointer_capture_element().setPointerCapture(event.pointerId)
+
+				const element = get_pointer_capture_element()
+
+				if (pointer_id)
+					element.releasePointerCapture(pointer_id)
+
 				pointer_id = event.pointerId
+				element.setPointerCapture(pointer_id)
 				set_pointer_position([event.clientX, event.clientY])
 			},
 		}),
@@ -29,15 +34,8 @@ export function make_pointer_listeners({
 			handleEvent: event => {
 				event.preventDefault()
 
-				const pointer = findTouchAppleFriendly(
-					pointer_id,
-					event.getCoalescedEvents(),
-				)
-
-				if (pointer) {
-					const {clientX, clientY} = pointer
-					set_pointer_position([clientX, clientY])
-				}
+				if (event.pointerId === pointer_id)
+					set_pointer_position([event.clientX, event.clientY])
 			},
 		}),
 

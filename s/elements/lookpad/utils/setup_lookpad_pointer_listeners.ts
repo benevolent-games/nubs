@@ -1,10 +1,8 @@
 
 import {asLitListener} from "../../../tools/lit-listener.js"
-import {findTouchAppleFriendly} from "../../../tools/find-touch-ios-friendly.js"
 
 export function setup_lookpad_pointer_listeners({
-		on_pointer_drag,
-		get_pointer_capture_element,
+		on_pointer_drag, get_pointer_capture_element,
 	}: {
 		on_pointer_drag: ({}: PointerEvent) => void
 		get_pointer_capture_element: () => HTMLElement
@@ -18,9 +16,13 @@ export function setup_lookpad_pointer_listeners({
 			handleEvent: event => {
 				event.preventDefault()
 
-				pointer_id = event.pointerId
-				get_pointer_capture_element().setPointerCapture(pointer_id)
+				const element = get_pointer_capture_element()
 
+				if (pointer_id)
+					element.releasePointerCapture(pointer_id)
+
+				pointer_id = event.pointerId
+				element.setPointerCapture(pointer_id)
 				on_pointer_drag(event)
 			},
 		}),
@@ -30,13 +32,8 @@ export function setup_lookpad_pointer_listeners({
 			handleEvent: event => {
 				event.preventDefault()
 
-				const event2 = findTouchAppleFriendly(
-					pointer_id,
-					event.getCoalescedEvents(),
-				)
-
-				if (event2)
-					on_pointer_drag(event2)
+				if (event.pointerId === pointer_id)
+					on_pointer_drag(event)
 			},
 		}),
 
@@ -44,9 +41,11 @@ export function setup_lookpad_pointer_listeners({
 			handleEvent: event => {
 				event.preventDefault()
 
-				pointer_id = undefined
-
-				on_pointer_drag(event)
+				if (event.pointerId === pointer_id) {
+					get_pointer_capture_element().releasePointerCapture(pointer_id)
+					pointer_id = undefined
+					on_pointer_drag(event)
+				}
 			},
 		}),
 	}
