@@ -7,8 +7,7 @@ export function findTouchAppleFriendly(
 	if (pointerId === undefined)
 		return undefined
 
-	for (let i = 0; i < pointers.length; i++) {
-		const pointer = pointers[i]
+	for (const pointer of pointers) {
 		if (pointer.pointerId === pointerId)
 			return pointer
 	}

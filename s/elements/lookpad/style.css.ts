@@ -4,10 +4,18 @@ export const styles = css`
 
 :host {
 	display: block;
-	border: 1px solid;
-	touch-action: none;
-
 	width: 10em;
 	height: 10em;
+
+	user-select: none;
+	border: 1px solid;
+
+	touch-action: none;
 }
+
+.pad {
+	width: 100%;
+	height: 100%;
+}
+
 `
