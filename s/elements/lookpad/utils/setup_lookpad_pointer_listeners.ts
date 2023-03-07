@@ -1,13 +1,11 @@
 
-import {V2} from "../../../tools/v2.js"
 import {asLitListener} from "../../../tools/lit-listener.js"
 
-export function make_pointer_listeners({
-		get_pointer_capture_element, set_vector, set_pointer_position,
+export function setup_lookpad_pointer_listeners({
+		on_pointer_drag, get_pointer_capture_element,
 	}: {
+		on_pointer_drag: ({}: PointerEvent) => void
 		get_pointer_capture_element: () => HTMLElement
-		set_vector: (vector: V2) => void
-		set_pointer_position: (position: V2) => void
 	}) {
 
 	let pointer_id: number | undefined
@@ -25,7 +23,7 @@ export function make_pointer_listeners({
 
 				pointer_id = event.pointerId
 				element.setPointerCapture(pointer_id)
-				set_pointer_position([event.clientX, event.clientY])
+				on_pointer_drag(event)
 			},
 		}),
 
@@ -35,15 +33,19 @@ export function make_pointer_listeners({
 				event.preventDefault()
 
 				if (event.pointerId === pointer_id)
-					set_pointer_position([event.clientX, event.clientY])
+					on_pointer_drag(event)
 			},
 		}),
 
 		pointerup: asLitListener<PointerEvent>({
 			handleEvent: event => {
 				event.preventDefault()
-				pointer_id = undefined
-				set_vector([0, 0])
+
+				if (event.pointerId === pointer_id) {
+					get_pointer_capture_element().releasePointerCapture(pointer_id)
+					pointer_id = undefined
+					on_pointer_drag(event)
+				}
 			},
 		}),
 	}
