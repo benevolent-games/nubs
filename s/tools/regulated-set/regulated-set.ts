@@ -1,54 +1,60 @@
 
-import {obtool} from "@chasemoskal/magical"
-
-import {Fun} from "./types/fun.js"
 import {ReadableSet} from "./types/readable-set.js"
 import {WritableSet} from "./types/writable-set.js"
 import {OnSetChange} from "./types/on-set-change.js"
-import {SetWritingFunctions} from "./types/set-writing-functions.js"
 
-export class RegulatedSet<T> {
-	#set: Set<T>
-	#writing: SetWritingFunctions<T> = {
-		add: (...xs) => {
-			for (const x of xs)
-				this.#set.add(x)
-		},
-		delete: x => {
-			this.#set.delete(x)
-		},
-		clear: () => {
-			this.#set.clear()
-		},
-		assign: items => {
-			this.#set.clear()
-			for (const item of items)
-				this.#set.add(item)
-		},
-	}
+export class RegulatedSet<X> implements WritableSet<X>, ReadableSet<X> {
+	#set: Set<X>
+	#on_change: (r: ReadableSet<X>) => void
+	#call_change() { this.#on_change(this.readable) }
 
-	writable: WritableSet<T>
-	readable: ReadableSet<T> = {
-		forEach: f => this.#set.forEach(f),
-		has: x => this.#set.has(x),
-		array: () => [...this.#set],
-	}
-
-	constructor(set: Set<T>, onChange: OnSetChange<T>) {
+	constructor(set: Set<X>, on_change: OnSetChange<X>) {
 		this.#set = set
+		this.#on_change = on_change
+	}
 
-		const writingFunctionsThatWillCallOnChange = (
-			obtool(this.#writing)
-				.map((fun: Fun) => (...args: any[]) => {
-					const result = fun(...args)
-					onChange(this.readable)
-					return result
-				})
-		)
+	// writing methods
 
-		this.writable = {
-			...this.readable,
-			...writingFunctionsThatWillCallOnChange,
-		}
+	add(...items: X[]) {
+		for (const x of items)
+			this.#set.add(x)
+		this.#call_change()
+	}
+
+	delete(item: X) {
+		this.#set.delete(item)
+		this.#call_change()
+	}
+
+	clear() {
+		this.#set.clear()
+		this.#call_change()
+	}
+
+	assign(items: X[]) {
+		this.#set.clear()
+		for (const item of items)
+			this.#set.add(item)
+		this.#call_change()
+	}
+
+	// reading methods
+
+	forEach(f: (item: X) => void) {
+		this.#set.forEach(f)
+	}
+
+	has(item: X) {
+		return this.#set.has(item)
+	}
+
+	array() {
+		return [...this.#set]
+	}
+
+	readable: ReadableSet<X> = {
+		forEach: this.forEach.bind(this),
+		has: this.has.bind(this),
+		array: this.array.bind(this),
 	}
 }
