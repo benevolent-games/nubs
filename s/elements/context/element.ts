@@ -10,8 +10,8 @@ import {NubModesEvent} from "../../events/modes.js"
 import {NubEffectEvent} from "../../events/effect.js"
 import {NubBindingsEvent} from "../../events/bindings.js"
 
-import {setup_effects_and_lookups} from "./setups/setup_effects_and_lookups.js"
 import {setup_modes_and_handle_changes} from "./setups/setup_modes_and_handle_changes.js"
+import {setup_effects_and_readable_proxy} from "./setups/setup_effects_and_readable_proxy.js"
 import {setup_cause_and_effect_translation} from "./setups/setup_cause_and_effect_translation.js"
 
 export class NubContext extends LitElement {
@@ -26,7 +26,7 @@ export class NubContext extends LitElement {
 	modes: string = ""
 
 	get effects() {
-		return this.#effects.lookups
+		return this.#effects.readable
 	}
 
 	get bindings() {
@@ -56,7 +56,7 @@ export class NubContext extends LitElement {
 				.dispatch({bindings}),
 	})
 
-	#effects = setup_effects_and_lookups()
+	#effects = setup_effects_and_readable_proxy()
 
 	#translate = setup_cause_and_effect_translation({
 		modes: this.modes_set.readable,
