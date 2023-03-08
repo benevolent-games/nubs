@@ -7,6 +7,7 @@ export const styles = css`
 	width: 24em;
 	height: 12em;
 	border: 1px solid;
+	touch-action: none;
 }
 
 [part="area"] {
