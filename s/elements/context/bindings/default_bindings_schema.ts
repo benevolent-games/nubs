@@ -9,8 +9,8 @@ export const default_bindings_schema = {
 			look: {causes: ["Pointer", "Lookpad"]},
 		},
 		stick: {
-			move: {causes: ["Stick", "Stickpad"]},
-			look: {causes: ["Stick2", "Stickpad2"]},
+			move: {causes: ["Stick"]},
+			look: {causes: ["Stick2"]},
 		},
 		key: {
 			"open menu": {causes: ["KeyQ", "Backquote"]},
