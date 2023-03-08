@@ -18,5 +18,5 @@ export function calculate_new_vector_from_pointer_position(
 		new_vector = find_closest_point_on_circle(radius, new_vector)
 
 	const [x, y] = new_vector
-	return [(x / radius), (y / radius)]
+	return [(x / radius), -(y / radius)]
 }

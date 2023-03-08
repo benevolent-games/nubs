@@ -7,6 +7,6 @@ export function stick_vector_to_pixels(
 	) {
 
 	return radius !== undefined
-		? [(x * radius), (y * radius)]
+		? [(x * radius), -(y * radius)]
 		: [0, 0]
 }
