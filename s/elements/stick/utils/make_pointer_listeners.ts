@@ -26,6 +26,7 @@ export function make_pointer_listeners({
 				pointer_id = event.pointerId
 				element.setPointerCapture(pointer_id)
 				set_pointer_position([event.clientX, event.clientY])
+				set_vector([0, 0])
 			},
 		}),
 
