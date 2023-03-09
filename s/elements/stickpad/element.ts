@@ -81,6 +81,14 @@ export class NubStickpad extends LitElement {
 		},
 	}
 
+	connectedCallback() {
+		super.connectedCallback()
+		const observer = new ResizeObserver(() => {
+			this.#reset_offset_to_center()
+		})
+		observer.observe(this)
+	}
+
 	firstUpdated() {
 		nap(0).then(() => this.#reset_offset_to_center())
 	}
