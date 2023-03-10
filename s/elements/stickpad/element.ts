@@ -9,6 +9,7 @@ import {NubCauseEvent} from "../../events/cause.js"
 import {NubStickGraphic} from "../stick-graphic/element.js"
 import {calculate_offset} from "./utils/calculate_offset.js"
 import {transform} from "../stick-graphic/utils/transform.js"
+import {on_element_resize} from "./utils/on_element_resize.js"
 import {calculate_centered_offset} from "./utils/calculate_centered_offset.js"
 import {make_pointer_listeners} from "../stick/utils/make_pointer_listeners.js"
 import {calculate_new_vector_from_pointer_position} from "../stick/utils/calculate_new_vector_from_pointer_position.js"
@@ -83,6 +84,7 @@ export class NubStickpad extends LitElement {
 
 	firstUpdated() {
 		nap(0).then(() => this.#reset_offset_to_center())
+		on_element_resize(this, () => this.#reset_offset_to_center())
 	}
 
 	render() {
