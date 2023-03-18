@@ -20,10 +20,11 @@ export const default_bindings_schema = {
 			move_leftward: {causes: ["KeyS", "ArrowLeft"]},
 			move_rightward: {causes: ["KeyF", "ArrowRight"]},
 
-			move_fast: {causes: ["KeyA"]},
-			move_slow: {causes: ["KeyZ"]},
+			move_fast: {causes: ["ShiftLeft"]},
+			move_slow: {causes: ["CapsLock"]},
 
 			jump: {causes: ["Space"]},
+			crouch: {causes: ["KeyZ"]},
 			use: {causes: ["KeyG", "Mouse3"]},
 			primary: {causes: ["Mouse1"]},
 			secondary: {causes: ["Mouse2"]},
@@ -34,7 +35,7 @@ export const default_bindings_schema = {
 			look_right: {causes: ["KeyL"]},
 
 			look_fast: {causes: ["Slash"]},
-			look_slow: {causes: ["Semicolon"]},
+			look_slow: {causes: ["Period"]},
 		},
 	},
 	menu: {
