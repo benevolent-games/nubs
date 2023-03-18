@@ -13,20 +13,33 @@ export const default_bindings_schema = {
 			look: {causes: ["Stick2"]},
 		},
 		key: {
-			"open menu": {causes: ["KeyQ", "Backquote"]},
-			"forward": {causes: ["KeyW", "ArrowUp"]},
-			"backward": {causes: ["KeyS", "ArrowDown"]},
-			"leftward": {causes: ["KeyA", "ArrowLeft"]},
-			"rightward": {causes: ["KeyD", "ArrowRight"]},
-			"jump": {causes: ["Space"]},
-			"use": {causes: ["KeyF", "Mouse3"]},
-			"primary": {causes: ["Mouse1"]},
-			"secondary": {causes: ["Mouse2"]},
+			open_menu: {causes: ["KeyQ", "Backquote"]},
+
+			move_forward: {causes: ["KeyE", "ArrowUp"]},
+			move_backward: {causes: ["KeyD", "ArrowDown"]},
+			move_leftward: {causes: ["KeyS", "ArrowLeft"]},
+			move_rightward: {causes: ["KeyF", "ArrowRight"]},
+
+			move_fast: {causes: ["KeyA"]},
+			move_slow: {causes: ["KeyZ"]},
+
+			jump: {causes: ["Space"]},
+			use: {causes: ["KeyG", "Mouse3"]},
+			primary: {causes: ["Mouse1"]},
+			secondary: {causes: ["Mouse2"]},
+
+			look_up: {causes: ["KeyI"]},
+			look_down: {causes: ["KeyK"]},
+			look_left: {causes: ["KeyJ"]},
+			look_right: {causes: ["KeyL"]},
+
+			look_fast: {causes: ["Slash"]},
+			look_slow: {causes: ["Semicolon"]},
 		},
 	},
 	menu: {
 		key: {
-			"menu": {causes: ["KeyQ"]},
+			close_menu: {causes: ["KeyQ", "Backquote"]},
 		},
 	},
 } satisfies BindingsSchema
