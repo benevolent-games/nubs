@@ -1,9 +1,10 @@
 
-import {html, LitElement} from "lit"
+import {html, LitElement, PropertyValueMap} from "lit"
 import {property} from "lit/decorators.js"
 
 import {Bindings} from "./bindings/types/bindings.js"
 import {set_initial_modes} from "./utils/set_initial_modes.js"
+import {set_updated_modes} from "./utils/set_updated_modes.js"
 import {Bindings_Controller} from "./bindings/bindings_controller.js"
 
 import {NubModesEvent} from "../../events/modes.js"
@@ -64,6 +65,12 @@ export class NubContext extends LitElement {
 				.target(this)
 				.dispatch({bindings}),
 	})
+
+	updated(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>) {
+		if (changedProperties.has("modes")) {
+			set_updated_modes(this.modes_set, this.modes)
+		}
+	}
 
 	#effects = setup_effects_and_readable_proxy()
 
