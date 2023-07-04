@@ -13,6 +13,18 @@ export function setup_keyboard_listening({
 	function dispatch_cause(pressed: boolean) {
 		return (event: KeyboardEvent) => {
 
+			const modifier_key = event.shiftKey
+				? "Shift "
+				: event.altKey
+					? "Alt "
+					: event.ctrlKey
+						? "Ctrl "
+						: ""
+
+			const is_a_modifier = event.code.startsWith("Shift")
+				|| event.code.startsWith("Alt")
+				|| event.code.startsWith("Control")
+
 			if (getPreventDefault())
 				event.preventDefault()
 
@@ -24,7 +36,8 @@ export function setup_keyboard_listening({
 				.dispatch({
 					pressed,
 					kind: "key",
-					cause: event.code,
+					is_a_modifier,
+					cause: `${modifier_key}${event.code}`,
 				})
 		}
 	}

@@ -12,6 +12,7 @@ export namespace NubDetail {
 	export interface Key extends Base {
 		kind: "key"
 		pressed: boolean
+		is_a_modifier?: boolean
 	}
 
 	export interface Pointer extends Base {

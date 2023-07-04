@@ -25,8 +25,9 @@ export function controlKeybindAssignments({
 		if (waiting && event.detail.kind === "key") {
 			const {cause, pressed} = event.detail
 			const {effect, keyIndex} = waiting
+			const is_a_modifier = event.detail.is_a_modifier
 
-			if (pressed) {
+			if (pressed && !is_a_modifier) {
 				setWaiting(undefined)
 
 				const mode = getMode()
