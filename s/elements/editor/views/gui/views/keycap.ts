@@ -10,11 +10,15 @@ export const KeycapView = view({shadow: false}, use => ({
 		isWaiting,
 		onClickRebind,
 	}: {
-		code: string
+		code: string | string[]
 		keyIndex: number
 		isWaiting: boolean
 		onClickRebind: (event: MouseEvent) => void
 	}) => {
+
+	if(typeof code !== "string") {
+		code = code.join(" ")
+	}
 
 	return isWaiting
 		? html`

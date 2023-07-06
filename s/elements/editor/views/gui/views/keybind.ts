@@ -15,7 +15,7 @@ export const KeybindView = view({}, use => ({
 		onClickAddNewBind,
 	}: {
 		effect: string
-		keycodes: string[]
+		keycodes: (string | string[])[]
 		waiting: undefined | Waiting
 		onClickRebind: (keyIndex: number) => void
 		onClickAddNewBind: () => void

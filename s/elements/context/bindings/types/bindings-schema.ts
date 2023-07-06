@@ -5,7 +5,7 @@ export type BindingsSchema = {
 	[mode: string]: {
 		[kind: string]: {
 			[effect: string]: {
-				causes: string[]
+				causes: (string | string[])[]
 				label?: string
 				icon?: SVGTemplateResult | TemplateResult
 			}

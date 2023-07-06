@@ -9,7 +9,7 @@ export function renderKeybind(
 		setWaiting: StateSetter<undefined | Waiting>,
 	) {
 
-	return ([effect, keycodes]: [string, string[]]) => KeybindView({
+	return ([effect, keycodes]: [string, (string | string[])[]]) => KeybindView({
 		effect,
 		keycodes,
 		waiting,

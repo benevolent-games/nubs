@@ -12,7 +12,7 @@ export function renderKeycap({
 		onClickRebind: (keyIndex: number) => void
 	}) {
 
-	return (code: string, keyIndex: number) => KeycapView({
+	return (code: string | string[], keyIndex: number) => KeycapView({
 
 		keyIndex,
 
