@@ -2,10 +2,12 @@
 import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
+import {when} from "../../../tools/when.js"
 import {Waiting} from "./gui/types/waiting.js"
 import {GuiOptions} from "./gui/types/gui-options.js"
 import {NubCauseEvent} from "../../../events/cause.js"
 import {renderKeybind} from "./gui/renderers/render-keybind.js"
+import {BindingsDialogView} from "./gui/views/bindings-dialog.js"
 import {controlKeybindAssignments} from "./gui/utils/control-keybind-assignments.js"
 
 export const GuiEditorPanelView = view({}, use => ({
@@ -23,6 +25,12 @@ export const GuiEditorPanelView = view({}, use => ({
 	const [waiting, setWaiting, getWaiting] =
 		use.state<undefined | Waiting>(undefined)
 
+	const [showDialog, setShowDialog, getShowDialog] =
+		use.state(false)
+
+	const [keysPressed, setKeysPressed, getKeysPressed] =
+		use.state<string[]>([])
+
 	use.setup(() =>
 		NubCauseEvent
 			.target(listenForCauseEventsOn)
@@ -32,6 +40,10 @@ export const GuiEditorPanelView = view({}, use => ({
 				setWaiting,
 				getBindingsDraft,
 				setBindingsDraft,
+				setKeysPressed,
+				getShowDialog,
+				setShowDialog,
+				getKeysPressed
 			}))
 	)
 
@@ -55,8 +67,13 @@ export const GuiEditorPanelView = view({}, use => ({
 			<div class=keybindlist>
 				${Object
 					.entries(keybinds)
-					.map(renderKeybind(waiting, setWaiting))}
+					.map(renderKeybind(waiting, setWaiting, setShowDialog))}
 			</div>
+
+			${when(showDialog, () => BindingsDialogView({
+				keysPressed,
+				setKeysPressed
+			}))}
 
 		</div>
 	`

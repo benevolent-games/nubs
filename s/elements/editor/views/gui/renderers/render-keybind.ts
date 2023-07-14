@@ -7,6 +7,7 @@ import {KeybindView} from "../views/keybind.js"
 export function renderKeybind(
 		waiting: undefined | Waiting,
 		setWaiting: StateSetter<undefined | Waiting>,
+		setShowDialog: StateSetter<boolean>
 	) {
 
 	return ([effect, keycodes]: [string, string[][]]) => KeybindView({
@@ -14,12 +15,14 @@ export function renderKeybind(
 		keycodes,
 		waiting,
 		onClickRebind(keyIndex) {
+			setShowDialog(true)
 			setWaiting({
 				effect,
 				keyIndex,
 			})
 		},
 		onClickAddNewBind() {
+			setShowDialog(true)
 			setWaiting({
 				effect,
 				keyIndex: keycodes.length,
