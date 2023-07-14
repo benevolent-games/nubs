@@ -136,6 +136,29 @@ export const styles = css`
 	}
 }
 
+.dialog {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	place-items: center;
+
+	> div {
+		gap: 1rem;
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		background: fixed linear-gradient(180deg, #1b2941, #0c0511);
+
+		> input {
+			color: white;
+			background: transparent;
+			border: 1px solid #363636;
+			text-align: center;
+			padding: 0.5em;
+		}
+	}
+}
+
 .problem {
 	color: orange;
 }

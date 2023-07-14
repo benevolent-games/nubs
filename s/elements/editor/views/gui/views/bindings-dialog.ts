@@ -15,9 +15,11 @@ export const BindingsDialogView = view({}, use => ({
 	})
 
 	return html`
-		<div>
-			<p>press desired key combination then press escape</p>
-			<input value=${keysPressed.join(" ")} />
+		<div class=dialog>
+			<div>
+				<p>press desired key combination then press ESCAPE</p>
+				<input value=${keysPressed.join(" + ")} />
+			</div>
 		</div>
 	`
 })
