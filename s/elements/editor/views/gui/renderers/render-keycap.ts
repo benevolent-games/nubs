@@ -12,11 +12,11 @@ export function renderKeycap({
 		onClickRebind: (keyIndex: number) => void
 	}) {
 
-	return (code: string, keyIndex: number) => KeycapView({
+	return (code: string[], keyIndex: number) => KeycapView({
 
 		keyIndex,
 
-		code: code ? code : "-",
+		code: code.length ? code.join(" ") : "-",
 
 		isWaiting: (
 			currentlyWaitingForThisEffect &&

@@ -1,6 +1,6 @@
 
 import {Effects} from "../bindings/types/effects.js"
-import {Bindings} from "../bindings/types/bindings.js"
+import {Bindings2} from "../bindings/types/bindings.js"
 import {NubCauseEvent} from "../../../events/cause.js"
 import {NubDetail} from "../../../events/types/detail.js"
 import {ReadableSet} from "../../../tools/regulated-set/types/readable-set.js"
@@ -14,15 +14,27 @@ export const setup_cause_and_effect_translation = ({
 	}: {
 		effects: Effects
 		modes: ReadableSet<string>
-		get_current_bindings: () => Bindings
+		get_current_bindings: () => Bindings2
 		dispatch_effect: (detail: NubDetail.Effect) => void
-	}) => (
+	}) => {
 
-	({detail: cause_detail}: NubCauseEvent) => {
+	const keys_pressed = new Set<string>()
+
+	return ({detail: cause_detail}: NubCauseEvent) => {
+
+		if (cause_detail.kind === "key") {
+			if (cause_detail.pressed) {
+				keys_pressed.add(cause_detail.cause)
+			}
+			else {
+				keys_pressed.delete(cause_detail.cause)
+			}
+		}
 
 		const matching_effect_names = (
 			find_effects_for_cause_by_consulting_bindings({
 				modes,
+				keys_pressed,
 				cause_detail,
 				bindings: get_current_bindings(),
 			})
@@ -34,4 +46,4 @@ export const setup_cause_and_effect_translation = ({
 			dispatch_effect(effect_detail)
 		}
 	}
-)
+}

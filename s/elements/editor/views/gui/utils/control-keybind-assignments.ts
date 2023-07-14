@@ -3,7 +3,7 @@ import {StateSetter} from "@chasemoskal/magical/x/view/types.js"
 
 import {Waiting} from "../types/waiting.js"
 import {NubCauseEvent} from "../../../../../events/cause.js"
-import {Bindings} from "../../../../context/bindings/types/bindings.js"
+import {Bindings2} from "../../../../context/bindings/types/bindings.js"
 
 export function controlKeybindAssignments({
 		getMode,
@@ -13,8 +13,8 @@ export function controlKeybindAssignments({
 		setWaiting,
 	}: {
 		getMode: () => string
-		getBindingsDraft: () => Bindings
-		setBindingsDraft: (b: Bindings) => void
+		getBindingsDraft: () => Bindings2
+		setBindingsDraft: (b: Bindings2) => void
 		getWaiting: () => undefined | Waiting
 		setWaiting: StateSetter<undefined | Waiting>
 	}) {
@@ -32,14 +32,14 @@ export function controlKeybindAssignments({
 				const mode = getMode()
 				const bindings = getBindingsDraft()
 				const isEscapeKey = cause === "Escape"
-				const keybinds = bindings[mode].key[effect]
-				const redundant = keybinds.some(c => c === cause)
+				const keybinds = bindings.modes[mode].key[effect]
+				const redundant = keybinds.some(c => c.join("") === cause)
 
 				if (!redundant) {
 					if (isEscapeKey)
 						keybinds.splice(keyIndex, 1)
 					else
-						keybinds[keyIndex] = cause
+						keybinds[keyIndex] = [cause]
 
 					setBindingsDraft(bindings)
 				}

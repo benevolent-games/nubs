@@ -6,7 +6,7 @@ import {styles} from "./style.css.js"
 import {ButtonsView} from "./views/buttons.js"
 import {MetabarView} from "./views/metabar.js"
 import {NubBindingsEvent} from "../../events/bindings.js"
-import {Bindings} from "../context/bindings/types/bindings.js"
+import {Bindings2} from "../context/bindings/types/bindings.js"
 import {GuiEditorPanelView} from "./views/gui-editor-panel.js"
 import {TextEditorPanelView} from "./views/text-editor-panel.js"
 import {default_mode} from "../context/bindings/default_bindings_schema.js"
@@ -22,7 +22,7 @@ export class NubEditor extends MagicElement {
 		const context = this.#getContext()
 
 		const [bindingsDraft, setBindingsDraft, getBindingsDraft] =
-			use.state<Bindings>(() => context.bindings)
+			use.state<Bindings2>(() => context.bindings)
 
 		const [showSaveButton, setShowSaveButton] =
 			use.state(false)
@@ -30,7 +30,7 @@ export class NubEditor extends MagicElement {
 		const [editingApproach, setEditingApproach] =
 			use.state<"gui" | "text">("gui")
 
-		const availableModes = Object.keys(bindingsDraft)
+		const availableModes = Object.keys(bindingsDraft.modes)
 		const [primaryMode = default_mode] = availableModes
 
 		const [, setMode, getMode] =
@@ -45,7 +45,7 @@ export class NubEditor extends MagicElement {
 				})
 		)
 
-		function changeBindingsDraftAndShowSaveButton(b: Bindings) {
+		function changeBindingsDraftAndShowSaveButton(b: Bindings2) {
 			setBindingsDraft(b)
 			setShowSaveButton(true)
 		}

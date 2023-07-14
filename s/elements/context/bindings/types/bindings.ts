@@ -6,3 +6,14 @@ export type Bindings = {
 		}
 	}
 }
+
+export type Bindings2 = {
+	version: number,
+	modes: {
+		[mode: string]: {
+			[kind: string]: {
+				[effect: string]: string[][]
+			}
+		}
+	}
+}

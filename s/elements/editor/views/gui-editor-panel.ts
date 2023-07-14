@@ -36,7 +36,7 @@ export const GuiEditorPanelView = view({}, use => ({
 	)
 
 	const mode = getMode()
-	const kindbinds = bindingsDraft[mode]
+	const kindbinds = bindingsDraft.modes[mode]
 	const keybinds = kindbinds?.key ?? {}
 
 	return html`

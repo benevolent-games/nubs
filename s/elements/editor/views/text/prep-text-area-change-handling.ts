@@ -1,10 +1,10 @@
 
 import {Setter} from "../../../../framework/types/setter.js"
-import {Bindings} from "../../../context/bindings/types/bindings.js"
+import {Bindings2} from "../../../context/bindings/types/bindings.js"
 import {text_to_bindings} from "../../../context/bindings/text/text_to_bindings.js"
 
 export function prepTextAreaChangeHandling(
-		setBindingsDraft: Setter<Bindings>,
+		setBindingsDraft: Setter<Bindings2>,
 		setProblem: Setter<string>,
 	) {
 
