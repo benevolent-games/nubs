@@ -1,21 +1,22 @@
 
-import {converters} from "../converters/converters.js"
+import {converter_1} from "../converters/1.js"
+import {migrate_versions} from "./migrate_versions.js"
+import {BindingsConverter} from "../types/bindings-converter.js"
 import {Bindings, Bindings1, Bindings2} from "../types/bindings.js"
+
+const converters = new Map<number, BindingsConverter<any, any>>()
+	.set(1, converter_1)
 
 export function migrate_bindings_to_latest_version(
 		b: Bindings1 | Bindings2,
 		current_version: number
 	): Bindings {
 
-	const LATEST_VERSION = 2
-	let bindings = b
+	const {data} = migrate_versions<Bindings>({
+		version: current_version,
+		converters,
+		data: b
+	})
 
-	for (let i = current_version; i < LATEST_VERSION; i++) {
-		const converter = converters.get(i)
-		if(!converter)
-			break
-		bindings = converter(bindings)
-	}
-
-	return bindings as Bindings
+	return data
 }
