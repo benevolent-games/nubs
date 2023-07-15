@@ -1,12 +1,12 @@
 
 import {Getter} from "../../../../../framework/types/getter.js"
 import {Setter} from "../../../../../framework/types/setter.js"
-import {Bindings2} from "../../../../context/bindings/types/bindings.js"
+import {Bindings} from "../../../../context/bindings/types/bindings.js"
 
 export type GuiOptions = {
-	bindingsDraft: Bindings2
-	setBindingsDraft: Setter<Bindings2>
-	getBindingsDraft: Getter<Bindings2>
+	bindingsDraft: Bindings
+	setBindingsDraft: Setter<Bindings>
+	getBindingsDraft: Getter<Bindings>
 
 	availableModes: string[]
 	getMode: () => string

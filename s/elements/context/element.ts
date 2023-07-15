@@ -2,7 +2,7 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 
-import {Bindings2} from "./bindings/types/bindings.js"
+import {Bindings} from "./bindings/types/bindings.js"
 import {set_initial_modes} from "./utils/set_initial_modes.js"
 import {Bindings_Controller} from "./bindings/bindings_controller.js"
 
@@ -42,7 +42,7 @@ export class NubContext extends LitElement {
 		return this.#bindings_controller.bindings
 	}
 
-	set bindings(b: Bindings2) {
+	set bindings(b: Bindings) {
 		this.#bindings_controller.bindings = b
 	}
 

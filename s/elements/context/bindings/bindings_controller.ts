@@ -1,5 +1,5 @@
 
-import {Bindings2} from "./types/bindings.js"
+import {Bindings} from "./types/bindings.js"
 import {extract_bindings} from "./extract_bindings.js"
 import {BindingsSchema} from "./types/bindings-schema.js"
 import {jsonStorageProxy} from "../../../tools/json-storage.js"
@@ -12,15 +12,15 @@ export class Bindings_Controller {
 
 	#schema: BindingsSchema = default_bindings_schema
 
-	#bindings: Bindings2 = this.defaults
+	#bindings: Bindings = this.defaults
 
 	#store: {[key: string]: any | undefined}
 
-	#on_bindings_change: (b: Bindings2) => void
+	#on_bindings_change: (b: Bindings) => void
 
 	constructor({storage, on_bindings_change}: {
 			storage: Storage
-			on_bindings_change: (b: Bindings2) => void
+			on_bindings_change: (b: Bindings) => void
 		}) {
 		this.#store = jsonStorageProxy(storage)
 		this.#on_bindings_change = on_bindings_change
@@ -43,7 +43,7 @@ export class Bindings_Controller {
 		return this.#bindings
 	}
 
-	set bindings(b: Bindings2) {
+	set bindings(b: Bindings) {
 		this.#bindings = b
 		this.save_to_storage()
 		this.#on_bindings_change(b)

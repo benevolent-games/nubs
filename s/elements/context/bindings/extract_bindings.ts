@@ -1,9 +1,9 @@
 
 import {obtool} from "@chasemoskal/magical"
-import {Bindings2} from "./types/bindings.js"
+import {Bindings} from "./types/bindings.js"
 import {BindingsSchema} from "./types/bindings-schema.js"
 
-export function extract_bindings(decorated: BindingsSchema): Bindings2 {
+export function extract_bindings(decorated: BindingsSchema): Bindings {
 	return {
 		version: 2,
 		modes: obtool(decorated).map(

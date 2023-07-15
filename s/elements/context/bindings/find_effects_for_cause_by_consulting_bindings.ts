@@ -1,5 +1,5 @@
 
-import {Bindings2} from "./types/bindings.js"
+import {Bindings} from "./types/bindings.js"
 import {NubDetail} from "../../../events/types/detail.js"
 import {ReadableSet} from "../../../tools/regulated-set/types/readable-set.js"
 import {compareStringArrays} from "../../../tools/compare-string-arrays.js"
@@ -10,7 +10,7 @@ export function find_effects_for_cause_by_consulting_bindings({
 		keys_pressed,
 		cause_detail,
 	}: {
-		bindings: Bindings2
+		bindings: Bindings
 		keys_pressed: Set<string>
 		modes: ReadableSet<string>
 		cause_detail: NubDetail.Any

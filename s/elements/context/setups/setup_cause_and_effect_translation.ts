@@ -1,6 +1,6 @@
 
 import {Effects} from "../bindings/types/effects.js"
-import {Bindings2} from "../bindings/types/bindings.js"
+import {Bindings} from "../bindings/types/bindings.js"
 import {NubCauseEvent} from "../../../events/cause.js"
 import {NubDetail} from "../../../events/types/detail.js"
 import {ReadableSet} from "../../../tools/regulated-set/types/readable-set.js"
@@ -14,7 +14,7 @@ export const setup_cause_and_effect_translation = ({
 	}: {
 		effects: Effects
 		modes: ReadableSet<string>
-		get_current_bindings: () => Bindings2
+		get_current_bindings: () => Bindings
 		dispatch_effect: (detail: NubDetail.Effect) => void
 	}) => {
 

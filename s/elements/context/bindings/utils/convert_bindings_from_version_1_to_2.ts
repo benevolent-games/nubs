@@ -1,9 +1,9 @@
 
 import {obtool} from "@chasemoskal/magical"
-import {Bindings, Bindings2} from "../types/bindings.js"
+import {Bindings1, Bindings2} from "../types/bindings.js"
 
 export function convert_bindings_from_version_1_to_2(
-		bindings: Bindings
+		bindings: Bindings1
 	): Bindings2 {
 
 	return {

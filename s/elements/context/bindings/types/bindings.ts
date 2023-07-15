@@ -1,5 +1,5 @@
 
-export type Bindings = {
+export type Bindings1 = {
 	[mode: string]: {
 		[kind: string]: {
 			[effect: string]: string[]
@@ -17,3 +17,5 @@ export type Bindings2 = {
 		}
 	}
 }
+
+export type Bindings = Bindings2

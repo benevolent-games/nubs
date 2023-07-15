@@ -3,7 +3,7 @@ import {StateGetter, StateSetter} from "@chasemoskal/magical/x/view/types.js"
 
 import {Waiting} from "../types/waiting.js"
 import {NubCauseEvent} from "../../../../../events/cause.js"
-import {Bindings2} from "../../../../context/bindings/types/bindings.js"
+import {Bindings} from "../../../../context/bindings/types/bindings.js"
 import {compareStringArrays} from "../../../../../tools/compare-string-arrays.js"
 
 export function controlKeybindAssignments({
@@ -18,8 +18,8 @@ export function controlKeybindAssignments({
 		setBindingsDraft,
 	}: {
 		getMode: () => string
-		getBindingsDraft: () => Bindings2
-		setBindingsDraft: (b: Bindings2) => void
+		getBindingsDraft: () => Bindings
+		setBindingsDraft: (b: Bindings) => void
 		getShowDialog: StateGetter<boolean>
 		setShowDialog: StateSetter<boolean>
 		getKeysPressed: StateGetter<string[]>
