@@ -40,8 +40,10 @@ export const setup_cause_and_effect_translation = ({
 			})
 		)
 
+		const causes = Array.from(keys_pressed).join(" ")
+
 		for (const effect of matching_effect_names) {
-			const effect_detail = {...cause_detail, effect}
+			const effect_detail = {...cause_detail, effect, cause: causes}
 			effects[cause_detail.kind][effect] = effect_detail
 			dispatch_effect(effect_detail)
 		}
