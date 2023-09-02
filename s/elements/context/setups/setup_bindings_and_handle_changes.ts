@@ -5,7 +5,7 @@ import {Bindings} from "../bindings/types/bindings.js"
 type OnBindingsChange = (bindings: Bindings) => void
 
 export function setup_bindings_and_handle_changes(onChange: OnBindingsChange) {
-	let bindings: Bindings = {}
+	let bindings: Bindings
 	const cloneBindings = () => clone(bindings)
 
 	return {

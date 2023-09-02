@@ -3,9 +3,9 @@ import {html} from "lit"
 import {view} from "@chasemoskal/magical"
 
 import {Waiting} from "../types/waiting.js"
+import {when} from "../../../../../tools/when.js"
 import {buttonLabels} from "../../../utils/constants.js"
 import {renderKeycap} from "../renderers/render-keycap.js"
-import {when} from "../../../../../tools/when.js"
 
 export const KeybindView = view({}, use => ({
 		effect,
@@ -15,7 +15,7 @@ export const KeybindView = view({}, use => ({
 		onClickAddNewBind,
 	}: {
 		effect: string
-		keycodes: string[]
+		keycodes: string[][]
 		waiting: undefined | Waiting
 		onClickRebind: (keyIndex: number) => void
 		onClickAddNewBind: () => void

@@ -30,7 +30,7 @@ export class NubEditor extends MagicElement {
 		const [editingApproach, setEditingApproach] =
 			use.state<"gui" | "text">("gui")
 
-		const availableModes = Object.keys(bindingsDraft)
+		const availableModes = Object.keys(bindingsDraft.modes)
 		const [primaryMode = default_mode] = availableModes
 
 		const [, setMode, getMode] =

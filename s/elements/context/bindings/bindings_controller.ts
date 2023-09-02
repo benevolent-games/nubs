@@ -4,6 +4,8 @@ import {extract_bindings} from "./extract_bindings.js"
 import {BindingsSchema} from "./types/bindings-schema.js"
 import {jsonStorageProxy} from "../../../tools/json-storage.js"
 import {default_bindings_schema} from "./default_bindings_schema.js"
+import {detect_bindings_version} from "./utils/detect_bindings_version.js"
+import {migrate_bindings_to_latest_version} from "./utils/migrate_bindings_to_latest_version.js"
 
 export class Bindings_Controller {
 	storage_key: string = `nub_bindings`
@@ -52,10 +54,13 @@ export class Bindings_Controller {
 	}
 
 	load_from_storage() {
-		this.#bindings = (
+		const read_bindings = (
 			this.#store[this.storage_key]
 				?? this.defaults
 		)
-		this.#on_bindings_change(this.#bindings)
+		const bindings_version = detect_bindings_version(read_bindings)
+		this.bindings = migrate_bindings_to_latest_version(
+			read_bindings, bindings_version
+		)
 	}
 }

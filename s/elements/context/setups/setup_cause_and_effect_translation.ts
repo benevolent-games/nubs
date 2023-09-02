@@ -16,22 +16,36 @@ export const setup_cause_and_effect_translation = ({
 		modes: ReadableSet<string>
 		get_current_bindings: () => Bindings
 		dispatch_effect: (detail: NubDetail.Effect) => void
-	}) => (
+	}) => {
 
-	({detail: cause_detail}: NubCauseEvent) => {
+	const keys_pressed = new Set<string>()
+
+	return ({detail: cause_detail}: NubCauseEvent) => {
+
+		if (cause_detail.kind === "key") {
+			if (cause_detail.pressed) {
+				keys_pressed.add(cause_detail.cause)
+			}
+			else {
+				keys_pressed.delete(cause_detail.cause)
+			}
+		}
 
 		const matching_effect_names = (
 			find_effects_for_cause_by_consulting_bindings({
 				modes,
+				keys_pressed,
 				cause_detail,
 				bindings: get_current_bindings(),
 			})
 		)
 
+		const causes = Array.from(keys_pressed).join(" ")
+
 		for (const effect of matching_effect_names) {
-			const effect_detail = {...cause_detail, effect}
+			const effect_detail = {...cause_detail, effect, cause: causes}
 			effects[cause_detail.kind][effect] = effect_detail
 			dispatch_effect(effect_detail)
 		}
 	}
-)
+}
