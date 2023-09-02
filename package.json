@@ -1,6 +1,6 @@
 {
 	"name": "@benev/nubs",
-	"version": "0.3.0-dev.0",
+	"version": "0.3.0-dev.1",
 	"description": "user-input system for web games",
 	"license": "MIT",
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
