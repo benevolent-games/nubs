@@ -23,16 +23,15 @@ export default ({
 			<script
 				type=importmap-shim
 				src="${v("/importmap.json")}"
-				defer
 			></script>
 			<script
 				type=module-shim
+				async
 				src="${v("/html.js")}"
-				defer
 			></script>
 			<script
+				async
 				src="/node_modules/es-module-shims/dist/es-module-shims.wasm.js"
-				defer
 			></script>
 		`}
 	${headContent}
